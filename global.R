@@ -5,7 +5,10 @@ library(gbm)#Boosting
 library(e1071)#SVM
 library(rpart)#Arbre
 library(foreach)#parallel
-library(shinythemes)#☺ Choix theme Shiny
+library(shinythemes)#Choix theme Shiny
+library(ggplot2)#graphique plus joli
+library(FactoMineR)# ACP
+library(factoextra)# graphique ACP
 
 # on importe les donnees necessaire pour le projet
 don <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee daibete transcodifie et avec imputation mice
@@ -16,3 +19,6 @@ mod <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
              high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
              Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
              Sodium_mg,data=don,family="binomial")
+
+# chargement des scripts
+source("script/Classif nutriment.R")
