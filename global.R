@@ -8,6 +8,7 @@ library(foreach)#parallel
 library(shinythemes)#☺ Choix theme Shiny
 
 # test diff avec github
+#test pour JV
 
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
