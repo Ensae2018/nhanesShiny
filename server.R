@@ -24,7 +24,6 @@ shinyServer(function(input, output) {
     
   })
    
-  
   tempoHyp <- 999
   tempoChol <- 999
   tempoDiab <- 999
@@ -33,34 +32,7 @@ shinyServer(function(input, output) {
   observeEvent(input$predict, {
     
   output$resultat_hypertension <- renderText({
-<<<<<<< HEAD
-    input$predire
-    isolate({
-      tempo <- predict(
-        mod,
-        data.frame(
-          Age_in_years_at_screening = input$age,
-          Systolic_Blood_pres_2nd_rdg_mm_Hg =
-            input$pression_sys,
-          high_cholesterol_level = input$cholesterol,
-          Body_Mass_Index_kg_m_2 = input$bmi,
-          Doctor_ever_said_you_were_overweight =
-            input$surpoids,
-          Ever_told_doctor_had_trouble_sleeping =
-            input$trouble_sommeil,
-          Phosphorus_mg = input$phosphorus,
-          Diastolic_Blood_pres_1st_rdg_mm_Hg =
-            input$pression_dia,
-          Sodium_mg = input$sodium
-        ),
-        type = "response"
-      )
-      ifelse(tempo > 0.5,
-             "vous avez de l'hypertension",
-             "vous n'avez pas de l'hypertension")
-    })
-=======
- 
+    
   tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
              Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
              high_cholesterol_level=input$cholesterol,
@@ -72,15 +44,7 @@ shinyServer(function(input, output) {
              Sodium_mg=input$sodium
              ),type="response")
   ifelse(tempoHyp>0.5,"vous avez de l'hypertension", "vous n'avez pas de l'hypertension")
-  #test
-  #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
->>>>>>> 36a3c249128b886756494057779fab3bbc280266
   })
-  
-  output$tableHypertension <- renderTable({
-    colnames(donHyp)
-  })
-  
   
   output$resultat_cholesterol <- renderText({
     
@@ -95,12 +59,6 @@ shinyServer(function(input, output) {
                                           Sodium_mg=input$sodium
     ),type="response")
     ifelse(tempoChol>0.5,"vous avez du cholesterol", "vous n'avez pas du cholesterol")
-    #test
-    #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
-  })
-  
-  output$tableCholesterol <- renderTable({
-    colnames(donChol)
   })
   
   output$resultat_diabetes <- renderText({
@@ -116,14 +74,19 @@ shinyServer(function(input, output) {
                                           Sodium_mg=input$sodium
     ),type="response")
     ifelse(tempoDiab>0.5,"vous avez de la diabetes", "vous n'avez pas de la diabetes")
-    #test
-    #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
+  })
+  })
+  
+  output$tableHypertension <- renderTable({
+    colnames(donHyp)
+  })
+  
+  output$tableCholesterol <- renderTable({
+    colnames(donChol)
   })
   
   output$tableDiabetes <- renderTable({
     colnames(donDiab)
-  })
-  
   })
   
   output$resultat_hypertension <- renderText({

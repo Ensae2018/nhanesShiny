@@ -11,7 +11,6 @@ library(FactoMineR)# ACP
 library(factoextra)# graphique ACP
 
 # test diff avec github
-#test pour JV
 
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
@@ -41,11 +40,7 @@ modChol <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
 modDiab <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
              high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
              Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
-<<<<<<< HEAD
-             Sodium_mg,data=don,family="binomial")
+             Sodium_mg,data=donDiab,family="binomial")
 
 # chargement des scripts
 source("script/Classif nutriment.R")
-=======
-             Sodium_mg,data=donDiab,family="binomial")
->>>>>>> 36a3c249128b886756494057779fab3bbc280266
