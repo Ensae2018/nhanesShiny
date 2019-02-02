@@ -38,7 +38,10 @@ shinyUI(
              )
     ),
     tabPanel(title="Contexte",
-             tableOutput(outputId="tableHypertension")),
+             tableOutput(outputId="tableHypertension"),
+             tableOutput(outputId="tableCholesterol"),
+             tableOutput(outputId="tableDiabetes")
+             ),
     navbarMenu(title="Choix modele",
                tabPanel("modele cholesterol"),
                tabPanel("modele diabete"),
@@ -46,6 +49,7 @@ shinyUI(
     ),
     tabPanel(title="Prediction",
              sidebarLayout(
+<<<<<<< HEAD
                sidebarPanel("Les données sur l'individu",
                             selectInput(inputId="sexe", label = "Selectionner votre sexe", 
                                         selected = "M", choices = c("M"="Male","F"="Female")),
@@ -78,6 +82,43 @@ shinyUI(
              plotOutput("inertienutrimentplot"),
              br(),
              plotOutput("acpnutrimentplot")),
+=======
+             sidebarPanel("Les données sur l'individu",
+             selectInput(inputId="sexe", label = "Selectionner votre sexe", 
+                         selected = "M", choices = c("M"="Male","F"="Female")),
+             checkboxGroupInput(inputId="trouble_sommeil", label= "Trouble de sommeil?",
+                                choices=c("Oui"="Yes","Non"="No"),selected = "No"),
+             checkboxGroupInput(inputId="cholesterol", label= "Taux élevé de cholesterol?",
+                                choices=c("Oui"="Yes","Non"="No"), selected = "No"),
+             checkboxGroupInput(inputId="surpoids", label= "obèse?",
+                                choices=c("Oui"="Yes","Non"="No"), selected = "No"),
+             numericInput(inputId="bmi", label="votre indice masse corporel", value=20, min=0, max=50),
+             numericInput(inputId="age", label="Entrer votre age", value=18, min=16, max=150),
+             numericInput(inputId="pression_sys", label="Entrer votre pression systolique",
+                          value=120, min = 0, max=300),
+             numericInput(inputId="pression_dia", label="Entrer votre pression diastolique",
+                          value=180, min = 0, max=300),
+             numericInput(inputId="phosphorus", label="consommation phosphorus en mg",
+                          value=2000, min = 0, max=3000),
+             numericInput(inputId="sodium", label="consommation sodium en mg",
+                          value=2000, min = 0, max=3000)
+             ),
+            
+             mainPanel("Les résultats de la prédiction",
+             textOutput(outputId="resultat_hypertension"),  
+             textOutput(outputId="resultat_cholesterol"),
+             textOutput(outputId="resultat_diabetes")
+             )
+             ),
+             #j'ajoute le button pour lancer la prédiction dans l'onglet PREDICTION
+             fluidRow(
+               column(4, wellPanel(
+                 actionButton("predict", "Prédire")
+               )))
+             ), 
+              
+    tabPanel(title="Classification"),
+>>>>>>> 36a3c249128b886756494057779fab3bbc280266
     tabPanel(title="Conclusion")
   )
 )
