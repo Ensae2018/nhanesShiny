@@ -22,8 +22,15 @@ shinyServer(function(input, output) {
     hist(x, breaks = bins, col = 'darkgray', border = 'white')
     
   })
+   
   
+  tempo <- 999
+  
+  # j'ajoute une observation  sur la button pour lancer la prédiction
+  observeEvent(input$predict, {
+    
   output$resultat_hypertension <- renderText({
+ 
   tempo <- predict(mod,data.frame(Age_in_years_at_screening=input$age,
              Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
              high_cholesterol_level=input$cholesterol,
@@ -35,10 +42,17 @@ shinyServer(function(input, output) {
              Sodium_mg=input$sodium
              ),type="response")
   ifelse(tempo>0.5,"vous avez de l'hypertension", "vous n'avez pas de l'hypertension")
+  #test
+  #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
   })
   
   output$tableHypertension <- renderTable({
     colnames(don)
+  })
+  })
+  
+  output$resultat_hypertension <- renderText({
+    ifelse(tempo==999,"simulation pas lancée")
   })
   
 })

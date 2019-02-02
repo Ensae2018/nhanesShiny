@@ -66,11 +66,18 @@ shinyUI(
              numericInput(inputId="sodium", label="consommation sodium en mg",
                           value=2000, min = 0, max=3000)
              ),
+            
              mainPanel("Les résultats de la prédiction",
              textOutput(outputId="resultat_hypertension")   
              )
-             )
              ),
+             #j'ajoute le button pour lancer la prédiction dans l'onglet PREDICTION
+             fluidRow(
+               column(4, wellPanel(
+                 actionButton("predict", "Prédire")
+               )))
+             ), 
+              
     tabPanel(title="Classification"),
     tabPanel(title="Conclusion")
   )
