@@ -38,7 +38,10 @@ shinyUI(
              )
     ),
     tabPanel(title="Contexte",
-             tableOutput(outputId="tableHypertension")),
+             tableOutput(outputId="tableHypertension"),
+             tableOutput(outputId="tableCholesterol"),
+             tableOutput(outputId="tableDiabetes")
+             ),
     navbarMenu(title="Choix modele",
                tabPanel("modele cholesterol"),
                tabPanel("modele diabete"),
@@ -68,7 +71,9 @@ shinyUI(
              ),
             
              mainPanel("Les résultats de la prédiction",
-             textOutput(outputId="resultat_hypertension")   
+             textOutput(outputId="resultat_hypertension"),  
+             textOutput(outputId="resultat_cholesterol"),
+             textOutput(outputId="resultat_diabetes")
              )
              ),
              #j'ajoute le button pour lancer la prédiction dans l'onglet PREDICTION

@@ -24,14 +24,16 @@ shinyServer(function(input, output) {
   })
    
   
-  tempo <- 999
+  tempoHyp <- 999
+  tempoChol <- 999
+  tempoDiab <- 999
   
   # j'ajoute une observation  sur la button pour lancer la prédiction
   observeEvent(input$predict, {
     
   output$resultat_hypertension <- renderText({
  
-  tempo <- predict(mod,data.frame(Age_in_years_at_screening=input$age,
+  tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
              Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
              high_cholesterol_level=input$cholesterol,
              Body_Mass_Index_kg_m_2=input$bmi,
@@ -41,18 +43,70 @@ shinyServer(function(input, output) {
              Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
              Sodium_mg=input$sodium
              ),type="response")
-  ifelse(tempo>0.5,"vous avez de l'hypertension", "vous n'avez pas de l'hypertension")
+  ifelse(tempoHyp>0.5,"vous avez de l'hypertension", "vous n'avez pas de l'hypertension")
   #test
   #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
   })
   
   output$tableHypertension <- renderTable({
-    colnames(don)
+    colnames(donHyp)
   })
+  
+  
+  output$resultat_cholesterol <- renderText({
+    
+    tempoChol <- predict(modChol,data.frame(Age_in_years_at_screening=input$age,
+                                          Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
+                                          high_cholesterol_level=input$cholesterol,
+                                          Body_Mass_Index_kg_m_2=input$bmi,
+                                          Doctor_ever_said_you_were_overweight=input$surpoids,
+                                          Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
+                                          Phosphorus_mg=input$phosphorus,
+                                          Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
+                                          Sodium_mg=input$sodium
+    ),type="response")
+    ifelse(tempoChol>0.5,"vous avez du cholesterol", "vous n'avez pas du cholesterol")
+    #test
+    #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
+  })
+  
+  output$tableCholesterol <- renderTable({
+    colnames(donChol)
+  })
+  
+  output$resultat_diabetes <- renderText({
+    
+    tempoDiab <- predict(modDiab,data.frame(Age_in_years_at_screening=input$age,
+                                          Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
+                                          high_cholesterol_level=input$cholesterol,
+                                          Body_Mass_Index_kg_m_2=input$bmi,
+                                          Doctor_ever_said_you_were_overweight=input$surpoids,
+                                          Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
+                                          Phosphorus_mg=input$phosphorus,
+                                          Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
+                                          Sodium_mg=input$sodium
+    ),type="response")
+    ifelse(tempoDiab>0.5,"vous avez de la diabetes", "vous n'avez pas de la diabetes")
+    #test
+    #ifelse(tempo>0.5,"plus de 0.5", "moins de 0.5")
+  })
+  
+  output$tableDiabetes <- renderTable({
+    colnames(donDiab)
+  })
+  
   })
   
   output$resultat_hypertension <- renderText({
-    ifelse(tempo==999,"simulation pas lancée")
+    ifelse(tempoHyp==999,"simulation pas lancée")
+  })
+  
+  output$resultat_cholesterol <- renderText({
+    ifelse(tempoChol==999,"simulation pas lancée")
+  })
+  
+  output$resultat_diabetes <- renderText({
+    ifelse(tempoDiab==999,"simulation pas lancée")
   })
   
 })
