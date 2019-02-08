@@ -9,8 +9,7 @@ library(shinythemes)#Choix theme Shiny
 library(ggplot2)#graphique plus joli
 library(FactoMineR)# ACP
 library(factoextra)# graphique ACP
-
-# test diff avec github
+library(DT)#utile pour la table interactive
 
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
@@ -20,6 +19,11 @@ donChol <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee cholest
 
 # on importe les donnees necessaire pour le projet
 donDiab <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee daibetes transcodifie et avec imputation mice
+
+# Conversion du facteur Yes/No vers 1/0 pour Y
+levels(donHyp$Y) <- c(0,1)
+levels(donChol$Y) <- c(0,1)
+levels(donDiab$Y) <- c(0,1)
 
 # algorithme de prediction hypertension
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
@@ -42,5 +46,9 @@ modDiab <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
              Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
              Sodium_mg,data=donDiab,family="binomial")
 
+# on charge la table de selection des variable
+tabselvar_hyp <- read.table("data/choix_var.csv", header=T, sep=";",row.names = NULL)
+max_val <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
+
 # chargement des scripts
-source("script/Classif nutriment.R")
+source("script/Classif nutriment.R") #utile pour la classification des nutriments

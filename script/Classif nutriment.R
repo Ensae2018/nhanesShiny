@@ -1,5 +1,5 @@
 # chargement du jeu de donnee
-nutriment <- don[,which(colnames(don)=="Energy_kcal"):which(colnames(don)=="Moisture_gm")]
+nutriment <- donHyp[,which(colnames(donHyp)=="Energy_kcal"):which(colnames(donHyp)=="Moisture_gm")]
 
 # ACP
 acp <- PCA(nutriment,scale.unit=T,graph = F)

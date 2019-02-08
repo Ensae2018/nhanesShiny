@@ -118,4 +118,18 @@ shinyServer(function(input, output) {
     )
   })
   
+  output$tabselvarhyp <- renderDataTable({
+    datatable(tabselvar_hyp,class = 'cell-border stripe',filter = 'bottom',
+              extensions = c('Buttons'), rownames = FALSE,
+              options=list(autoWidth = TRUE, 
+                           dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
+                           pageLength=20)
+              ) %>% 
+      formatStyle(
+                columns = 2:length(tabselvar_hyp), 
+                backgroundColor = styleEqual(levels = rang_val(), 
+                                             values = rep("yellow", length(rang_val())))) 
+    })
+  
+  rang_val <- reactive(tabselvar_hyp[,-1][which(max_val==input$prio, arr.ind=TRUE)])
 })

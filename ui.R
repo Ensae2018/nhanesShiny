@@ -45,8 +45,21 @@ shinyUI(
       title = "Choix modele",
       tabPanel("modele cholesterol"),
       tabPanel("modele diabete"),
-      tabPanel("modele hypertension")
-    ),
+      tabPanel("modele hypertension",
+               navlistPanel(widths=c(2,10),
+                 tabPanel(title = "choix variable",
+                          fluidRow(
+                            column(
+                              width = 2,
+                              title = "parametre hyp",
+                              sliderInput("prio", "rangd'importance", 1, 10, value = 1)
+                            ),
+                            column(width = 10,
+                                   dataTableOutput(outputId = "tabselvarhyp"))
+                          )),
+                 tabPanel(title = "modele prediction")
+               ))
+    ), 
     tabPanel(title = "Prediction",
              sidebarLayout(
                sidebarPanel(
