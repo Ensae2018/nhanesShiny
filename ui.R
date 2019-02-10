@@ -18,7 +18,8 @@ shinyUI(
       title = "Presentation",
       
       # Application title
-      titlePanel("Old Faithful Geyser Data"),
+      titlePanel(strong("Projet Nhanes 2015-2016: construction de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
+                 à partir de données démographiques, de santé, d'alimentation et d'habitudes de vie")),
       
       # Sidebar with a slider input for number of bins
       sidebarLayout(sidebarPanel(
