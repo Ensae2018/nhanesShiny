@@ -50,11 +50,15 @@ shinyUI(
                  tabPanel(title = "choix variable",
                           fluidRow(
                             column(
-                              width = 2,
+                              width = 1,
                               title = "parametre hyp",
-                              sliderInput("prio", "rangd'importance", 1, 10, value = 1)
+                              dropdownButton(
+                                tags$h3("List of Input"),
+                                sliderInput("prio", "Rang d'importance", 1, 10, value = 1),
+                                tooltip = tooltipOptions(title = "Click to see inputs !")
+                              )
                             ),
-                            column(width = 10,
+                            column(width = 11,
                                    dataTableOutput(outputId = "tabselvarhyp"))
                           )),
                  tabPanel(title = "modele prediction",
@@ -63,23 +67,23 @@ shinyUI(
                               width=4,
                               pickerInput(
                                 "methode",
-                                label = "choisir la methode",
+                                label = "Choisir la methode",
                                 choices = colnames(res_hyp[, -1]),
                                 multiple = TRUE,
                                 selected = colnames(res_hyp[, c(2,6,10)]),
                                 options = list(
-                                  `actions-box` = TRUE,
-                                  `deselect-all-text` = "effacer tout",
-                                  `select-all-text` = "tout selectionner",
-                                  `none-selected-text` = "vide",
+                                  `actions-box` = FALSE,
+                                  `none-selected-text` = "Selectionner 3!",
                                   `max-options` = 3
                                 )
                               )
+                            ),
+                            column(width=4,
+                            sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
                             )
                           ),
                           conditionalPanel(
                             condition="input.methode.length==3",
-                            Sys.sleep(5),
                           fluidRow(
                             plotOutput("choixmethode")),
                           column(width=4,
@@ -173,20 +177,24 @@ shinyUI(
                  div(HTML("<b>Les résultats de la prédiction</b>"), align = "center"),
                  br(),
                  fluidRow(column(4, wellPanel(
-                   actionButton("predict", "Prédire")
+                   switchInput(inputId = "predict", value = FALSE)
+                   #actionButton("predict", "Prédire")
                  ))),
                  hr(),
-                 div(h1(
+                 conditionalPanel(condition="input.predict==true",
+                 div(h4(
                    textOutput(outputId = "resultat_hypertension"), align = "center"
                  )),
+                 imageOutput("im_hyp"),  
                  hr(),
-                 div(h1(
+                 div(h4(
                    textOutput(outputId = "resultat_cholesterol"), align = "center"
                  )),
                  hr(),
-                 div(h1(
+                 div(h4(
                    textOutput(outputId = "resultat_diabetes"), align = "center"
                  ))
+                 )
                )
              )),
     tabPanel(

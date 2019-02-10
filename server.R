@@ -13,12 +13,12 @@ library(shiny)
 shinyServer(function(input, output) {
   
   # fonction utilisée pour faire de la matrice confusion
-  monerreur <- function(X, Y, seuil=0.5){
+  monerreur <- function(X, Y, seuil=input$seuilmod){
     table(cut(X, breaks = c(0,seuil,1)), Y)
   }
   
   # fonction utilisée pour le calcul de la précision
-  precision <- function(X,Y,seuil=0.5){
+  precision <- function(X,Y,seuil=input$seuilmod){
     Xc <- cut(X,breaks=c(0,seuil,1),labels=c(0,1))
     round(sum(as.factor(Y)==Xc)/(sum(as.factor(Y)==Xc)+sum(as.factor(Y)!=Xc)),3)
   }
@@ -41,7 +41,7 @@ shinyServer(function(input, output) {
   tempoDiab <- 999
   
   # j'ajoute une observation  sur la button pour lancer la prédiction
-  observeEvent(input$predict, {
+  observeEvent(input$predict==TRUE, {
     
   output$resultat_hypertension <- renderText({
     
@@ -87,6 +87,11 @@ shinyServer(function(input, output) {
     ),type="response")
     ifelse(tempoDiab>0.5,"vous avez de la diabetes", "vous n'avez pas de la diabetes")
   })
+  
+  output$im_hyp <- renderImage({
+    filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg'))
+    list(src = filename)},deleteFile = FALSE)
+  
   })
   
   output$tableHypertension <- renderTable({

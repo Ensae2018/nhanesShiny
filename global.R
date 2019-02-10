@@ -58,4 +58,4 @@ max_val <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.metho
 # chargement des scripts
 source("script/Classif nutriment.R") #utile pour la classification des nutriments
 
-options(shiny.trace=TRUE)
+options(shiny.trace=FALSE)
