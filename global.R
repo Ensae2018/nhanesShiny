@@ -10,6 +10,8 @@ library(ggplot2)#graphique plus joli
 library(FactoMineR)# ACP
 library(factoextra)# graphique ACP
 library(DT)#utile pour la table interactive
+library(pROC)#Etude courbe ROC et AUC
+library(shinyWidgets)#widgets avancés pour Shiny
 
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
@@ -46,9 +48,14 @@ modDiab <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
              Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
              Sodium_mg,data=donDiab,family="binomial")
 
+# Le résulatat de comparaison des méthodes de prédiction Hypertension
+res_hyp <- read.csv2("data/res_hyp.csv")
+
 # on charge la table de selection des variable
 tabselvar_hyp <- read.table("data/choix_var.csv", header=T, sep=";",row.names = NULL)
 max_val <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 # chargement des scripts
 source("script/Classif nutriment.R") #utile pour la classification des nutriments
+
+options(shiny.trace=TRUE)

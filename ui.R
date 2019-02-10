@@ -57,7 +57,42 @@ shinyUI(
                             column(width = 10,
                                    dataTableOutput(outputId = "tabselvarhyp"))
                           )),
-                 tabPanel(title = "modele prediction")
+                 tabPanel(title = "modele prediction",
+                          fluidRow(
+                            column(
+                              width=4,
+                              pickerInput(
+                                "methode",
+                                label = "choisir la methode",
+                                choices = colnames(res_hyp[, -1]),
+                                multiple = TRUE,
+                                selected = colnames(res_hyp[, c(2,6,10)]),
+                                options = list(
+                                  `actions-box` = TRUE,
+                                  `deselect-all-text` = "effacer tout",
+                                  `select-all-text` = "tout selectionner",
+                                  `none-selected-text` = "vide",
+                                  `max-options` = 3
+                                )
+                              )
+                            )
+                          ),
+                          conditionalPanel(
+                            condition="input.methode.length==3",
+                            Sys.sleep(5),
+                          fluidRow(
+                            plotOutput("choixmethode")),
+                          column(width=4,
+                            HTML("<h4>Les valeurs d'AUC</h4>"),
+                            tableOutput("valAUC"),
+                            HTML("<h4>Les valeurs de precision</h4>"),
+                            tableOutput("matprecision")
+                            ),
+                          column(width=4,
+                            HTML("<h4>Matrice de confusion</h4>"),     
+                            tableOutput("matconf")
+                            )
+                          ))
                ))
     ), 
     tabPanel(title = "Prediction",

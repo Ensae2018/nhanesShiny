@@ -11,6 +11,18 @@ library(shiny)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  
+  # fonction utilisée pour faire de la matrice confusion
+  monerreur <- function(X, Y, seuil=0.5){
+    table(cut(X, breaks = c(0,seuil,1)), Y)
+  }
+  
+  # fonction utilisée pour le calcul de la précision
+  precision <- function(X,Y,seuil=0.5){
+    Xc <- cut(X,breaks=c(0,seuil,1),labels=c(0,1))
+    round(sum(as.factor(Y)==Xc)/(sum(as.factor(Y)==Xc)+sum(as.factor(Y)!=Xc)),3)
+  }
+  
   output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
     x    <- don[, 50]
@@ -132,4 +144,46 @@ shinyServer(function(input, output) {
     })
   
   rang_val <- reactive(tabselvar_hyp[,-1][which(max_val==input$prio, arr.ind=TRUE)])
+ 
+observeEvent(input$methode==3,{
+  output$choixmethode <- renderPlot({
+    plot(roc(res_hyp[,1],res_hyp[,input$methode[1]]),col="black",main="Courbes ROC")
+    lines(roc(res_hyp[,1],res_hyp[,input$methode[2]]), col="red")
+    lines(roc(res_hyp[,1],res_hyp[,input$methode[3]]), col="green")
+    legend("bottomright",legend = c(input$methode[1],input$methode[2], input$methode[3]), col=c("black","red","green"), lty = 1)
+  })
+
+  output$valAUC <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methode[1]]),
+               auc(res_hyp[,1],res_hyp[,input$methode[2]]),
+               auc(res_hyp[,1],res_hyp[,input$methode[3]])
+    )
+    names(tabauc) <- input$methode    
+    tabauc
+  })
+  
+  output$matconf <- renderTable({
+    tabconf <- cbind(as.data.frame(monerreur(res_hyp[,input$methode[1]],res_hyp[,1])),
+          as.data.frame(monerreur(res_hyp[,input$methode[2]],res_hyp[,1]))[,3],
+          as.data.frame(monerreur(res_hyp[,input$methode[3]],res_hyp[,1]))[,3]
+    )
+    names(tabconf)[3:length(names(tabconf))] <- input$methode
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
+    tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilite"
+    tabconf$seuil[6] <- "Specificite"
+    tabconf
+  })
+  
+  output$matprecision <- renderTable({
+    tabprecision <- data.frame(precision(res_hyp[,input$methode[1]],res_hyp[,1]),
+          precision(res_hyp[,input$methode[2]],res_hyp[,1]),
+          precision(res_hyp[,input$methode[3]],res_hyp[,1]))
+    names(tabprecision) <- input$methode
+    tabprecision
+  })
+})
+
 })
