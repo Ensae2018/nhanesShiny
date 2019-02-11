@@ -14,35 +14,69 @@ shinyUI(
   navbarPage(
     theme = shinytheme("cerulean"),
     title = "Etude Nhanes",
+
+#----------------------------------------------------------------  
+#tabPanel : PRESENTATION
+#----------------------------------------------------------------    
+    
     tabPanel(
-      title = "Presentation",
+      title = "Présentation",
       
       # Application title
-      titlePanel(strong("Projet Nhanes 2015-2016: construction de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
-                 à partir de données démographiques, de santé, d'alimentation et d'habitudes de vie")),
+      titlePanel(h1(br(),"Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
+                 à partir de données démographiques, de santé, d'alimentation et d'habitudes de vie",align="center",
+                    br(),
+                    br(),
+                    h1("")
+                    )),
       
       # Sidebar with a slider input for number of bins
-      sidebarLayout(sidebarPanel(
-        sliderInput(
-          "bins",
-          "Number of bins:",
-          min = 1,
-          max = 50,
-          value = 30
-        )
+      sidebarLayout(
+        sidebarPanel(
+        radioButtons(inputId = "idRadio", label = "Sommaire", selected = 3,
+                     choices = c("Page de garde" = 1, "Les données" = 2, "La démarche" = 3))
         
       ),
       
       # Show a plot of the generated distribution
-      mainPanel(plotOutput("distPlot")))
+      mainPanel(
+        conditionalPanel(condition="input.idRadio == 1",
+                         br(),
+                         br(),
+                         h2("Présenté par:",span("Insaf DRIS HAMED, Yifan ZHENG, Jean-Vincent PALLON",style = "color:blue"),align="center"),
+                         br(),
+                         h3("Le 27 février 2019",align="center"),
+                         br(),
+                         br(),
+                         img(src="img/nhanes.jpg", title="Popup",width="40%",style="display: block; margin-left: auto; margin-right: auto;"), 
+                         br(),
+                         br(),
+                         img(src="img/NHANES Mobile Van_Pic 1.png", title="Popup",width="40%",style="display: block; margin-left: auto; margin-right: auto;")),
+      
+        conditionalPanel(condition="input.idRadio == 2",h1("A compléter")),
+        conditionalPanel(condition="input.idRadio == 3",h1("A compléter"))
+        
+        ))
     ),
+    
+    
+#----------------------------------------------------------------  
+#tabPanel : CONTEXTE
+#----------------------------------------------------------------    
+    
+    
     tabPanel(
       title = "Contexte",
       tableOutput(outputId = "tableHypertension"),
       tableOutput(outputId = "tableCholesterol"),
       tableOutput(outputId = "tableDiabetes")
     ),
-    navbarMenu(
+    
+#----------------------------------------------------------------  
+#navbarMenu : CHOIX MODELE
+#----------------------------------------------------------------    
+
+      navbarMenu(
       title = "Choix modele",
       tabPanel("modele cholesterol"),
       tabPanel("modele diabete"),
