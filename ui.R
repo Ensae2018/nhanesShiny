@@ -78,8 +78,67 @@ shinyUI(
 
       navbarMenu(
       title = "Choix modele",
-      tabPanel("modele cholesterol"),
+      
+      # Choix modele pour Diabete
       tabPanel("modele diabete"),
+      
+      # Choix modele pour Cholesterol
+      tabPanel("modele cholesterol",
+               navlistPanel(widths=c(2,10),
+                            tabPanel(title = "choix variable",
+                                     fluidRow(
+                                       column(
+                                         width = 1,
+                                         title = "parametre chol",
+                                         dropdownButton(
+                                           tags$h3("List of Input"),
+                                           sliderInput("prio", "Rang d'importance", 1, 10, value = 1),
+                                           tooltip = tooltipOptions(title = "Click to see inputs !")
+                                         )
+                                       ),
+                                       column(width = 11,
+                                              dataTableOutput(outputId = "tabselvarchol"))
+                                     )),
+                            tabPanel(title = "modele prediction",
+                                     fluidRow(
+                                       column(
+                                         width=4,
+                                         pickerInput(
+                                           "methode",
+                                           label = "Choisir la methode",
+                                           choices = colnames(res_chol[, -1]),
+                                           multiple = TRUE,
+                                           selected = colnames(res_chol[, c(2,6,10)]),
+                                           options = list(
+                                             `actions-box` = FALSE,
+                                             `none-selected-text` = "Selectionner 3!",
+                                             `max-options` = 3
+                                           )
+                                         )
+                                       ),
+                                       column(width=4,
+                                              sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
+                                       )
+                                     ),
+                                     conditionalPanel(
+                                       condition="input.methode.length==3",
+                                       fluidRow(
+                                         plotOutput("choixmethode_chol")),
+                                       column(width=4,
+                                              HTML("<h4>Les valeurs d'AUC</h4>"),
+                                              tableOutput("valAUC_chol"),
+                                              HTML("<h4>Les valeurs de precision</h4>"),
+                                              tableOutput("matprecision_chol")
+                                       ),
+                                       column(width=4,
+                                              HTML("<h4>Matrice de confusion</h4>"),     
+                                              tableOutput("matconf_chol")
+                                       )
+                                     ))
+                    )
+               ),
+      
+      # Choix modele pour Hypertension
       tabPanel("modele hypertension",
                navlistPanel(widths=c(2,10),
                  tabPanel(title = "choix variable",
@@ -134,6 +193,10 @@ shinyUI(
                           ))
                ))
     ), 
+
+#----------------------------------------------------------------  
+#tabPanel : PREDICTION
+#----------------------------------------------------------------  
     tabPanel(title = "Prediction",
              sidebarLayout(
                sidebarPanel(
@@ -232,12 +295,20 @@ shinyUI(
                  )
                )
              )),
+
+#----------------------------------------------------------------  
+#tabPanel : CLASSIFICATION
+#----------------------------------------------------------------  
     tabPanel(
       title = "Classification",
       plotOutput("inertienutrimentplot"),
       br(),
       plotOutput("acpnutrimentplot")
     ),
+
+#----------------------------------------------------------------  
+#tabPanel : CONCLUSION
+#----------------------------------------------------------------  
     tabPanel(title = "Conclusion")
   )
 )
