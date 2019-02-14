@@ -6,7 +6,7 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+options(encoding = "UTF-8")  
 library(shiny)
 
 # Define UI for application that draws a histogram
@@ -24,8 +24,8 @@ shinyUI(
       
       # Application title
       titlePanel(h1(br(),"Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
-                 à partir de données démographiques, de santé, d'alimentation et d'habitudes de vie",align="center",
-                    br(),
+                 à partir de donnéees démographiques, de santé, d'alimentation et d'habitudes de vie",align="center",
+                    hr(),
                     br(),
                     h1("")
                     )),
@@ -43,7 +43,7 @@ shinyUI(
         conditionalPanel(condition="input.idRadio == 1",
                          br(),
                          br(),
-                         h2("Présenté par:",span("Insaf DRIS HAMED, Yifan ZHENG, Jean-Vincent PALLON",style = "color:blue"),align="center"),
+                         h2("Présentation par:",span("Insaf DRIS HAMED, Yifan ZHENG, Jean-Vincent PALLON",style = "color:blue"),align="center"),
                          br(),
                          h3("Le 27 février 2019",align="center"),
                          br(),
@@ -52,9 +52,40 @@ shinyUI(
                          br(),
                          br(),
                          img(src="img/NHANES Mobile Van_Pic 1.png", title="Popup",width="40%",style="display: block; margin-left: auto; margin-right: auto;")),
-      
-        conditionalPanel(condition="input.idRadio == 2",h1("A compléter")),
-        conditionalPanel(condition="input.idRadio == 3",h1("A compléter"))
+        
+        conditionalPanel(condition="input.idRadio == 2",
+                         h2("Les données viennent du site ",
+                            a("Centers for Disease Control and Prevention",
+                            href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?BeginYear=2015")),
+                         br(),
+                         h2(span(strong("83 tables"))," XPT (package SASxport)"),
+                         h2(span(strong("9971 individus"))," âgés de 0 à 80 ans"),
+                         h2(span(strong("1893 variables"))," réparties en 4 catégories:"),
+                         br(),
+                         h3("-",span(strong("démographiques")),": âge, sexe, niveau d'éducation, revenus..."),
+                         h3("-",span(strong("médicales")),":"),
+                         h4("* caractéristiques générales: poids, taille, IMC, santé dentaire..."),
+                         h4("* analyses de laboratoire: plomb, insuline, test d'urine..."),
+                         h4("* maladies déjà connues: hypertension, cholestérol, diabète, problème coronaires, infarctus..."),
+                         h3("-", span(strong("alimentaires")),": les menus complets de 2 jours non consécutifs d'alimentation"),
+                         h3("-",span(strong("habitudes de vie")),": alcool, drogue, assuré ou non, propriétaire ou locataire, activité physique...")),
+                         
+                    
+                         
+        conditionalPanel(condition="input.idRadio == 3",
+                         h1("Phase 1: Préparation des données générale"),
+                         h3("Regroupement des tables, pré-sélection métier de 150 variables pour les 3 maladies -élimination des data trop techniques, trop détaillées ou non éthiques-,
+                            ,web scrapping des libellés des variables qualitatives...1 jeu de données initial commun pour les 3 maladies - 8339X150"),
+                         h1("Phase 2: Construction d'un jeu de données spécifique par maladie"),
+                         h3("Recodage de variables, élimination des variables avec plus de 10% de NA, imputation des données manquantes -package MICE-"),
+                         h1("Phase 3: Modélisation"),
+                         h3("Sélection de variables, sélection de modèles"),
+                         h1("Phase 4: Construction de l'outil shiny pour la visualisation et d'un package pour synthétiser l'ensemble du projet"),
+                         br(),
+                         h3("Travail avec Github pour le versioning")
+                         
+                         
+                         )
         
         ))
     ),
@@ -200,7 +231,7 @@ shinyUI(
     tabPanel(title = "Prediction",
              sidebarLayout(
                sidebarPanel(
-                 "Les données sur l'individu",
+                 "Les donnÃ©es sur l'individu",
                  selectInput(
                    inputId = "sexe",
                    label = "Selectionner votre sexe",
@@ -216,14 +247,14 @@ shinyUI(
                  ),
                  checkboxGroupInput(
                    inputId = "cholesterol",
-                   label = "Taux élevé de cholesterol?",
+                   label = "Taux Ã©levÃ© de cholesterol?",
                    choices = c("Oui" = "Yes", "Non" =
                                  "No"),
                    selected = "No"
                  ),
                  checkboxGroupInput(
                    inputId = "surpoids",
-                   label = "obèse?",
+                   label = "obÃ¨se?",
                    choices = c("Oui" = "Yes", "Non" =
                                  "No"),
                    selected = "No"
@@ -272,11 +303,11 @@ shinyUI(
                  )
                ),
                mainPanel(
-                 div(HTML("<b>Les résultats de la prédiction</b>"), align = "center"),
+                 div(HTML("<b>Les rÃ©sultats de la prÃ©diction</b>"), align = "center"),
                  br(),
                  fluidRow(column(4, wellPanel(
                    switchInput(inputId = "predict", value = FALSE)
-                   #actionButton("predict", "Prédire")
+                   #actionButton("predict", "PrÃ©dire")
                  ))),
                  hr(),
                  conditionalPanel(condition="input.predict==true",
