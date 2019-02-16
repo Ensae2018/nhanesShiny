@@ -135,7 +135,9 @@ shinyServer(function(input, output) {
     )
   })
   
+  
   output$tabselvarhyp <- renderDataTable({
+  
     datatable(tabselvar_hyp,class = 'cell-border stripe',filter = 'bottom',
               extensions = c('Buttons'), rownames = FALSE,
               options=list(autoWidth = TRUE, 
@@ -144,13 +146,14 @@ shinyServer(function(input, output) {
               ) %>% 
       formatStyle(
                 columns = 2:length(tabselvar_hyp), 
-                backgroundColor = styleEqual(levels = rang_val(), 
-                                             values = rep("yellow", length(rang_val())))) 
+                backgroundColor = styleEqual(levels = rang_val_hyp(), 
+                                             values = rep("yellow", length(rang_val_hyp())))) 
     })
   
-  rang_val <- reactive(tabselvar_hyp[,-1][which(max_val==input$prio, arr.ind=TRUE)])
+  rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$prio, arr.ind=TRUE)])
   
   output$tabselvarchol <- renderDataTable({
+    
     datatable(tabselvar_chol,class = 'cell-border stripe',filter = 'bottom',
               extensions = c('Buttons'), rownames = FALSE,
               options=list(autoWidth = TRUE,
@@ -159,11 +162,11 @@ shinyServer(function(input, output) {
     ) %>%
       formatStyle(
         columns = 2:length(tabselvar_chol),
-        backgroundColor = styleEqual(levels = rang_val(),
-                                     values = rep("yellow", length(rang_val()))))
+        backgroundColor = styleEqual(levels = rang_val_chol(),
+                                     values = rep("yellow", length(rang_val_chol()))))
   })
 
-  rang_val <- reactive(tabselvar_chol[,-1][which(max_val==input$prio, arr.ind=TRUE)])
+ rang_val_chol <- reactive(tabselvar_chol[,-1][which(max_val_chol==input$prio, arr.ind=TRUE)]) 
   
 ####
 # Les metriques pour Hypertension

@@ -40,6 +40,10 @@ modChol <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
              high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
              Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
              Sodium_mg,data=donChol,family="binomial")
+# modChol <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
+#                  high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
+#                  Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
+#                  Sodium_mg,data=donChol,family="binomial")
 
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
@@ -56,12 +60,12 @@ res_chol <- read.csv2("data/res_chol.csv")
 
 # on charge la table de selection des variable pour l'Hypertension
 tabselvar_hyp <- read.table("data/choix_var.csv", header=T, sep=";",row.names = NULL)
-max_val <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
+max_val_hyp <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 # on charge la table de selection des variable pour le Cholesterol
 #tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.names = NULL)
 tabselvar_chol <- read.csv2("data/choix_var_chol.csv")
-max_val <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
+max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 # chargement des scripts
 source("script/Classif nutriment.R") #utile pour la classification des nutriments
