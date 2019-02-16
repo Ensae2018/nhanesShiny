@@ -135,6 +135,7 @@ shinyServer(function(input, output) {
     )
   })
   
+  rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$priohyp, arr.ind=TRUE)])
   
   output$tabselvarhyp <- renderDataTable({
   
@@ -150,8 +151,10 @@ shinyServer(function(input, output) {
                                              values = rep("yellow", length(rang_val_hyp())))) 
     })
   
-  rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$prio, arr.ind=TRUE)])
   
+  
+  rang_val_chol <- reactive(tabselvar_chol[,-1][which(max_val_chol==input$priochol, arr.ind=TRUE)]) 
+
   output$tabselvarchol <- renderDataTable({
     
     datatable(tabselvar_chol,class = 'cell-border stripe',filter = 'bottom',
@@ -166,8 +169,8 @@ shinyServer(function(input, output) {
                                      values = rep("yellow", length(rang_val_chol()))))
   })
 
- rang_val_chol <- reactive(tabselvar_chol[,-1][which(max_val_chol==input$prio, arr.ind=TRUE)]) 
-  
+ 
+  rang_val <- reactive(tabselvar_dia[,-1][which(max_val==input$priodia, arr.ind=TRUE)])
   
   output$tabselvardia <- renderDataTable({
     datatable(tabselvar_dia,class = 'cell-border stripe',filter = 'bottom',
@@ -182,7 +185,7 @@ shinyServer(function(input, output) {
                                      values = rep("yellow", length(rang_val()))))
   })
   
-  rang_val <- reactive(tabselvar_dia[,-1][which(max_val==input$prio, arr.ind=TRUE)])
+  
 
   ####
 # Les metriques pour Hypertension

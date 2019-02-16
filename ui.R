@@ -119,7 +119,7 @@ shinyUI(
                                 width = 1,
                                 title = "parametre diab",dropdownButton(
                                   tags$h3("List of Input"),
-                                  sliderInput("prio", "Rang d'importance", 1, 10, value = 1),
+                                  sliderInput("priodia", "Rang d'importance", 1, 10, value = 1),
                                   tooltip = tooltipOptions(title = "Click to see inputs !")
                                 )),column(width = 11,
                                           dataTableOutput(outputId = "tabselvardia")))),
@@ -174,7 +174,7 @@ shinyUI(
                                          title = "parametre chol",
                                          dropdownButton(
                                            tags$h3("List of Input"),
-                                           sliderInput("prio", "Rang d'importance", 1, 10, value = 1),
+                                           sliderInput("priochol", "Rang d'importance", 1, 10, value = 1),
                                            tooltip = tooltipOptions(title = "Click to see inputs !")
                                          )
                                        ),
@@ -230,7 +230,7 @@ shinyUI(
                               title = "parametre hyp",
                               dropdownButton(
                                 tags$h3("List of Input"),
-                                sliderInput("prio", "Rang d'importance", 1, 10, value = 1),
+                                sliderInput("priohyp", "Rang d'importance", 1, 10, value = 1),
                                 tooltip = tooltipOptions(title = "Click to see inputs !")
                               )
                             ),
