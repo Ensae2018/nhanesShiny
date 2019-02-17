@@ -51,7 +51,7 @@ shinyServer(function(input, output) {
          border = 'white')
     
   })
-   
+  
   tempoHyp <- 999
   tempoChol <- 999
   tempoDiab <- 999
@@ -210,7 +210,10 @@ shinyServer(function(input, output) {
                            pageLength=20))
   })
   
+  rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$priohyp, arr.ind=TRUE)])
+  
   output$tabselvarhyp <- renderDataTable({
+  
     datatable(tabselvar_hyp,class = 'cell-border stripe',filter = 'bottom',
               extensions = c('Buttons'), rownames = FALSE,
               options=list(autoWidth = TRUE, 
@@ -219,12 +222,49 @@ shinyServer(function(input, output) {
               ) %>% 
       formatStyle(
                 columns = 2:length(tabselvar_hyp), 
-                backgroundColor = styleEqual(levels = rang_val(), 
-                                             values = rep("yellow", length(rang_val())))) 
+                backgroundColor = styleEqual(levels = rang_val_hyp(), 
+                                             values = rep("yellow", length(rang_val_hyp())))) 
     })
   
-  rang_val <- reactive(tabselvar_hyp[,-1][which(max_val==input$prio, arr.ind=TRUE)])
+  
+  
+  rang_val_chol <- reactive(tabselvar_chol[,-1][which(max_val_chol==input$priochol, arr.ind=TRUE)]) 
+
+  output$tabselvarchol <- renderDataTable({
+    
+    datatable(tabselvar_chol,class = 'cell-border stripe',filter = 'bottom',
+              extensions = c('Buttons'), rownames = FALSE,
+              options=list(autoWidth = TRUE,
+                           dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
+                           pageLength=20)
+    ) %>%
+      formatStyle(
+        columns = 2:length(tabselvar_chol),
+        backgroundColor = styleEqual(levels = rang_val_chol(),
+                                     values = rep("yellow", length(rang_val_chol()))))
+  })
+
  
+  rang_val <- reactive(tabselvar_dia[,-1][which(max_val==input$priodia, arr.ind=TRUE)])
+  
+  output$tabselvardia <- renderDataTable({
+    datatable(tabselvar_dia,class = 'cell-border stripe',filter = 'bottom',
+              extensions = c('Buttons'), rownames = FALSE,
+              options=list(autoWidth = TRUE,
+                           dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
+                           pageLength=20)
+    ) %>%
+      formatStyle(
+        columns = 2:length(tabselvar_chol),
+        backgroundColor = styleEqual(levels = rang_val(),
+                                     values = rep("yellow", length(rang_val()))))
+  })
+  
+  
+
+  ####
+# Les metriques pour Hypertension
+####
 observeEvent(input$methode==3,{
   output$choixmethode <- renderPlot({
     plot(roc(res_hyp[,1],res_hyp[,input$methode[1]]),col="black",main="Courbes ROC")
@@ -265,5 +305,95 @@ observeEvent(input$methode==3,{
     tabprecision
   })
 })
+
+####
+# Les metriques pour Cholesterol
+####
+observeEvent(input$methode==3,{
+  output$choixmethode_chol <- renderPlot({
+    plot(roc(res_chol[,1],res_chol[,input$methode[1]]),col="black",main="Courbes ROC")
+    lines(roc(res_chol[,1],res_chol[,input$methode[2]]), col="red")
+    lines(roc(res_chol[,1],res_chol[,input$methode[3]]), col="green")
+    legend("bottomright",legend = c(input$methode[1],input$methode[2], input$methode[3]), col=c("black","red","green"), lty = 1)
+  })
+  
+  output$valAUC_chol <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methode[1]]),
+                         auc(res_chol[,1],res_chol[,input$methode[2]]),
+                         auc(res_chol[,1],res_chol[,input$methode[3]])
+    )
+    names(tabauc) <- input$methode    
+    tabauc
+  })
+  
+  output$matconf_chol <- renderTable({
+    tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methode[1]],res_chol[,1])),
+                     as.data.frame(monerreur(res_chol[,input$methode[2]],res_chol[,1]))[,3],
+                     as.data.frame(monerreur(res_chol[,input$methode[3]],res_chol[,1]))[,3]
+    )
+    names(tabconf)[3:length(names(tabconf))] <- input$methode
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
+    tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilite"
+    tabconf$seuil[6] <- "Specificite"
+    tabconf
+  })
+  
+  output$matprecision_chol <- renderTable({
+    tabprecision <- data.frame(precision(res_chol[,input$methode[1]],res_chol[,1]),
+                               precision(res_chol[,input$methode[2]],res_chol[,1]),
+                               precision(res_chol[,input$methode[3]],res_chol[,1]))
+    names(tabprecision) <- input$methode
+    tabprecision
+  })
+})
+
+
+####
+# Les metriques pour le diabete
+####
+observeEvent(input$methode==3,{
+  output$choixmethode_dia <- renderPlot({
+    plot(roc(res_dia[,1],res_dia[,input$methode[1]]),col="black",main="Courbes ROC")
+    lines(roc(res_dia[,1],res_dia[,input$methode[2]]), col="red")
+    lines(roc(res_dia[,1],res_dia[,input$methode[3]]), col="green")
+    legend("bottomright",legend = c(input$methode[1],input$methode[2], input$methode[3]), col=c("black","red","green"), lty = 1)
+  })
+  
+  output$valAUC_dia <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methode[1]]),
+                         auc(res_dia[,1],res_dia[,input$methode[2]]),
+                         auc(res_dia[,1],res_dia[,input$methode[3]])
+    )
+    names(tabauc) <- input$methode    
+    tabauc
+  })
+  
+  output$matconf_dia <- renderTable({
+    tabconf <- cbind(as.data.frame(monerreur(res_dia[,input$methode[1]],res_dia[,1])),
+                     as.data.frame(monerreur(res_dia[,input$methode[2]],res_dia[,1]))[,3],
+                     as.data.frame(monerreur(res_dia[,input$methode[3]],res_dia[,1]))[,3]
+    )
+    names(tabconf)[3:length(names(tabconf))] <- input$methode
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
+    tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilite"
+    tabconf$seuil[6] <- "Specificite"
+    tabconf
+  })
+  
+  output$matprecision_dia <- renderTable({
+    tabprecision <- data.frame(precision(res_dia[,input$methode[1]],res_dia[,1]),
+                               precision(res_dia[,input$methode[2]],res_dia[,1]),
+                               precision(res_dia[,input$methode[3]],res_dia[,1]))
+    names(tabprecision) <- input$methode
+    tabprecision
+  })
+})
+
 
 })
