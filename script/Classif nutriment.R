@@ -11,3 +11,5 @@ for (i in 1:15){
   kmk <- kmeans(var$coord,centers = i, nstart = 10)
   partition[i]= kmk$tot.withinss/kmk$totss*100
 }
+
+plot(acp,choix="var")

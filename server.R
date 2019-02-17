@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
   output$resultat_cholesterol <- renderText({
     
     tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
-                                            RIAGENDR_demo=input$sexe,
+                                            RIAGENDR_demo=ifelse(input$sexe=="Male", 1, 0),
                                             BPXSY3_bpx=input$pression_sys,
                                             BMXBMI_bmx=input$bmi,
                                             MCQ080_mcq=input$surpoids,
@@ -93,7 +93,7 @@ shinyServer(function(input, output) {
                                             BMXWT_bmx=input$poids,
                                             BPQ020_bpq=input$risquehypertension,
                                             DIQ010_diq=input$risquediabetes,
-                                            OHAREC_ohxref=input$dentaire,
+                                            OHAREC_ohxref=as.numeric(input$dentaire),
                                             DRQSDIET_dr1tot=input$diete,
                                             DR1TFIBE_dr1tot=input$dietefibre,
                                             DR1TALCO_dr1tot=input$alcool,
@@ -305,29 +305,29 @@ shinyServer(function(input, output) {
 ####
 # Les metriques pour Hypertension
 ####
-observeEvent(input$methode==3,{
+observeEvent(input$methodehyp==3,{
   output$choixmethode <- renderPlot({
-    plot(roc(res_hyp[,1],res_hyp[,input$methode[1]]),col="black",main="Courbes ROC")
-    lines(roc(res_hyp[,1],res_hyp[,input$methode[2]]), col="red")
-    lines(roc(res_hyp[,1],res_hyp[,input$methode[3]]), col="green")
-    legend("bottomright",legend = c(input$methode[1],input$methode[2], input$methode[3]), col=c("black","red","green"), lty = 1)
+    plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC")
+    lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[2]]), col="red")
+    lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[3]]), col="green")
+    legend("bottomright",legend = c(input$methodehyp[1],input$methodehyp[2], input$methodehyp[3]), col=c("black","red","green"), lty = 1)
   })
 
   output$valAUC <- renderTable({
-    tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methode[1]]),
-               auc(res_hyp[,1],res_hyp[,input$methode[2]]),
-               auc(res_hyp[,1],res_hyp[,input$methode[3]])
+    tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),
+               auc(res_hyp[,1],res_hyp[,input$methodehyp[2]]),
+               auc(res_hyp[,1],res_hyp[,input$methodehyp[3]])
     )
-    names(tabauc) <- input$methode    
+    names(tabauc) <- input$methodehyp    
     tabauc
   })
   
   output$matconf <- renderTable({
-    tabconf <- cbind(as.data.frame(monerreur(res_hyp[,input$methode[1]],res_hyp[,1])),
-          as.data.frame(monerreur(res_hyp[,input$methode[2]],res_hyp[,1]))[,3],
-          as.data.frame(monerreur(res_hyp[,input$methode[3]],res_hyp[,1]))[,3]
+    tabconf <- cbind(as.data.frame(monerreur(res_hyp[,input$methodehyp[1]],res_hyp[,1])),
+          as.data.frame(monerreur(res_hyp[,input$methodehyp[2]],res_hyp[,1]))[,3],
+          as.data.frame(monerreur(res_hyp[,input$methodehyp[3]],res_hyp[,1]))[,3]
     )
-    names(tabconf)[3:length(names(tabconf))] <- input$methode
+    names(tabconf)[3:length(names(tabconf))] <- input$methodehyp
     names(tabconf)[1] <- "seuil"
     tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
     tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
@@ -338,10 +338,10 @@ observeEvent(input$methode==3,{
   })
   
   output$matprecision <- renderTable({
-    tabprecision <- data.frame(precision(res_hyp[,input$methode[1]],res_hyp[,1]),
-          precision(res_hyp[,input$methode[2]],res_hyp[,1]),
-          precision(res_hyp[,input$methode[3]],res_hyp[,1]))
-    names(tabprecision) <- input$methode
+    tabprecision <- data.frame(precision(res_hyp[,input$methodehyp[1]],res_hyp[,1]),
+          precision(res_hyp[,input$methodehyp[2]],res_hyp[,1]),
+          precision(res_hyp[,input$methodehyp[3]],res_hyp[,1]))
+    names(tabprecision) <- input$methodehyp
     tabprecision
   })
 })
@@ -349,29 +349,29 @@ observeEvent(input$methode==3,{
 ####
 # Les metriques pour Cholesterol
 ####
-observeEvent(input$methode==3,{
+observeEvent(input$methodechol==3,{
   output$choixmethode_chol <- renderPlot({
-    plot(roc(res_chol[,1],res_chol[,input$methode[1]]),col="black",main="Courbes ROC")
-    lines(roc(res_chol[,1],res_chol[,input$methode[2]]), col="red")
-    lines(roc(res_chol[,1],res_chol[,input$methode[3]]), col="green")
-    legend("bottomright",legend = c(input$methode[1],input$methode[2], input$methode[3]), col=c("black","red","green"), lty = 1)
+    plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC")
+    lines(roc(res_chol[,1],res_chol[,input$methodechol[2]]), col="red")
+    lines(roc(res_chol[,1],res_chol[,input$methodechol[3]]), col="green")
+    legend("bottomright",legend = c(input$methodechol[1],input$methodechol[2], input$methodechol[3]), col=c("black","red","green"), lty = 1)
   })
   
   output$valAUC_chol <- renderTable({
-    tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methode[1]]),
-                         auc(res_chol[,1],res_chol[,input$methode[2]]),
-                         auc(res_chol[,1],res_chol[,input$methode[3]])
+    tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]),
+                         auc(res_chol[,1],res_chol[,input$methodechol[2]]),
+                         auc(res_chol[,1],res_chol[,input$methodechol[3]])
     )
-    names(tabauc) <- input$methode    
+    names(tabauc) <- input$methodechol    
     tabauc
   })
   
   output$matconf_chol <- renderTable({
-    tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methode[1]],res_chol[,1])),
-                     as.data.frame(monerreur(res_chol[,input$methode[2]],res_chol[,1]))[,3],
-                     as.data.frame(monerreur(res_chol[,input$methode[3]],res_chol[,1]))[,3]
+    tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol)),
+                     as.data.frame(monerreur(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol))[,3],
+                     as.data.frame(monerreur(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))[,3]
     )
-    names(tabconf)[3:length(names(tabconf))] <- input$methode
+    names(tabconf)[3:length(names(tabconf))] <- input$methodechol
     names(tabconf)[1] <- "seuil"
     tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
     tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
@@ -382,10 +382,10 @@ observeEvent(input$methode==3,{
   })
   
   output$matprecision_chol <- renderTable({
-    tabprecision <- data.frame(precision(res_chol[,input$methode[1]],res_chol[,1]),
-                               precision(res_chol[,input$methode[2]],res_chol[,1]),
-                               precision(res_chol[,input$methode[3]],res_chol[,1]))
-    names(tabprecision) <- input$methode
+    tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol),
+                               precision(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol),
+                               precision(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))
+    names(tabprecision) <- input$methodechol
     tabprecision
   })
 })

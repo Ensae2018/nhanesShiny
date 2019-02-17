@@ -186,7 +186,7 @@ shinyUI(
                                        column(
                                          width=4,
                                          pickerInput(
-                                           "methode",
+                                           "methodechol",
                                            label = "Choisir la methode",
                                            choices = colnames(res_chol[, -1]),
                                            multiple = TRUE,
@@ -199,11 +199,11 @@ shinyUI(
                                          )
                                        ),
                                        column(width=4,
-                                              sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
+                                              sliderInput("seuilmodchol", "Choisir le seuil de discrimination", 0.01,0.99,0.5,0.1)
                                        )
                                      ),
                                      conditionalPanel(
-                                       condition="input.methode.length==3",
+                                       condition="input.methodechol.length==3",
                                        fluidRow(
                                          plotOutput("choixmethode_chol")),
                                        column(width=4,
@@ -242,7 +242,7 @@ shinyUI(
                             column(
                               width=4,
                               pickerInput(
-                                "methode",
+                                "methodehyp",
                                 label = "Choisir la methode",
                                 choices = colnames(res_hyp[, -1]),
                                 multiple = TRUE,
@@ -259,7 +259,7 @@ shinyUI(
                             )
                           ),
                           conditionalPanel(
-                            condition="input.methode.length==3",
+                            condition="input.methodehyp.length==3",
                           fluidRow(
                             plotOutput("choixmethode")),
                           column(width=4,
@@ -394,11 +394,25 @@ shinyUI(
                                  "No"),
                    selected = "No"
                  ),
+                 # checkboxGroupInput(
+                 #   inputId = "dentaire",
+                 #   label = "dentaire?",
+                 #   choices = c("Oui" = 4, "Non" =
+                 #                 3, "Unpeu"=2),
+                 #   selected = 2
+                 # # ),
+                 # numericInput(
+                 #   inputId = "dentaire",
+                 #   label = "dentaire",
+                 #   value = 3,
+                 #   min = 2,
+                 #   max = 4
+                 # ),
                  selectInput(
                    inputId = "dentaire",
                    label = "dentaire",
-                   selected = "4",
-                   choices = c("4" = "4", "3" = "3", "2" = "3")
+                   selected = "2",
+                   choices = c("1" = "4", "2" = "3", "3" = "2")
                  ),
                  checkboxGroupInput(
                    inputId = "diete",
