@@ -282,7 +282,7 @@ shinyUI(
     tabPanel(title = "Prediction",
              sidebarLayout(
                sidebarPanel(
-                 "Les donnÃ©es sur l'individu",
+                 "Les donnees sur l'individu",
                  selectInput(
                    inputId = "sexe",
                    label = "Selectionner votre sexe",
@@ -298,7 +298,7 @@ shinyUI(
                  ),
                  checkboxGroupInput(
                    inputId = "cholesterol",
-                   label = "Taux Ã©levÃ© de cholesterol?",
+                   label = "Taux eleve de cholesterol?",
                    choices = c("Oui" = "Yes", "Non" =
                                  "No"),
                    selected = "No"
@@ -437,26 +437,49 @@ shinyUI(
                  )
                ),
                mainPanel(
-                 div(HTML("<b>Les rÃ©sultats de la prÃ©diction</b>"), align = "center"),
+                 div(HTML("<b>Les resultats de la prediction</b>"), align = "center"),
                  br(),
-                 fluidRow(column(4, wellPanel(
+                 fluidRow(column(4,
+                   wellPanel(
                    switchInput(inputId = "predict", value = FALSE)
-                   #actionButton("predict", "PrÃ©dire")
-                 ))),
-                 hr(),
+                 ),
+                   wellPanel(
+                     sliderTextInput(
+                       inputId = "sensibilite", 
+                       label = "Comment jugez vous mentalement?", 
+                       grid = TRUE, 
+                       force_edges = TRUE,
+                       choices = c("Fragile","Normale","Fort")
+                     ) 
+                   )
+                 )),
                  conditionalPanel(condition="input.predict==true",
-                 div(h4(
-                   textOutput(outputId = "resultat_hypertension"), align = "center"
-                 )),
-                 imageOutput("im_hyp"),  
-                 hr(),
-                 div(h4(
-                   textOutput(outputId = "resultat_cholesterol"), align = "center"
-                 )),
-                 hr(),
-                 div(h4(
-                   textOutput(outputId = "resultat_diabetes"), align = "center"
-                 ))
+                 fluidRow(
+                 column(width=4,
+                        div(h4(
+                          textOutput(outputId = "resultat_hypertension"), align = "center"
+                        )),
+                        imageOutput("im_hyp_g",width="10px", height="10px","auto", inline = FALSE),
+                        conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                        imageOutput("im_hyp_b",width="10px", height="10px","auto", inline = FALSE)
+                        )),
+                 column(width=4,
+                        div(h4(
+                          textOutput(outputId = "resultat_cholesterol"), align = "center"
+                        )),
+                        imageOutput("im_cho_g",width="10px", height="10px","auto", inline = FALSE),
+                        conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                        imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
+                        )),
+                 column(width=4,
+                        div(h4(
+                          textOutput(outputId = "resultat_diabetes"), align = "center"
+                        )),
+                        imageOutput("im_dia_g",width="10px", height="10px","auto", inline = FALSE),
+                        conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                        imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
+                         ))
+                 )
                  )
                )
              )),
@@ -466,8 +489,23 @@ shinyUI(
 #----------------------------------------------------------------  
     tabPanel(
       title = "Classification",
+      column(width=6,
+      div(sliderInput("nb_classe", "Nombre de classe", 3, 8, 1), align="center"),
       plotOutput("inertienutrimentplot"),
       br(),
+      plotOutput("acpnutrimentplotkm"),
+      hr(),
+      dataTableOutput("groupekm")
+      ),
+      column(width=6,
+      fluidRow(width=12,
+      div(sliderInput("nivo_cah", "coupure sur l'arbre", 4,8,value=5,step=0.1),align="center"),
+      plotOutput("dendrogramme"),
+      br(),
+      plotOutput("acpnutrimentplotcah"),
+      hr(),
+      dataTableOutput("groupecah")
+      )),
       plotOutput("acpnutrimentplot")
     ),
 
