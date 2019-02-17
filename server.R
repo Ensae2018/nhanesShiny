@@ -12,6 +12,22 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
+  seuil <- reactive({
+    switch (input$sensibilite,
+      Fragile = 0.4,
+      Normal = 0.5,
+      fort=0.6
+    )
+  })
+  
+  km <- reactive({
+    km <- kmeans(var$coord, center=input$nb_classe, nstart = 25)
+  })
+  
+  cah <- reactive({
+    hclust(dist(scale(var$coord)),method = "ward.D2")
+  })
+  
   # fonction utilisée pour faire de la matrice confusion
   monerreur <- function(X, Y, seuil=input$seuilmod){
     table(cut(X, breaks = c(0,seuil,1)), Y)
@@ -55,7 +71,7 @@ shinyServer(function(input, output) {
              Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
              Sodium_mg=input$sodium
              ),type="response")
-  ifelse(tempoHyp>0.5,"vous avez de l'hypertension", "vous n'avez pas de l'hypertension")
+  ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
   })
   
   output$resultat_cholesterol <- renderText({
@@ -70,7 +86,7 @@ shinyServer(function(input, output) {
                                           Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                           Sodium_mg=input$sodium
     ),type="response")
-    ifelse(tempoChol>0.5,"vous avez du cholesterol", "vous n'avez pas du cholesterol")
+    ifelse(tempoChol>seuil,"Danger!!", ";-)")
   })
   
   output$resultat_diabetes <- renderText({
@@ -85,13 +101,32 @@ shinyServer(function(input, output) {
                                           Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                           Sodium_mg=input$sodium
     ),type="response")
-    ifelse(tempoDiab>0.5,"vous avez de la diabetes", "vous n'avez pas de la diabetes")
+    ifelse(tempoDiab>seuil,"Danger!!", ";-)")
   })
   
-  output$im_hyp <- renderImage({
+  output$im_hyp_g <- renderImage({
     filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg'))
-    list(src = filename)},deleteFile = FALSE)
+    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
   
+  output$im_hyp_b <- renderImage({
+    filename <- normalizePath(file.path('./www/img/hypertensionbad.jpg'))
+    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+  
+  output$im_cho_g <- renderImage({
+    filename <- normalizePath(file.path('./www/img/Cholesterolgood.jpg'))
+    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+  
+  output$im_cho_b <- renderImage({
+    filename <- normalizePath(file.path('./www/img/Cholesterolbad.png'))
+    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+  
+  output$im_dia_g <- renderImage({
+    filename <- normalizePath(file.path('./www/img/diabetegood.jpg'))
+    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+  
+  output$im_dia_b <- renderImage({
+    filename <- normalizePath(file.path('./www/img/diabetebad.png'))
+    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
   })
   
   output$tableHypertension <- renderTable({
@@ -126,13 +161,53 @@ shinyServer(function(input, output) {
       xlab("nombre de classe") + ylab("I inter/I totale")
   })
   
-  output$acpnutrimentplot <- renderPlot({
+  output$acpnutrimentplotkm <- renderPlot({
+    grp <- as.factor(km()$cluster)
     fviz_pca_var(
       acp,
       col.var = grp,
-      palette = c("black", "Blue", "red", "orange"),
+      palette = 1:input$nb_classe,
       repel = TRUE
     )
+  })
+  
+  output$acpnutrimentplotcah <- renderPlot({
+    grp <- as.factor(cutree(cah(), h=input$nivo_cah))
+    fviz_pca_var(
+      acp,
+      col.var = grp,
+      palette = 1:length(levels(grp)),
+      repel = TRUE
+    )
+  })
+  
+  output$dendrogramme <- renderPlot({
+    plot(as.dendrogram(cah()))
+    rect.hclust(cah(),h=input$nivo_cah)
+  })
+  
+  output$groupekm <- renderDataTable({
+  tempo <- as.data.frame(km()$cluster)
+  tempo <- cbind(row.names(tempo),tempo)
+  row.names(tempo) <- NULL
+  colnames(tempo) <- c("nutriment","classe")
+  datatable(tempo,class = 'cell-border stripe',filter = 'bottom',
+            extensions = c('Buttons'), rownames = FALSE,
+            options=list(autoWidth = TRUE, 
+                         dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
+                         pageLength=20))
+  })
+  
+  output$groupecah <- renderDataTable({
+    tempo <- as.data.frame(cutree(cah(), h=input$nivo_cah))
+    tempo <- cbind(row.names(tempo),tempo)
+    row.names(tempo) <- NULL
+    colnames(tempo) <- c("nutriment","classe")
+    datatable(tempo,class = 'cell-border stripe',filter = 'bottom',
+              extensions = c('Buttons'), rownames = FALSE,
+              options=list(autoWidth = TRUE, 
+                           dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
+                           pageLength=20))
   })
   
   output$tabselvarhyp <- renderDataTable({
