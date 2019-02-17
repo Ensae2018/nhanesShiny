@@ -17,14 +17,16 @@ library(shinyWidgets)#widgets avancés pour Shiny
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
 
 # on importe les donnees necessaire pour le projet
-donChol <- read.csv("data/nhanes_chol_mice_faux.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
+#donChol <- read.csv("data/nhanes_chol_mice_faux.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
+donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 
 # on importe les donnees necessaire pour le projet: partie diabete
 donDiab <- read.csv("data/nhanes_diab_mice_apres.csv", row.names = 1)# donnee diabete transcodifie et avec imputation mice
 
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)
-levels(donChol$Y) <- c(0,1)
+#levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
+donChol$nhanes.y <- as.numeric(donChol$nhanes.y)
 #levels(donDiab$Y) <- c(0,1)
 
 # algorithme de prediction hypertension
@@ -36,10 +38,21 @@ modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
 
 # algorithme de prediction CHOLESTEROL => IL RESTE CHANGER LES VAR
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
-modChol <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
-             high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
-             Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
-             Sodium_mg,data=donChol,family="binomial")
+# modChol <- glm(nhanes.y~.,data=donChol,family="binomial")
+modChol <- glm(nhanes.y~RIDAGEYR_demo+RIAGENDR_demo+INDFMPIR_demo+Var_TRAVAIL+
+                 BMXHT_bmx+BMXWT_bmx+BMXBMI_bmx+BPQ020_bpq+MCQ080_mcq+DIQ010_diq+
+                 BPXDI2_bpx+BPXSY3_bpx+SLQ050_slq+OHAREC_ohxref+
+                 DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
+# modChol <- glm(Y~Age_in_years_at_screening
+#                +Systolic_Blood_pres_2nd_rdg_mm_Hg
+#                +high_cholesterol_level
+#                +Body_Mass_Index_kg_m_2
+#                +Doctor_ever_said_you_were_overweight
+#                +Ever_told_doctor_had_trouble_sleeping
+#                +Phosphorus_mg
+#                +Diastolic_Blood_pres_1st_rdg_mm_Hg
+#                +Sodium_mg,data=donChol,
+#                data=donChol,family="binomial")
 # modChol <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
 #                  high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
 #                  Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+

@@ -351,6 +351,89 @@ shinyUI(
                    value = 2000,
                    min = 0,
                    max = 3000
+                 ),
+                 numericInput(
+                   inputId = "pobretefamille",
+                   label = "pobretefamille",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),
+                 checkboxGroupInput(
+                   inputId = "travail",
+                   label = "travail?",
+                   choices = c("oui" = "oui", "non" =
+                                 "non"),
+                   selected = "non"
+                 ),
+                 numericInput(
+                   inputId = "hauteur",
+                   label = "votre hauteur",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),
+                 numericInput(
+                   inputId = "poids",
+                   label = "votre poids",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),
+                 checkboxGroupInput(
+                   inputId = "risquehypertension",
+                   label = "risquehypertension?",
+                   choices = c("1" = "Yes", "2" =
+                                 "No"),
+                   selected = "No"
+                 ),
+                 checkboxGroupInput(
+                   inputId = "risquediabetes",
+                   label = "risquediabetes?",
+                   choices = c("1" = "Yes", "2" =
+                                 "No"),
+                   selected = "No"
+                 ),
+                 selectInput(
+                   inputId = "dentaire",
+                   label = "dentaire",
+                   selected = "4",
+                   choices = c("4" = "4", "3" = "3", "2" = "3")
+                 ),
+                 checkboxGroupInput(
+                   inputId = "diete",
+                   label = "diete?",
+                   choices = c("1" = "Yes", "2" =
+                                 "No"),
+                   selected = "No"
+                 ),
+                  numericInput(
+                   inputId = "dietefibre",
+                   label = "dietefibre",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),
+                 numericInput(
+                   inputId = "alcool",
+                   label = "alcool",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),
+                 numericInput(
+                   inputId = "foodfolate",
+                   label = "foodfolate",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),
+                 numericInput(
+                   inputId = "waterdrank",
+                   label = "waterdrank",
+                   value = 20,
+                   min = 0,
+                   max = 50
                  )
                ),
                mainPanel(

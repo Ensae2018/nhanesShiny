@@ -35,7 +35,11 @@ shinyServer(function(input, output) {
          border = 'white')
     
   })
-   
+  
+####
+# La Prediction
+####  
+  
   tempoHyp <- 999
   tempoChol <- 999
   tempoDiab <- 999
@@ -60,18 +64,38 @@ shinyServer(function(input, output) {
   
   output$resultat_cholesterol <- renderText({
     
-    tempoChol <- predict(modChol,data.frame(Age_in_years_at_screening=input$age,
-                                          Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
-                                          high_cholesterol_level=input$cholesterol,
-                                          Body_Mass_Index_kg_m_2=input$bmi,
-                                          Doctor_ever_said_you_were_overweight=input$surpoids,
-                                          Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
-                                          Phosphorus_mg=input$phosphorus,
-                                          Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
-                                          Sodium_mg=input$sodium
+    tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
+                                            RIAGENDR_demo=input$sexe,
+                                            BPXSY3_bpx=input$pression_sys,
+                                            BMXBMI_bmx=input$bmi,
+                                            MCQ080_mcq=input$surpoids,
+                                            SLQ050_slq=input$trouble_sommeil,
+                                            BPXDI2_bpx=input$pression_dia,
+                                            INDFMPIR_demo=input$pobretefamille,
+                                            Var_TRAVAIL=input$travail,
+                                            BMXHT_bmx=input$hauteur,
+                                            BMXWT_bmx=input$poids,
+                                            BPQ020_bpq=input$risquehypertension,
+                                            DIQ010_diq=input$risquediabetes,
+                                            OHAREC_ohxref=input$dentaire,
+                                            DRQSDIET_dr1tot=input$diete,
+                                            DR1TFIBE_dr1tot=input$dietefibre,
+                                            DR1TALCO_dr1tot=input$alcool,
+                                            DR1TFF_dr1tot=input$foodfolate,
+                                            DR1.320Z_dr1tot=input$waterdrank
     ),type="response")
     ifelse(tempoChol>0.5,"vous avez du cholesterol", "vous n'avez pas du cholesterol")
   })
+  
+    # tempoChol <- predict(modChol,data.frame(Age_in_years_at_screening=input$age,
+    #                                       Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
+    #                                       high_cholesterol_level=input$cholesterol,
+    #                                       Body_Mass_Index_kg_m_2=input$bmi,
+    #                                       Doctor_ever_said_you_were_overweight=input$surpoids,
+    #                                       Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
+    #                                       Phosphorus_mg=input$phosphorus,
+    #                                       Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
+    #                                       Sodium_mg=input$sodium 
   
   output$resultat_diabetes <- renderText({
     
@@ -118,6 +142,11 @@ shinyServer(function(input, output) {
     ifelse(tempoDiab==999,"simulation pas lancée")
   })
   
+  
+####
+# La Classification
+####  
+  
   output$inertienutrimentplot <- renderPlot({
     ggplot(as.data.frame(partition),
            aes(x = seq(1, length(partition)),
@@ -135,6 +164,10 @@ shinyServer(function(input, output) {
     )
   })
   
+####
+# Les choix de variables pour Hypertension
+####
+  
   rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$priohyp, arr.ind=TRUE)])
   
   output$tabselvarhyp <- renderDataTable({
@@ -151,7 +184,9 @@ shinyServer(function(input, output) {
                                              values = rep("yellow", length(rang_val_hyp())))) 
     })
   
-  
+####
+# Les choix de variables pour Cholesterol
+####  
   
   rang_val_chol <- reactive(tabselvar_chol[,-1][which(max_val_chol==input$priochol, arr.ind=TRUE)]) 
 
@@ -169,7 +204,11 @@ shinyServer(function(input, output) {
                                      values = rep("yellow", length(rang_val_chol()))))
   })
 
- 
+  
+####
+# Les choix de variables pour Diabetes
+####  
+  
   rang_val <- reactive(tabselvar_dia[,-1][which(max_val==input$priodia, arr.ind=TRUE)])
   
   output$tabselvardia <- renderDataTable({
@@ -187,7 +226,7 @@ shinyServer(function(input, output) {
   
   
 
-  ####
+####
 # Les metriques pour Hypertension
 ####
 observeEvent(input$methode==3,{
