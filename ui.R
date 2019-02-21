@@ -98,11 +98,27 @@ shinyUI(
     
     tabPanel(
       title = "Contexte",
-      tableOutput(outputId = "tableHypertension"),
-      tableOutput(outputId = "tableCholesterol"),
-      tableOutput(outputId = "tableDiabetes")
-    ),
-    
+      titlePanel(h1("Exploration des 3 jeux de données",align="center")),
+      
+      sidebarLayout(
+        sidebarPanel(
+          selectInput(inputId = "varhyp", label = p(span("Hypertension", style = "color:blue"),
+                      ": choisissez la variable à explorer"),choices=colnames(donHyp)),
+          selectInput(inputId = "varcho", label = p(span("Cholestérol", style = "color:blue"),
+                      ": choisissez la variable à explorer"),choices=colnames(donChol)),
+          selectInput(inputId = "vardia", label = p(span("Diabète", style = "color:blue"), 
+                      ": choisissez la variable à explorer"),choices=colnames(donDia[,-1]))#je mets -1 pour enlever le SEQN dans la liste deroulante
+          ),
+        
+        # Show a plot of the generated distribution
+        mainPanel(p(strong("Dataset hypertension")),plotOutput(outputId="graphhyp"),
+                  p(strong("Dataset cholestérol")),plotOutput(outputId="graphcho"),
+                  p(strong("Dataset diabète")),plotOutput(outputId="graphdia")
+      
+      )
+      
+      )),
+
 #----------------------------------------------------------------  
 #navbarMenu : CHOIX MODELE
 #----------------------------------------------------------------    

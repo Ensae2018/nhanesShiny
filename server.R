@@ -162,7 +162,7 @@ shinyServer(function(input, output) {
   })
   
   output$tableDiabetes <- renderTable({
-    colnames(donDiab)
+    colnames(donDia)
   })
   
   output$resultat_hypertension <- renderText({
@@ -434,6 +434,34 @@ observeEvent(input$methode==3,{
     tabprecision
   })
 })
+
+#=================================
+#Graphiques pour l'onglet CONTEXTE
+#=================================
+
+
+output$graphhyp<-renderPlot({
+  xhyp<-donHyp[,input$varhyp]
+  if (class(xhyp) %in% c("numeric","integer")) {
+  ggplot(data=donHyp,aes(x=xhyp))+geom_histogram(binwidth=1,fill="light blue")} else {
+      ggplot(data=donHyp,aes(x=xhyp))+geom_bar(fill="light blue")}})
+
+output$graphcho<-renderPlot({
+  xcho<-donChol[,input$varcho]
+  if (class(xcho) %in% c("numeric","integer")) {
+  ggplot(data=donChol,aes(x=xcho))+geom_histogram(binwidth=1,fill="light blue")} else {
+    ggplot(data=donChol,aes(x=xcho))+geom_bar(fill="light blue")}})
+
+output$graphdia<-renderPlot({
+  xdia<-donDia[,input$vardia]
+  if (class(xdia) %in% c("numeric","integer")) {
+  ggplot(data=donDia,aes(x=xdia))+geom_histogram(binwidth=1,fill="light blue")} else {
+    ggplot(data=donDia,aes(x=xdia))+geom_bar(fill="light blue")
+    
+  }
+    
+    
+    })
 
 
 })

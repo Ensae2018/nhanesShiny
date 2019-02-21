@@ -21,13 +21,32 @@ donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hyperten
 donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 
 # on importe les donnees necessaire pour le projet: partie diabete
-donDiab <- read.csv("data/nhanes_diab_mice_apres.csv", row.names = 1)# donnee diabete transcodifie et avec imputation mice
+donDia <- read.csv("data/nhanes_dia_mice_apres.csv", sep=",",dec=".",row.names=1)# donnee diabete transcodifie et avec imputation mice
+
+#Conversion en facteurs de variables diabete
+donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
+donDia$DIQ010_diq<-factor(donDia$DIQ010_diq)
+donDia$BPQ020_bpq<-as.factor(donDia$BPQ020_bpq)
+donDia$BPQ080_bpq<-as.factor(donDia$BPQ080_bpq)
+donDia$MCQ080_mcq<-as.factor(donDia$MCQ080_mcq)
+donDia$MCQ160A_mcq<-as.factor(donDia$MCQ160A_mcq)
+donDia$MCQ160B_mcq<-as.factor(donDia$MCQ160B_mcq)
+donDia$MCQ160C_mcq<-as.factor(donDia$MCQ160C_mcq)
+donDia$MCQ160D_mcq<-as.factor(donDia$MCQ160D_mcq)
+donDia$MCQ160E_mcq<-as.factor(donDia$MCQ160E_mcq)
+donDia$MCQ160F_mcq<-as.factor(donDia$MCQ160F_mcq)
+donDia$MCQ160G_mcq<-as.factor(donDia$MCQ160G_mcq)
+donDia$MCQ160M_mcq<-as.factor(donDia$MCQ160M_mcq)
+donDia$MCQ160N_mcq<-as.factor(donDia$MCQ160N_mcq)
+donDia$SLQ050_slq<-as.factor(donDia$SLQ050_slq)
+donDia$HEQ010_heq<-as.factor(donDia$HEQ010_heq)
+donDia$HEQ030_heq<-as.factor(donDia$HEQ030_heq)
 
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)
 #levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
 donChol$nhanes.y <- as.numeric(donChol$nhanes.y)
-#levels(donDiab$Y) <- c(0,1)
+#levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
 
 # algorithme de prediction hypertension
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
