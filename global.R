@@ -77,8 +77,8 @@ max_val_hyp <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.m
 
 # on charge la table de selection des variable pour le Cholesterol => Yfan format CSV specifique à reproduire
 #tabselvar_chol <- read.csv2("data/choix_var_chol.csv",row.names = NULL)
-#tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.names = NULL)
-tabselvar_chol <- read.table("data/choix_var_chol_faux.csv", header=T, sep=";",row.names = NULL) 
+tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.names = NULL)
+#tabselvar_chol <- read.table("data/choix_var_chol_faux.csv", header=T, sep=";",row.names = NULL) 
 max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 # on charge la table de selection des variable pour le diabete
