@@ -51,9 +51,9 @@ donChol$nhanes.y <- as.numeric(donChol$nhanes.y)
 # algorithme de prediction hypertension
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
 modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
-             high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
-             Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
-             Sodium_mg,data=donHyp,family="binomial")
+                high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
+                Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
+                Sodium_mg,data=donHyp,family="binomial")
 
 # algorithme de prediction CHOLESTEROL => IL RESTE CHANGER LES VAR
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
@@ -90,6 +90,10 @@ res_hyp <- read.csv2("data/res_hyp.csv")
 # Le résulatat de comparaison des méthodes de prédiction Cholesterol
 res_chol <- read.csv2("data/res_chol.csv")
 
+# Le résulatat de comparaison des méthodes de prédiction Diabète
+res_dia <- read.csv("data/res_dia.csv",header=TRUE,sep=",",dec=".",row.names=1)
+str(res_dia)
+
 # on charge la table de selection des variable pour l'Hypertension
 tabselvar_hyp <- read.table("data/choix_var.csv", header=T, sep=";",row.names = NULL)
 max_val_hyp <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
@@ -101,8 +105,10 @@ tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.na
 max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 # on charge la table de selection des variable pour le diabete
-tabselvar_dia <- read.table("data/choix_var.csv", header=T, sep=";",row.names = NULL)#LIGNE A MODIFIER JV
+tabselvar_dia <- read.table("data/choix_var_dia.csv", header=T, sep=";",dec=",",row.names = NULL)
 max_val <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
+
+
 
 # chargement des scripts
 source("script/Classif nutriment.R") #utile pour la classification des nutriments

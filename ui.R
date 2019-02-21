@@ -73,19 +73,15 @@ shinyUI(
                     
                          
         conditionalPanel(condition="input.idRadio == 3",
-                         h1("Phase 1: Préparation des données générale"),
-                         h3("Regroupement des tables, pré-sélection métier de 150 variables pour les 3 maladies -élimination des data trop techniques, trop détaillées ou non éthiques-,
-                            ,web scrapping des libellés des variables qualitatives...1 jeu de données initial commun pour les 3 maladies - 8339X150"),
-                         h1("Phase 2: Construction d'un jeu de données spécifique par maladie"),
-                         h3("Recodage de variables, élimination des variables avec plus de 10% de NA, imputation des données manquantes -package MICE-"),
-                         h1("Phase 3: Modélisation"),
-                         h3("Sélection de variables, sélection de modèles"),
-                         h1("Phase 4: Construction de l'outil shiny pour la visualisation et d'un package pour synthétiser l'ensemble du projet"),
-                         br(),
-                         h3("Travail avec Github pour le versioning")
-                         
-                         
-                         )
+                         h2("Phase 1: Préparation des données générale"),
+                         h3("- Regroupement des tables",br(),"- Pré-sélection métier de 150 variables pour les 3 maladies -élimination des data trop techniques, trop détaillées ou non éthiques",
+                            br(),"- Web scrapping des libellés des variables qualitatives",br(),br()," ce qui aboutit à 1 dataset initial commun pour les 3 maladies 8339 individus et 150 variables"),
+                         h2("Phase 2: Construction d'un jeu de données spécifique par maladie"),
+                         h3("- Recodage de variables",br(),"- Elimination des variables avec plus de 10% de NA",br(),"- Imputation des données manquantes package MICE"),
+                         h2("Phase 3: Modélisation"),
+                         h3("- Sélection de variables",br(),"- Sélection de modèles"),
+                         h2("Phase 4: Construction de l'outil shiny Github pour la visualisation et d'un package pour synthétiser l'ensemble du projet")
+        )
         
         ))
     ),
@@ -133,7 +129,8 @@ shinyUI(
                                      fluidRow(
                               column(
                                 width = 1,
-                                title = "parametre diab",dropdownButton(
+                                title = "parametre diab",
+                                dropdownButton(
                                   tags$h3("List of Input"),
                                   sliderInput("priodia", "Rang d'importance", 1, 10, value = 1),
                                   tooltip = tooltipOptions(title = "Click to see inputs !")
@@ -145,11 +142,11 @@ shinyUI(
                                        column(
                                          width=4,
                                          pickerInput(
-                                           "methode",
+                                           "methodedia",
                                            label = "Choisir la methode",
-                                           choices = colnames(res_chol[, -1]),
+                                           choices = colnames(res_dia[, -1]),
                                            multiple = TRUE,
-                                           selected = colnames(res_chol[, c(2,6,10)]),
+                                           selected = colnames(res_dia[, c(2,6,9)]),
                                            options = list(
                                              `actions-box` = FALSE,
                                              `none-selected-text` = "Selectionner 3!",
@@ -158,11 +155,11 @@ shinyUI(
                                          )
                                        ),
                                        column(width=4,
-                                              sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
+                                              sliderInput("seuilmoddia", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
                                        )
                                      ),
                                      conditionalPanel(
-                                       condition="input.methode.length==3",
+                                       condition="input.methodedia.length==3",
                                        fluidRow(
                                          plotOutput("choixmethode_dia")),
                                        column(width=4,
