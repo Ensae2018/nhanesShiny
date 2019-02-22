@@ -318,7 +318,7 @@ shinyUI(
                  ),
                  checkboxGroupInput(
                    inputId = "surpoids",
-                   label = "obÃ¨se?",
+                   label = "Obèse?",
                    choices = c("Oui" = "Yes", "Non" =
                                  "No"),
                    selected = "No"
@@ -367,14 +367,14 @@ shinyUI(
                  ),
                  numericInput(
                    inputId = "pobretefamille",
-                   label = "pobretefamille",
+                   label = "le niveau de votre famille",
                    value = 20,
                    min = 0,
                    max = 50
                  ),
                  checkboxGroupInput(
                    inputId = "travail",
-                   label = "travail?",
+                   label = "Travail?",
                    choices = c("oui" = "oui", "non" =
                                  "non"),
                    selected = "non"
@@ -395,14 +395,14 @@ shinyUI(
                  ),
                  checkboxGroupInput(
                    inputId = "risquehypertension",
-                   label = "risquehypertension?",
+                   label = "risque d'hypertension?",
                    choices = c("1" = "Yes", "2" =
                                  "No"),
                    selected = "No"
                  ),
                  checkboxGroupInput(
                    inputId = "risquediabetes",
-                   label = "risquediabetes?",
+                   label = "risque de diabetes?",
                    choices = c("1" = "Yes", "2" =
                                  "No"),
                    selected = "No"
@@ -414,19 +414,19 @@ shinyUI(
                  #                 3, "Unpeu"=2),
                  #   selected = 2
                  # # ),
-                 # numericInput(
+                 numericInput(
+                   inputId = "dentaire",
+                   label = "votre santé dentaire",
+                   value = 3,
+                   min = 2,
+                   max = 4
+                 ),
+                 # selectInput(
                  #   inputId = "dentaire",
                  #   label = "dentaire",
-                 #   value = 3,
-                 #   min = 2,
-                 #   max = 4
+                 #   selected = "2",
+                 #   choices = c("1" = "4", "2" = "3", "3" = "2")
                  # ),
-                 selectInput(
-                   inputId = "dentaire",
-                   label = "dentaire",
-                   selected = "2",
-                   choices = c("1" = "4", "2" = "3", "3" = "2")
-                 ),
                  checkboxGroupInput(
                    inputId = "diete",
                    label = "diete?",
@@ -436,14 +436,14 @@ shinyUI(
                  ),
                   numericInput(
                    inputId = "dietefibre",
-                   label = "dietefibre",
+                   label = "diete fibre?",
                    value = 20,
                    min = 0,
                    max = 50
                  ),
                  numericInput(
                    inputId = "alcool",
-                   label = "alcool",
+                   label = "alcool?",
                    value = 20,
                    min = 0,
                    max = 50
@@ -539,6 +539,61 @@ shinyUI(
 #----------------------------------------------------------------  
 #tabPanel : CONCLUSION
 #----------------------------------------------------------------  
-    tabPanel(title = "Conclusion")
-  )
-)
+
+tabPanel(
+  title = "Conclusion",
+  
+  # Application title
+  titlePanel(h1(br(),"Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
+                à partir de donnéees démographiques, de santé, d'alimentation et d'habitudes de vie",align="center",
+                hr(),
+                br(),
+                h1("")
+  )),
+  
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons(inputId = "idRadioC", label = "Agenda", selected = 3,
+                   choices = c("Choix des meilleurs modèles" = 1, "Prédiction trimaladie" = 2, "Perspectives" = 3))
+      
+    ),
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+      conditionalPanel(condition="input.idRadioC == 1",
+                       br(),
+                       br(),
+                       h2("Meilleur modèle pour Diabètes : forêt avec ...",align="center"),
+                       br(),
+                       h2("Meilleur modèle pour Cholésterol : forêt avec ...",align="center"),
+                       br(),
+                       br(),
+                       h2("Meilleur modèle pour Hypertension : forêt avec ...",align="center"),
+                       br(),
+                       br()),
+      
+      conditionalPanel(condition="input.idRadioC == 2",
+                       br(),
+                       br(),
+                       h2("Modèle trimaladie : logistique avec step...",align="center"),
+                       br(),
+                       br(),
+                       h2("Meilleures variables répresentatives : age, ...",align="center"),
+                       br(),
+                       br()),
+  
+      conditionalPanel(condition="input.idRadioC == 3",
+                       br(),
+                       br(),
+                       h2("Nutriments versus aliments",align="center"),
+                       br(),
+                       br(),
+                       h2("Modèle français",align="center"),
+                       br(),
+                       br(),
+                       h2("Modèle international",align="center"),
+                       br(),
+                       br())
+      )))
+))
