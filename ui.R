@@ -294,8 +294,8 @@ shinyUI(
 #----------------------------------------------------------------  
     tabPanel(title = "Prediction",
              sidebarLayout(
-               sidebarPanel(
-                 "Les donnees sur l'individu",
+             sidebarPanel("Les donnees sur l'individu",
+             fluidRow(column(6,
                  selectInput(
                    inputId = "sexe",
                    label = "Selectionner votre sexe",
@@ -391,7 +391,11 @@ shinyUI(
                    value = 180,
                    min = 0,
                    max = 300
-                 ),
+                 )
+               ),
+
+
+                fluidRow(column(6,
                  checkboxGroupInput(
                    inputId = "dentaire",
                    label = "Quelle recommendation pour votre santé dentaire ?",
@@ -448,7 +452,7 @@ shinyUI(
                    min = 0,
                    max = 3000
                  )
-               ),
+               )))),
                mainPanel(
                  div(HTML("<b>Les resultats de la prediction</b>"), align = "center"),
                  br(),
