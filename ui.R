@@ -295,6 +295,8 @@ shinyUI(
     tabPanel(title = "Prediction",
              sidebarLayout(
              sidebarPanel("Les donnees sur l'individu",
+                          
+             #Premiere colonne du questionnaire             
              fluidRow(column(6,
                  selectInput(
                    inputId = "sexe",
@@ -360,41 +362,45 @@ shinyUI(
                  ),
                  numericInput(
                    inputId = "hauteur",
-                   label = "Entrez votre hauteur",
+                   label = "Entrez votre hauteur(cm)",
                    value = 20,
-                   min = 0,
-                   max = 50
+                   min = 80,
+                   max = 200
                  ),
                  numericInput(
                    inputId = "poids",
-                   label = "Entrez votre poids",
+                   label = "Entrez votre poids(kg)",
                    value = 20,
-                   min = 0,
-                   max = 50
+                   min = 3,
+                   max = 200,
+                   step = 5
                  ),numericInput(
                    inputId = "bmi",
-                   label = "Entrez votre indice masse corporel",
+                   label = "Entrez votre indice masse corporel (kg/m^2)",
                    value = 20,
-                   min = 0,
-                   max = 50
+                   min = 11,
+                   max = 70,
+                   step = 5
                  ),
                  numericInput(
                    inputId = "pression_sys",
-                   label = "Entrez votre pression systolique",
+                   label = "Entrez votre pression systolique (mm Hg)",
                    value = 120,
-                   min = 0,
-                   max = 300
+                   min = 70,
+                   max = 300,
+                   step = 10
                  ),
                  numericInput(
                    inputId = "pression_dia",
-                   label = "Entrez votre pression diastolique",
+                   label = "Entrez votre pression diastolique (mm Hg)",
                    value = 180,
                    min = 0,
-                   max = 300
+                   max = 300,
+                   step = 10
                  )
                ),
 
-
+               #Deuxieme colonne du questionnaire 
                 fluidRow(column(6,
                  checkboxGroupInput(
                    inputId = "dentaire",
@@ -410,47 +416,52 @@ shinyUI(
                                  2),
                    selected = 2
                  ),
-                  numericInput(
+                numericInput(
                    inputId = "fibre",
                    label = "Entrez votre niveau de fibre alimentaire(g)",
                    value = 20,
                    min = 0,
-                   max = 50
+                   max = 200
                  ),
                  numericInput(
                    inputId = "foodfolate",
                    label = "Entrez votre niveau de folate alimentaire(g)",
                    value = 20,
                    min = 0,
-                   max = 50
+                   max = 3000,
+                   step = 30
                  ),                 
                  numericInput(
                    inputId = "waterdrank",
                    label = "Entrez l'eau plate consommée hier(g)",
                    value = 20,
                    min = 0,
-                   max = 50
+                   max = 15000,
+                   step = 200
                  ),                
                  numericInput(
                    inputId = "alcool",
                    label = "Entrez votre niveau d'alcool(g)",
                    value = 20,
                    min = 0,
-                   max = 50
+                   max = 800,
+                   step = 30
                  ),
                  numericInput(
                    inputId = "phosphorus",
                    label = "Entrez votre consommation en phosphorus(mg)",
                    value = 2000,
                    min = 0,
-                   max = 3000
+                   max = 8000,
+                   step = 100
                  ),
                  numericInput(
                    inputId = "sodium",
                    label = "Entrez votre consommation en sodium (mg)",
                    value = 2000,
                    min = 0,
-                   max = 3000
+                   max = 20000,
+                   step = 100
                  )
                )))),
                mainPanel(
