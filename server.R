@@ -100,7 +100,7 @@ shinyServer(function(input, output) {
                                             DR1TFF_dr1tot=input$foodfolate,
                                             DR1.320Z_dr1tot=input$waterdrank
     ),type="response")
-    ifelse(tempoChol>seuil,"Danger!!", ";-)")
+    ifelse(tempoChol>seuil(),"Danger!!", ";-)")
   })
 
   
@@ -116,7 +116,7 @@ shinyServer(function(input, output) {
                                           Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                           Sodium_mg=input$sodium
     ),type="response")
-    ifelse(tempoDiab>seuil,"Danger!!", ";-)")
+    ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
   })
   
   output$im_hyp_g <- renderImage({
