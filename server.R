@@ -318,7 +318,7 @@ shinyServer(function(input, output) {
 # Les choix de variables pour Diabetes
 ####  
   
-  rang_val <- reactive(tabselvar_dia[,-1][which(max_val==input$priodia, arr.ind=TRUE)])
+  rang_val_dia <- reactive(tabselvar_dia[,-1][which(max_val_dia==input$priodia, arr.ind=TRUE)])
   
   output$tabselvardia <- renderDataTable({
     datatable(tabselvar_dia,class = 'cell-border stripe',filter = 'bottom',
@@ -328,9 +328,9 @@ shinyServer(function(input, output) {
                            pageLength=20)
     ) %>%
       formatStyle(
-        columns = 2:length(tabselvar_chol),
-        backgroundColor = styleEqual(levels = rang_val(),
-                                     values = rep("yellow", length(rang_val()))))
+        columns = 2:length(tabselvar_dia),
+        backgroundColor = styleEqual(levels = rang_val_dia(),
+                                     values = rep("yellow", length(rang_val_dia()))))
   })
   
   

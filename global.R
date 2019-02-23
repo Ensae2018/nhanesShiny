@@ -94,7 +94,7 @@ max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties
 
 # on charge la table de selection des variable pour le diabete
 tabselvar_dia <- read.table("data/choix_var_dia.csv", header=T, sep=";",dec=",",row.names = NULL)
-max_val <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
+max_val_dia <- apply(tabselvar_dia[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 
 
