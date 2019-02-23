@@ -55,27 +55,13 @@ modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
                 Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
                 Sodium_mg,data=donHyp,family="binomial")
 
-# algorithme de prediction CHOLESTEROL => IL RESTE CHANGER LES VAR
-## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
+# algorithme de prediction CHOLESTEROL
+## Utilisation du modele logistique avec le choix d'une dizaine de variables prépondérantes
 # modChol <- glm(nhanes.y~.,data=donChol,family="binomial")
 modChol <- glm(nhanes.y~RIDAGEYR_demo+RIAGENDR_demo+INDFMPIR_demo+Var_TRAVAIL+
                  BMXHT_bmx+BMXWT_bmx+BMXBMI_bmx+BPQ020_bpq+MCQ080_mcq+DIQ010_diq+
                  BPXDI2_bpx+BPXSY3_bpx+SLQ050_slq+OHAREC_ohxref+
                  DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
-# modChol <- glm(Y~Age_in_years_at_screening
-#                +Systolic_Blood_pres_2nd_rdg_mm_Hg
-#                +high_cholesterol_level
-#                +Body_Mass_Index_kg_m_2
-#                +Doctor_ever_said_you_were_overweight
-#                +Ever_told_doctor_had_trouble_sleeping
-#                +Phosphorus_mg
-#                +Diastolic_Blood_pres_1st_rdg_mm_Hg
-#                +Sodium_mg,data=donChol,
-#                data=donChol,family="binomial")
-# modChol <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
-#                  high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
-#                  Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
-#                  Sodium_mg,data=donChol,family="binomial")
 
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
@@ -100,7 +86,9 @@ max_val_hyp <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.m
 
 # on charge la table de selection des variable pour le Cholesterol => Yfan format CSV specifique à reproduire
 #tabselvar_chol <- read.csv2("data/choix_var_chol.csv",row.names = NULL)
-tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.names = NULL)
+#tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.names = NULL)
+tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",dec=".",row.names = NULL)
+
 #tabselvar_chol <- read.table("data/choix_var_chol_faux.csv", header=T, sep=";",row.names = NULL) 
 max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 

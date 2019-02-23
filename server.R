@@ -85,34 +85,25 @@ shinyServer(function(input, output) {
                                             RIAGENDR_demo=ifelse(input$sexe=="Male", 1, 0),
                                             BPXSY3_bpx=input$pression_sys,
                                             BMXBMI_bmx=input$bmi,
-                                            MCQ080_mcq=input$surpoids,
-                                            SLQ050_slq=input$trouble_sommeil,
+                                            MCQ080_mcq=ifelse(input$surpoids=="Yes",1,0),
+                                            SLQ050_slq=ifelse(input$trouble_sommeil=="Yes",1,0),
                                             BPXDI2_bpx=input$pression_dia,
-                                            INDFMPIR_demo=input$pobretefamille,
+                                            INDFMPIR_demo=input$pauvretefamille,
                                             Var_TRAVAIL=input$travail,
                                             BMXHT_bmx=input$hauteur,
                                             BMXWT_bmx=input$poids,
-                                            BPQ020_bpq=input$risquehypertension,
-                                            DIQ010_diq=input$risquediabetes,
+                                            BPQ020_bpq=as.numeric(input$risquehypertension),
+                                            DIQ010_diq=as.numeric(input$risquediabetes),
                                             OHAREC_ohxref=as.numeric(input$dentaire),
-                                            DRQSDIET_dr1tot=input$diete,
-                                            DR1TFIBE_dr1tot=input$dietefibre,
+                                            DRQSDIET_dr1tot=as.numeric(input$diete),
+                                            DR1TFIBE_dr1tot=input$fibre,
                                             DR1TALCO_dr1tot=input$alcool,
                                             DR1TFF_dr1tot=input$foodfolate,
                                             DR1.320Z_dr1tot=input$waterdrank
     ),type="response")
-    ifelse(tempoChol>seuil,"Danger!!", ";-)")
+    ifelse(tempoChol>seuil(),"Danger!!", ";-)")
   })
-  
-    # tempoChol <- predict(modChol,data.frame(Age_in_years_at_screening=input$age,
-    #                                       Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
-    #                                       high_cholesterol_level=input$cholesterol,
-    #                                       Body_Mass_Index_kg_m_2=input$bmi,
-    #                                       Doctor_ever_said_you_were_overweight=input$surpoids,
-    #                                       Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
-    #                                       Phosphorus_mg=input$phosphorus,
-    #                                       Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
-    #                                       Sodium_mg=input$sodium 
+
   
   output$resultat_diabetes <- renderText({
     
@@ -126,7 +117,7 @@ shinyServer(function(input, output) {
                                           Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                           Sodium_mg=input$sodium
     ),type="response")
-    ifelse(tempoDiab>seuil,"Danger!!", ";-)")
+    ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
   })
   
   output$im_hyp_g <- renderImage({

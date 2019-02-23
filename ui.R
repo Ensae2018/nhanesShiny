@@ -294,13 +294,36 @@ shinyUI(
 #----------------------------------------------------------------  
     tabPanel(title = "Prediction",
              sidebarLayout(
-               sidebarPanel(
-                 "Les donnees sur l'individu",
+             sidebarPanel("Les donnees sur l'individu",
+                          
+             #Premiere colonne du questionnaire             
+             fluidRow(column(6,
                  selectInput(
                    inputId = "sexe",
                    label = "Selectionner votre sexe",
                    selected = "M",
                    choices = c("M" = "Male", "F" = "Female")
+                 ),
+                 numericInput(
+                   inputId = "age",
+                   label = "Selectionner votre age",
+                   value = 18,
+                   min = 16,
+                   max = 150
+                 ),
+                 checkboxGroupInput(
+                   inputId = "travail",
+                   label = "Avez-vous travaillez la semaine dernière?",
+                   choices = c("Oui" = "oui", "Non" =
+                                 "non"),
+                   selected = "non"
+                 ),                 
+                 numericInput(
+                   inputId = "pauvretefamille",
+                   label = "Entrez le taux de pauvreté de votre famille",
+                   value = 1,
+                   min = 0,
+                   max = 5
                  ),
                  checkboxGroupInput(
                    inputId = "trouble_sommeil",
@@ -317,152 +340,130 @@ shinyUI(
                    selected = "No"
                  ),
                  checkboxGroupInput(
+                   inputId = "risquehypertension",
+                   label = "Taux eleve d'hypertension?",
+                   choices = c("Oui" = 1, "Non" =
+                                 2),
+                   selected = 2
+                 ),
+                 checkboxGroupInput(
+                   inputId = "risquediabetes",
+                   label = "Diabètes?",
+                   choices = c("Oui" = 1, "Non" =
+                                 2),
+                   selected = 2
+                 ),
+                 checkboxGroupInput(
                    inputId = "surpoids",
-                   label = "obÃ¨se?",
+                   label = "Obèse?",
                    choices = c("Oui" = "Yes", "Non" =
                                  "No"),
                    selected = "No"
                  ),
                  numericInput(
-                   inputId = "bmi",
-                   label = "votre indice masse corporel",
-                   value = 20,
-                   min = 0,
-                   max = 50
-                 ),
-                 numericInput(
-                   inputId = "age",
-                   label = "Entrer votre age",
-                   value = 18,
-                   min = 16,
-                   max = 150
-                 ),
-                 numericInput(
-                   inputId = "pression_sys",
-                   label = "Entrer votre pression systolique",
-                   value = 120,
-                   min = 0,
-                   max = 300
-                 ),
-                 numericInput(
-                   inputId = "pression_dia",
-                   label = "Entrer votre pression diastolique",
-                   value = 180,
-                   min = 0,
-                   max = 300
-                 ),
-                 numericInput(
-                   inputId = "phosphorus",
-                   label = "consommation phosphorus en mg",
-                   value = 2000,
-                   min = 0,
-                   max = 3000
-                 ),
-                 numericInput(
-                   inputId = "sodium",
-                   label = "consommation sodium en mg",
-                   value = 2000,
-                   min = 0,
-                   max = 3000
-                 ),
-                 numericInput(
-                   inputId = "pobretefamille",
-                   label = "pobretefamille",
-                   value = 20,
-                   min = 0,
-                   max = 50
-                 ),
-                 checkboxGroupInput(
-                   inputId = "travail",
-                   label = "travail?",
-                   choices = c("oui" = "oui", "non" =
-                                 "non"),
-                   selected = "non"
-                 ),
-                 numericInput(
                    inputId = "hauteur",
-                   label = "votre hauteur",
+                   label = "Entrez votre hauteur(cm)",
                    value = 20,
-                   min = 0,
-                   max = 50
+                   min = 80,
+                   max = 200
                  ),
                  numericInput(
                    inputId = "poids",
-                   label = "votre poids",
+                   label = "Entrez votre poids(kg)",
                    value = 20,
+                   min = 3,
+                   max = 200,
+                   step = 5
+                 ),numericInput(
+                   inputId = "bmi",
+                   label = "Entrez votre indice masse corporel (kg/m^2)",
+                   value = 20,
+                   min = 11,
+                   max = 70,
+                   step = 5
+                 ),
+                 numericInput(
+                   inputId = "pression_sys",
+                   label = "Entrez votre pression systolique (mm Hg)",
+                   value = 120,
+                   min = 70,
+                   max = 300,
+                   step = 10
+                 ),
+                 numericInput(
+                   inputId = "pression_dia",
+                   label = "Entrez votre pression diastolique (mm Hg)",
+                   value = 180,
                    min = 0,
-                   max = 50
-                 ),
+                   max = 300,
+                   step = 10
+                 )
+               ),
+
+               #Deuxieme colonne du questionnaire 
+                fluidRow(column(6,
                  checkboxGroupInput(
-                   inputId = "risquehypertension",
-                   label = "risquehypertension?",
-                   choices = c("1" = "Yes", "2" =
-                                 "No"),
-                   selected = "No"
-                 ),
-                 checkboxGroupInput(
-                   inputId = "risquediabetes",
-                   label = "risquediabetes?",
-                   choices = c("1" = "Yes", "2" =
-                                 "No"),
-                   selected = "No"
-                 ),
-                 # checkboxGroupInput(
-                 #   inputId = "dentaire",
-                 #   label = "dentaire?",
-                 #   choices = c("Oui" = 4, "Non" =
-                 #                 3, "Unpeu"=2),
-                 #   selected = 2
-                 # # ),
-                 # numericInput(
-                 #   inputId = "dentaire",
-                 #   label = "dentaire",
-                 #   value = 3,
-                 #   min = 2,
-                 #   max = 4
-                 # ),
-                 selectInput(
                    inputId = "dentaire",
-                   label = "dentaire",
-                   selected = "2",
-                   choices = c("1" = "4", "2" = "3", "3" = "2")
+                   label = "Quelle recommendation pour votre santé dentaire ?",
+                   choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                               "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                   selected = 4
                  ),
                  checkboxGroupInput(
                    inputId = "diete",
-                   label = "diete?",
-                   choices = c("1" = "Yes", "2" =
-                                 "No"),
-                   selected = "No"
+                   label = "Prenez-vous un type de diète?",
+                   choices = c("Oui" = 1, "Non" =
+                                 2),
+                   selected = 2
                  ),
-                  numericInput(
-                   inputId = "dietefibre",
-                   label = "dietefibre",
+                numericInput(
+                   inputId = "fibre",
+                   label = "Entrez votre niveau de fibre alimentaire(g)",
                    value = 20,
                    min = 0,
-                   max = 50
-                 ),
-                 numericInput(
-                   inputId = "alcool",
-                   label = "alcool",
-                   value = 20,
-                   min = 0,
-                   max = 50
+                   max = 200
                  ),
                  numericInput(
                    inputId = "foodfolate",
-                   label = "foodfolate",
+                   label = "Entrez votre niveau de folate alimentaire(g)",
                    value = 20,
                    min = 0,
-                   max = 50
-                 ),
+                   max = 3000,
+                   step = 30
+                 ),                 
                  numericInput(
                    inputId = "waterdrank",
-                   label = "waterdrank",
+                   label = "Entrez l'eau plate consommée hier(g)",
                    value = 20,
                    min = 0,
-                   max = 50
+                   max = 15000,
+                   step = 200
+                 ),                
+                 numericInput(
+                   inputId = "alcool",
+                   label = "Entrez votre niveau d'alcool(g)",
+                   value = 20,
+                   min = 0,
+                   max = 800,
+                   step = 30
+                 ),
+                 numericInput(
+                   inputId = "phosphorus",
+                   label = "Entrez votre consommation en phosphorus(mg)",
+                   value = 2000,
+                   min = 0,
+                   max = 8000,
+                   step = 100
+                 ),
+                 numericInput(
+                   inputId = "sodium",
+                   label = "Entrez votre consommation en sodium (mg)",
+                   value = 2000,
+                   min = 0,
+                   max = 20000,
+                   step = 100
                  )
-               ),
+               )))),
                mainPanel(
                  div(HTML("<b>Les resultats de la prediction</b>"), align = "center"),
                  br(),
@@ -559,6 +560,61 @@ shinyUI(
 #----------------------------------------------------------------  
 #tabPanel : CONCLUSION
 #----------------------------------------------------------------  
-    tabPanel(title = "Conclusion")
-  )
-)
+
+tabPanel(
+  title = "Conclusion",
+  
+  # Application title
+  titlePanel(h1(br(),"Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
+                à partir de donnéees démographiques, de santé, d'alimentation et d'habitudes de vie",align="center",
+                hr(),
+                br(),
+                h1("")
+  )),
+  
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons(inputId = "idRadioC", label = "Agenda", selected = 3,
+                   choices = c("Choix des meilleurs modèles" = 1, "Prédiction trimaladie" = 2, "Perspectives" = 3))
+      
+    ),
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+      conditionalPanel(condition="input.idRadioC == 1",
+                       br(),
+                       br(),
+                       h2("Meilleur modèle pour Diabètes : forêt avec ...",align="center"),
+                       br(),
+                       h2("Meilleur modèle pour Cholésterol : forêt avec ...",align="center"),
+                       br(),
+                       br(),
+                       h2("Meilleur modèle pour Hypertension : forêt avec ...",align="center"),
+                       br(),
+                       br()),
+      
+      conditionalPanel(condition="input.idRadioC == 2",
+                       br(),
+                       br(),
+                       h2("Modèle trimaladie : logistique avec step...",align="center"),
+                       br(),
+                       br(),
+                       h2("Meilleures variables répresentatives : age, ...",align="center"),
+                       br(),
+                       br()),
+  
+      conditionalPanel(condition="input.idRadioC == 3",
+                       br(),
+                       br(),
+                       h2("Nutriments versus aliments",align="center"),
+                       br(),
+                       br(),
+                       h2("Modèle français",align="center"),
+                       br(),
+                       br(),
+                       h2("Modèle international",align="center"),
+                       br(),
+                       br())
+      )))
+))
