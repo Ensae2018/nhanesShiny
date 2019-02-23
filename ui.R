@@ -516,24 +516,44 @@ shinyUI(
 #----------------------------------------------------------------  
     tabPanel(
       title = "Classification",
-      column(width=6,
+      column(
+      width=2,
       div(sliderInput("nb_classe", "Nombre de classe", 3, 8, 1), align="center"),
-      plotOutput("inertienutrimentplot"),
-      br(),
-      plotOutput("acpnutrimentplotkm"),
-      hr(),
-      dataTableOutput("groupekm")
+      div(sliderInput("nivo_cah", "coupure sur l'arbre", 3,8,value=5,step=1),align="center"),
+      div(sliderTextInput(
+        inputId = "choixmaladie", 
+        label = "Choisir le maladie:", 
+        grid = TRUE, 
+        force_edges = TRUE,
+        choices = c("cholesterol","diabete","hypertension")
+      ), align="center")
       ),
-      column(width=6,
-      fluidRow(width=12,
-      div(sliderInput("nivo_cah", "coupure sur l'arbre", 4,8,value=5,step=0.1),align="center"),
-      plotOutput("dendrogramme"),
-      br(),
-      plotOutput("acpnutrimentplotcah"),
-      hr(),
-      dataTableOutput("groupecah")
-      )),
-      plotOutput("acpnutrimentplot")
+      column(
+      width=10,
+      tabsetPanel(
+      tabPanel("Kmeans",
+              plotOutput("partitionkm"),
+              plotOutput("inertienutrimentplot")),
+      tabPanel("CAH",
+               plotOutput("dendrogramme"),
+               plotOutput("indicehierarchieplot")),
+      tabPanel("Comparaison",
+               column(width=6,
+               plotOutput("acpnutrimentplotkm"),
+               plotOutput("contri1")),
+               column(width=6,
+               plotOutput("acpnutrimentplotcah"),
+               plotOutput("contri2"))),
+      tabPanel("Tableau",
+               column(width=6,
+               dataTableOutput("groupecah")),
+               column(width=6,
+               dataTableOutput("groupekm"))),
+      tabPanel("Croisement",
+      fluidRow(
+      plotOutput("acpplotind"),
+      plotOutput("acpplotdual")
+      ))))
     ),
 
 #----------------------------------------------------------------  

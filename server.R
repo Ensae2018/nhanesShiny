@@ -25,7 +25,8 @@ shinyServer(function(input, output) {
   })
   
   cah <- reactive({
-    hclust(dist(scale(var$coord)),method = "ward.D2")
+    #hcut(dist(scale(var$coord)),method = "ward.D2")
+    hcut(dist(scale(var$coord)),k=input$nivo_cah, method = "ward.D2")
   })
   
   # fonction utilisée pour faire de la matrice confusion
@@ -186,8 +187,15 @@ shinyServer(function(input, output) {
     ggplot(as.data.frame(partition),
            aes(x = seq(1, length(partition)),
                y = partition)) +
-      geom_point() + ggtitle("Evolution inertie/nb de classe") +
+      geom_bar(stat = "identity") + ggtitle("Evolution inertie/nb de classe") +
       xlab("nombre de classe") + ylab("I inter/I totale")
+  })
+  
+  output$indicehierarchieplot <- renderPlot({
+    ggplot(as.data.frame(sort(cah()$height,dec=T)),
+           aes(x = seq(1,length(cah()$height)),y=sort(cah()$height,dec=T)))+
+      geom_point() + ggtitle("hauteur CAH") +
+      xlab("index") + ylab("hauteur")
   })
   
   output$acpnutrimentplotkm <- renderPlot({
@@ -210,15 +218,37 @@ shinyServer(function(input, output) {
     )
   })
   
-
-####
-# Les choix de variables pour Hypertension
-####
+  output$acpplotind <- renderPlot({
+    fviz_pca_ind(
+      acp,
+      habillage = (switch(input$choixmaladie,
+                          "cholesterol"=1,"diabete"=2,"hypertension"=3)),
+      label="none",
+      addEllipses = T
+    )
+  })
+  
+  output$acpplotdual <- renderPlot({
+    grp <- as.factor(km()$cluster)
+    fviz_pca_biplot(
+      acp,
+      habillage = (switch(input$choixmaladie,
+                          "cholesterol"=1,"diabete"=2,"hypertension"=3)),
+      label="var",
+      col.var = grp,
+      invisible = "quanti.sup"
+    )
+  })
+  
+  output$partitionkm <- renderPlot({
+  fviz_cluster(km(),data=var$coord,main = "Partitioning Clustering Plot")
+  })
 
   output$dendrogramme <- renderPlot({
-    plot(as.dendrogram(cah()))
-    rect.hclust(cah(),h=input$nivo_cah)
+    fviz_dend(cah(), rect = TRUE, cex = 0.5,
+              k_colors =1:input$nivo_cah)
   })
+  
   
   output$groupekm <- renderDataTable({
   tempo <- as.data.frame(km()$cluster)
@@ -243,7 +273,19 @@ shinyServer(function(input, output) {
                            dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
                            pageLength=20))
   })
+  
+  output$contri1 <- renderPlot({
+    fviz_contrib(acp, choice = "var", axes = 1, top = 10)
+  })
+  
+  output$contri2 <- renderPlot({
+    fviz_contrib(acp, choice = "var", axes = 2, top = 10)
+  })
 
+  ####
+  # Les choix de variables pour Hypertension
+  ####
+  
   rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$priohyp, arr.ind=TRUE)])
   
   output$tabselvarhyp <- renderDataTable({
