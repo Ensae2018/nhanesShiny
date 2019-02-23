@@ -307,7 +307,7 @@ shinyUI(
                  numericInput(
                    inputId = "age",
                    label = "Selectionner votre age",
-                   value = 18,
+                   value = 46,
                    min = 16,
                    max = 150
                  ),
@@ -321,7 +321,7 @@ shinyUI(
                  numericInput(
                    inputId = "pauvretefamille",
                    label = "Entrez le taux de pauvreté de votre famille",
-                   value = 1,
+                   value = 2,
                    min = 0,
                    max = 5
                  ),
@@ -363,21 +363,21 @@ shinyUI(
                  numericInput(
                    inputId = "hauteur",
                    label = "Entrez votre hauteur(cm)",
-                   value = 20,
+                   value = 160,
                    min = 80,
                    max = 200
                  ),
                  numericInput(
                    inputId = "poids",
                    label = "Entrez votre poids(kg)",
-                   value = 20,
+                   value = 80,
                    min = 3,
                    max = 200,
                    step = 5
                  ),numericInput(
                    inputId = "bmi",
                    label = "Entrez votre indice masse corporel (kg/m^2)",
-                   value = 20,
+                   value = 30,
                    min = 11,
                    max = 70,
                    step = 5
@@ -393,9 +393,9 @@ shinyUI(
                  numericInput(
                    inputId = "pression_dia",
                    label = "Entrez votre pression diastolique (mm Hg)",
-                   value = 180,
+                   value = 70,
                    min = 0,
-                   max = 300,
+                   max = 200,
                    step = 10
                  )
                ),
@@ -421,20 +421,20 @@ shinyUI(
                    label = "Entrez votre niveau de fibre alimentaire(g)",
                    value = 20,
                    min = 0,
-                   max = 200
+                   max = 100
                  ),
                  numericInput(
                    inputId = "foodfolate",
                    label = "Entrez votre niveau de folate alimentaire(g)",
-                   value = 20,
+                   value = 200,
                    min = 0,
-                   max = 3000,
+                   max = 2000,
                    step = 30
                  ),                 
                  numericInput(
                    inputId = "waterdrank",
                    label = "Entrez l'eau plate consommée hier(g)",
-                   value = 20,
+                   value = 1200,
                    min = 0,
                    max = 15000,
                    step = 200
@@ -442,10 +442,10 @@ shinyUI(
                  numericInput(
                    inputId = "alcool",
                    label = "Entrez votre niveau d'alcool(g)",
-                   value = 20,
+                   value = 8,
                    min = 0,
-                   max = 800,
-                   step = 30
+                   max = 500,
+                   step = 2
                  ),
                  numericInput(
                    inputId = "phosphorus",
@@ -496,7 +496,7 @@ shinyUI(
                           textOutput(outputId = "resultat_cholesterol"), align = "center"
                         )),
                         imageOutput("im_cho_g",width="10px", height="10px","auto", inline = FALSE),
-                        conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                        conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'",
                         imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
                         )),
                  column(width=4,
@@ -504,7 +504,7 @@ shinyUI(
                           textOutput(outputId = "resultat_diabetes"), align = "center"
                         )),
                         imageOutput("im_dia_g",width="10px", height="10px","auto", inline = FALSE),
-                        conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                        conditionalPanel(condition="output.resultat_diabetes=='Danger!!'",
                         imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
                          ))
                  )
@@ -575,7 +575,7 @@ tabPanel(
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      radioButtons(inputId = "idRadioC", label = "Agenda", selected = 3,
+      radioButtons(inputId = "idRadioC", label = "Plan", selected = 3,
                    choices = c("Choix des meilleurs modèles" = 1, "Prédiction trimaladie" = 2, "Classification" = 3, "Perspectives" = 4))
       
     ),
