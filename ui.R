@@ -302,6 +302,27 @@ shinyUI(
                    selected = "M",
                    choices = c("M" = "Male", "F" = "Female")
                  ),
+                 numericInput(
+                   inputId = "age",
+                   label = "Selectionner votre age",
+                   value = 18,
+                   min = 16,
+                   max = 150
+                 ),
+                 checkboxGroupInput(
+                   inputId = "travail",
+                   label = "Avez-vous travaillez la semaine dernière?",
+                   choices = c("Oui" = "oui", "Non" =
+                                 "non"),
+                   selected = "non"
+                 ),                 
+                 numericInput(
+                   inputId = "pauvretefamille",
+                   label = "Entrez le taux de pauvreté de votre famille",
+                   value = 1,
+                   min = 0,
+                   max = 5
+                 ),
                  checkboxGroupInput(
                    inputId = "trouble_sommeil",
                    label = "Trouble de sommeil?",
@@ -317,6 +338,20 @@ shinyUI(
                    selected = "No"
                  ),
                  checkboxGroupInput(
+                   inputId = "risquehypertension",
+                   label = "Taux eleve d'hypertension?",
+                   choices = c("Oui" = 1, "Non" =
+                                 2),
+                   selected = 2
+                 ),
+                 checkboxGroupInput(
+                   inputId = "risquediabetes",
+                   label = "Diabètes?",
+                   choices = c("Oui" = 1, "Non" =
+                                 2),
+                   selected = 2
+                 ),
+                 checkboxGroupInput(
                    inputId = "surpoids",
                    label = "Obèse?",
                    choices = c("Oui" = "Yes", "Non" =
@@ -324,29 +359,35 @@ shinyUI(
                    selected = "No"
                  ),
                  numericInput(
-                   inputId = "bmi",
-                   label = "votre indice masse corporel",
+                   inputId = "hauteur",
+                   label = "Entrez votre hauteur",
                    value = 20,
                    min = 0,
                    max = 50
                  ),
                  numericInput(
-                   inputId = "age",
-                   label = "Entrer votre age",
-                   value = 18,
-                   min = 16,
-                   max = 150
+                   inputId = "poids",
+                   label = "Entrez votre poids",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),numericInput(
+                   inputId = "bmi",
+                   label = "Entrez votre indice masse corporel",
+                   value = 20,
+                   min = 0,
+                   max = 50
                  ),
                  numericInput(
                    inputId = "pression_sys",
-                   label = "Entrer votre pression systolique",
+                   label = "Entrez votre pression systolique",
                    value = 120,
                    min = 0,
                    max = 300
                  ),
                  numericInput(
                    inputId = "pression_dia",
-                   label = "Entrer votre pression diastolique",
+                   label = "Entrez votre pression diastolique",
                    value = 180,
                    min = 0,
                    max = 300
@@ -365,99 +406,44 @@ shinyUI(
                    min = 0,
                    max = 3000
                  ),
-                 numericInput(
-                   inputId = "pobretefamille",
-                   label = "le niveau de votre famille",
-                   value = 20,
-                   min = 0,
-                   max = 50
-                 ),
                  checkboxGroupInput(
-                   inputId = "travail",
-                   label = "Travail?",
-                   choices = c("oui" = "oui", "non" =
-                                 "non"),
-                   selected = "non"
-                 ),
-                 numericInput(
-                   inputId = "hauteur",
-                   label = "votre hauteur",
-                   value = 20,
-                   min = 0,
-                   max = 50
-                 ),
-                 numericInput(
-                   inputId = "poids",
-                   label = "votre poids",
-                   value = 20,
-                   min = 0,
-                   max = 50
-                 ),
-                 checkboxGroupInput(
-                   inputId = "risquehypertension",
-                   label = "risque d'hypertension?",
-                   choices = c("1" = "Yes", "2" =
-                                 "No"),
-                   selected = "No"
-                 ),
-                 checkboxGroupInput(
-                   inputId = "risquediabetes",
-                   label = "risque de diabetes?",
-                   choices = c("1" = "Yes", "2" =
-                                 "No"),
-                   selected = "No"
-                 ),
-                 # checkboxGroupInput(
-                 #   inputId = "dentaire",
-                 #   label = "dentaire?",
-                 #   choices = c("Oui" = 4, "Non" =
-                 #                 3, "Unpeu"=2),
-                 #   selected = 2
-                 # # ),
-                 numericInput(
                    inputId = "dentaire",
-                   label = "votre santé dentaire",
-                   value = 3,
-                   min = 2,
-                   max = 4
+                   label = "Quelle recommendation pour votre santé dentaire ?",
+                   choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                               "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                   selected = 4
                  ),
-                 # selectInput(
-                 #   inputId = "dentaire",
-                 #   label = "dentaire",
-                 #   selected = "2",
-                 #   choices = c("1" = "4", "2" = "3", "3" = "2")
-                 # ),
                  checkboxGroupInput(
                    inputId = "diete",
-                   label = "diete?",
-                   choices = c("1" = "Yes", "2" =
-                                 "No"),
-                   selected = "No"
+                   label = "Prenez-vous un type de diète?",
+                   choices = c("Oui" = 1, "Non" =
+                                 2),
+                   selected = 2
                  ),
                   numericInput(
-                   inputId = "dietefibre",
-                   label = "diete fibre?",
-                   value = 20,
-                   min = 0,
-                   max = 50
-                 ),
-                 numericInput(
-                   inputId = "alcool",
-                   label = "alcool?",
+                   inputId = "fibre",
+                   label = "Entrez votre niveau de fibre alimentaire(g)",
                    value = 20,
                    min = 0,
                    max = 50
                  ),
                  numericInput(
                    inputId = "foodfolate",
-                   label = "foodfolate",
+                   label = "Entrez votre niveau de folate alimentaire(g)",
                    value = 20,
                    min = 0,
                    max = 50
-                 ),
+                 ),                 
                  numericInput(
                    inputId = "waterdrank",
-                   label = "waterdrank",
+                   label = "Entrez l'eau plate consommée hier(g)",
+                   value = 20,
+                   min = 0,
+                   max = 50
+                 ),                
+                 numericInput(
+                   inputId = "alcool",
+                   label = "Entrez votre niveau d'alcool(g)",
                    value = 20,
                    min = 0,
                    max = 50
