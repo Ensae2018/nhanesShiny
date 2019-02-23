@@ -101,7 +101,7 @@ shinyUI(
           selectInput(inputId = "varhyp", label = p(span("Hypertension", style = "color:blue"),
                       ": choisissez la variable à explorer"),choices=colnames(donHyp)),
           selectInput(inputId = "varcho", label = p(span("Cholestérol", style = "color:blue"),
-                      ": choisissez la variable à explorer"),choices=colnames(donChol)),
+                      ": choisissez la variable à explorer"),choices=colnames(donChol[,-c(1,21)])),#enlever le SEQN et le Y dans la liste deroulante
           selectInput(inputId = "vardia", label = p(span("Diabète", style = "color:blue"), 
                       ": choisissez la variable à explorer"),choices=colnames(donDia[,-1]))#je mets -1 pour enlever le SEQN dans la liste deroulante
           ),
