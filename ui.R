@@ -392,20 +392,6 @@ shinyUI(
                    min = 0,
                    max = 300
                  ),
-                 numericInput(
-                   inputId = "phosphorus",
-                   label = "consommation phosphorus en mg",
-                   value = 2000,
-                   min = 0,
-                   max = 3000
-                 ),
-                 numericInput(
-                   inputId = "sodium",
-                   label = "consommation sodium en mg",
-                   value = 2000,
-                   min = 0,
-                   max = 3000
-                 ),
                  checkboxGroupInput(
                    inputId = "dentaire",
                    label = "Quelle recommendation pour votre santé dentaire ?",
@@ -447,6 +433,20 @@ shinyUI(
                    value = 20,
                    min = 0,
                    max = 50
+                 ),
+                 numericInput(
+                   inputId = "phosphorus",
+                   label = "Entrez votre consommation en phosphorus(mg)",
+                   value = 2000,
+                   min = 0,
+                   max = 3000
+                 ),
+                 numericInput(
+                   inputId = "sodium",
+                   label = "Entrez votre consommation en sodium (mg)",
+                   value = 2000,
+                   min = 0,
+                   max = 3000
                  )
                ),
                mainPanel(
