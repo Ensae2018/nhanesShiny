@@ -519,15 +519,28 @@ shinyUI(
       title = "Classification",
       column(
       width=2,
-      div(sliderInput("nb_classe", "Nombre de classe", 3, 8, 1), align="center"),
-      div(sliderInput("nivo_cah", "coupure sur l'arbre", 3,8,value=5,step=1),align="center"),
+      div(sliderInput("nb_classe", "Nombre de classe Kmeans", 3, 8, value=5), align="center"),
+      div(sliderInput("nivo_cah", "Nombre de classe CAH", 3,8,value=5,step=1),align="center"),
       div(sliderTextInput(
         inputId = "choixmaladie", 
-        label = "Choisir le maladie:", 
+        label = "Choisir la maladie:", 
         grid = TRUE, 
         force_edges = TRUE,
         choices = c("cholesterol","diabete","hypertension")
-      ), align="center")
+      ), align="center"),
+      div(sliderTextInput(
+        inputId = "afficherind", 
+        label = "Afficher les libellés des individus?", 
+        grid = TRUE, 
+        force_edges = TRUE,
+        choices = c("oui","non")), align="center"),
+      div(sliderTextInput(
+        inputId = "choixaxe", 
+        label = "Choisir les axes des dimensions", 
+        grid = TRUE, 
+        force_edges = TRUE,
+        choices = c("dim1-dim2","dim3-dim4")), align="center"),
+      div(sliderInput("topcontrib", "nombre de contribution", 3, 15, value=5), align="center")
       ),
       column(
       width=10,
@@ -535,6 +548,9 @@ shinyUI(
       tabPanel("Kmeans",
               plotOutput("partitionkm"),
               plotOutput("inertienutrimentplot")),
+      tabPanel("Kmeans_ind",
+               plotOutput("partitionkmbis"),
+               plotOutput("inertienutrimentplotbis")),
       tabPanel("CAH",
                plotOutput("dendrogramme"),
                plotOutput("indicehierarchieplot")),

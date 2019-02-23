@@ -24,6 +24,10 @@ shinyServer(function(input, output) {
     km <- kmeans(var$coord, center=input$nb_classe, nstart = 25)
   })
   
+  kmbis <- reactive({
+    kmbis <- kmeans(ind$coord, center=input$nb_classe, nstart = 25)
+  })
+  
   cah <- reactive({
     #hcut(dist(scale(var$coord)),method = "ward.D2")
     hcut(dist(scale(var$coord)),k=input$nivo_cah, method = "ward.D2")
@@ -179,14 +183,25 @@ shinyServer(function(input, output) {
            aes(x = seq(1, length(partition)),
                y = partition)) +
       geom_bar(stat = "identity") + ggtitle("Evolution inertie/nb de classe") +
-      xlab("nombre de classe") + ylab("I inter/I totale")
+      xlab("nombre de classe") + ylab("I inter/I totale")+
+      geom_vline(xintercept=input$nb_classe, linetype="dashed", color = "red",size=2)
+  })
+  
+  output$inertienutrimentplotbis <- renderPlot({
+    ggplot(as.data.frame(partitionbis),
+           aes(x = seq(1, length(partitionbis)),
+               y = partitionbis)) +
+      geom_bar(stat = "identity") + ggtitle("Evolution inertie/nb de classe") +
+      xlab("nombre de classe") + ylab("I inter/I totale")+
+      geom_vline(xintercept=input$nb_classe, linetype="dashed", color = "red", size=2)
   })
   
   output$indicehierarchieplot <- renderPlot({
     ggplot(as.data.frame(sort(cah()$height,dec=T)),
            aes(x = seq(1,length(cah()$height)),y=sort(cah()$height,dec=T)))+
       geom_point() + ggtitle("hauteur CAH") +
-      xlab("index") + ylab("hauteur")
+      xlab("index") + ylab("hauteur")+
+      geom_vline(xintercept=input$nivo_cah, linetype="dashed", color = "red",size=2)
   })
   
   output$acpnutrimentplotkm <- renderPlot({
@@ -195,7 +210,10 @@ shinyServer(function(input, output) {
       acp,
       col.var = grp,
       palette = 1:input$nb_classe,
-      repel = TRUE
+      repel = TRUE,
+      geom = c(ifelse(input$afficherind=="oui","text","arrow")),
+      axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+               ifelse(input$choixaxe=="dim1-dim2",2,4))
     )
   })
   
@@ -205,7 +223,10 @@ shinyServer(function(input, output) {
       acp,
       col.var = grp,
       palette = 1:length(levels(grp)),
-      repel = TRUE
+      repel = TRUE,
+      geom = c(ifelse(input$afficherind=="oui","text","arrow")),
+      axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+               ifelse(input$choixaxe=="dim1-dim2",2,4))
     )
   })
   
@@ -214,8 +235,8 @@ shinyServer(function(input, output) {
       acp,
       habillage = (switch(input$choixmaladie,
                           "cholesterol"=1,"diabete"=2,"hypertension"=3)),
-      label="none",
-      addEllipses = T
+      addEllipses = T,
+      geom = c(ifelse(input$afficherind=="oui","text","point"))
     )
   })
   
@@ -232,12 +253,31 @@ shinyServer(function(input, output) {
   })
   
   output$partitionkm <- renderPlot({
-  fviz_cluster(km(),data=var$coord,main = "Partitioning Clustering Plot")
+  fviz_cluster(km(),data=var$coord,main = "Partitioning Clustering Plot",
+               repel = TRUE,
+               geom = c(ifelse(input$afficherind=="oui","text","point")),
+               axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+                        ifelse(input$choixaxe=="dim1-dim2",2,4)))
+  })
+  
+  output$partitionkmbis <- renderPlot({
+    fviz_cluster(kmbis(),data=ind$coord,main = "Partitioning Clustering Plot",
+                 geom = c(ifelse(input$afficherind=="oui","text","point")),
+                 axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+                          ifelse(input$choixaxe=="dim1-dim2",2,4)))
   })
 
   output$dendrogramme <- renderPlot({
-    fviz_dend(cah(), rect = TRUE, cex = 0.5,
-              k_colors =1:input$nivo_cah)
+    fviz_dend(
+      cah(),
+      type="phylogenic",
+      rect = TRUE,rect_fill = TRUE,
+      cex = 1,
+      k_colors = 1:input$nivo_cah,
+      rect_border = 1:input$nivo_cah,
+      repel = TRUE,
+      show_labels = ifelse(input$afficherind=="oui",TRUE,FALSE)
+    )
   })
   
   
@@ -266,11 +306,11 @@ shinyServer(function(input, output) {
   })
   
   output$contri1 <- renderPlot({
-    fviz_contrib(acp, choice = "var", axes = 1, top = 10)
+    fviz_contrib(acp, choice = "var", axes = 1, top = input$topcontrib)
   })
   
   output$contri2 <- renderPlot({
-    fviz_contrib(acp, choice = "var", axes = 2, top = 10)
+    fviz_contrib(acp, choice = "var", axes = 2, top = input$topcontrib)
   })
 
   ####

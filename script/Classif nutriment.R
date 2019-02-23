@@ -19,3 +19,8 @@ for (i in 1:15){
   partition[i]= kmk$tot.withinss/kmk$totss*100
 }
 
+partitionbis <- 1:15
+for (i in 1:15){
+  kmk <- kmeans(ind$coord,centers = i, nstart = 10)
+  partitionbis[i]= kmk$tot.withinss/kmk$totss*100
+}
