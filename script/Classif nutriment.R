@@ -1,10 +1,10 @@
 # chargement du jeu de donnee
-nutriment <- donHyp[,c(which(colnames(don)=="high_cholesterol_level"),
-                       which(colnames(don)=="Doctor_told_you_have_diabetes"),
-                       which(colnames(don)=="Y"),
-                       which(colnames(don)=="Age_in_years_at_screening"),
-                       which(colnames(don)=="Sleep_hours"),
-                       which(colnames(don)=="Energy_kcal"):which(colnames(don)=="Moisture_gm"))]
+nutriment <- donHyp[,c(which(colnames(donHyp)=="high_cholesterol_level"),
+                       which(colnames(donHyp)=="Doctor_told_you_have_diabetes"),
+                       which(colnames(donHyp)=="Y"),
+                       which(colnames(donHyp)=="Age_in_years_at_screening"),
+                       which(colnames(donHyp)=="Sleep_hours"),
+                       which(colnames(donHyp)=="Energy_kcal"):which(colnames(donHyp)=="Moisture_gm"))]
 names(nutriment)[3] <- "hypertension"
 
 # ACP
