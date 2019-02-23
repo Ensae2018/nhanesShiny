@@ -576,7 +576,7 @@ tabPanel(
   sidebarLayout(
     sidebarPanel(
       radioButtons(inputId = "idRadioC", label = "Agenda", selected = 3,
-                   choices = c("Choix des meilleurs modèles" = 1, "Prédiction trimaladie" = 2, "Perspectives" = 3))
+                   choices = c("Choix des meilleurs modèles" = 1, "Prédiction trimaladie" = 2, "Classification" = 3, "Perspectives" = 4))
       
     ),
     
@@ -603,8 +603,19 @@ tabPanel(
                        h2("Meilleures variables répresentatives : age, ...",align="center"),
                        br(),
                        br()),
-  
       conditionalPanel(condition="input.idRadioC == 3",
+                       br(),
+                       br(),
+                       h2("Kmeans : ",align="center"),
+                       br(),
+                       br(),
+                       h2("CAH : ",align="center"),
+                       br(),
+                       br(),
+                       h2("Croisement : ",align="center"),
+                       br(),
+                       br()),
+      conditionalPanel(condition="input.idRadioC == 4",
                        br(),
                        br(),
                        h2("Nutriments versus aliments",align="center"),
