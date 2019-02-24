@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
   
   # fonction utilisée pour le calcul de la précision
   precision <- function(X,Y,seuil=input$seuilmod){
-    Xc <- cut(X,breaks=c(0,seuil,1),labels=c(0,1))
+    Xc <- cut(X,breaks=c(0,seuil,1),labels=c(0,1),include.lowest=TRUE)
     round(sum(as.factor(Y)==Xc)/(sum(as.factor(Y)==Xc)+sum(as.factor(Y)!=Xc)),3)
   }
   
