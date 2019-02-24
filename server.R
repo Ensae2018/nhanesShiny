@@ -111,15 +111,21 @@ shinyServer(function(input, output) {
   
   output$resultat_diabetes <- renderText({
     
-    tempoDiab <- predict(modDiab,data.frame(Age_in_years_at_screening=input$age,
-                                          Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
-                                          high_cholesterol_level=input$cholesterol,
-                                          Body_Mass_Index_kg_m_2=input$bmi,
-                                          Doctor_ever_said_you_were_overweight=input$surpoids,
-                                          Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
-                                          Phosphorus_mg=input$phosphorus,
-                                          Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
-                                          Sodium_mg=input$sodium
+    tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
+                                              DR1TSUGR_dr1tot=input$sucre,
+                                              BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
+                                              MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
+                                              BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
+                                              DR1TALCO_dr1tot=input$alcool,
+                                              DR1TMOIS_dr1tot=input$humidite,
+                                              RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("0")),
+                                              DR1.320Z_dr1tot=input$waterdrank,
+                                              DR1TCHOL_dr1tot=input$choles,
+                                              DR1TPROT_dr1tot=input$proteines,
+                                              INDFMPIR_demo=input$pauvretefamille,
+                                              DR1TIRON_dr1tot=input$fer,
+                                              Var_TENSIONDI=input$pression_dia,
+                                              DR1TCAFF_dr1tot=input$cafeine
     ),type="response")
     ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
   })

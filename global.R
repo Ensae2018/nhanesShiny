@@ -65,11 +65,22 @@ modChol <- glm(nhanes.y~RIDAGEYR_demo+RIAGENDR_demo+INDFMPIR_demo+Var_TRAVAIL+
                  DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
 
 # algorithme de prediction DIABETES
-## Utilisation du modele logistique avec le choix des 10 variables prépondérantes
-# modDiab <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
-#              high_cholesterol_level+Body_Mass_Index_kg_m_2+Doctor_ever_said_you_were_overweight+
-#              Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
-#              Sodium_mg,data=donDiab,family="binomial")
+## Utilisation du modele logistique step réduit aux 15 variables d'importance
+modDiab <- glm(DIQ010_diq~RIDAGEYR_demo+
+                 DR1TSUGR_dr1tot+
+                 BPQ080_bpq+
+                 MCQ080_mcq+
+                 BPQ020_bpq + 
+                 DR1TALCO_dr1tot+
+                 DR1TMOIS_dr1tot+
+                 RIAGENDR_demo+
+                 DR1.320Z_dr1tot+
+                 DR1TCHOL_dr1tot+
+                 DR1TPROT_dr1tot+
+                 INDFMPIR_demo+
+                 DR1TIRON_dr1tot+
+                 Var_TENSIONDI+
+                 DR1TCAFF_dr1tot,data=donDia,family="binomial")
 
 # Le résulatat de comparaison des méthodes de prédiction Hypertension
 res_hyp <- read.csv2("data/res_hyp.csv")
@@ -79,7 +90,7 @@ res_chol <- read.csv2("data/res_chol.csv")
 
 # Le résulatat de comparaison des méthodes de prédiction Diabète
 res_dia <- read.csv("data/res_dia.csv",header=TRUE,sep=",",dec=".",row.names=1)
-str(res_dia)
+
 
 # on charge la table de selection des variable pour l'Hypertension
 tabselvar_hyp <- read.table("data/choix_var.csv", header=T, sep=";",row.names = NULL)

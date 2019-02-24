@@ -80,7 +80,7 @@ shinyUI(
                          h3("- Recodage de variables",br(),"- Elimination des variables avec plus de 10% de NA",br(),"- Imputation des données manquantes package MICE"),
                          h2("Phase 3: Modélisation"),
                          h3("- Sélection de variables",br(),"- Sélection de modèles"),
-                         h2("Phase 4: Construction de l'outil shiny Github pour la visualisation et d'un package pour synthétiser l'ensemble du projet")
+                         h2("Phase 4: Construction de l'outil shiny (avec Github) pour la visualisation et d'un package pour synthétiser l'ensemble du projet")
         )
         
         ))
@@ -146,7 +146,7 @@ shinyUI(
                                            label = "Choisir la methode",
                                            choices = colnames(res_dia[, -1]),
                                            multiple = TRUE,
-                                           selected = colnames(res_dia[, c(2,6,9)]),
+                                           selected = colnames(res_dia[, c(2,6,10)]),
                                            options = list(
                                              `actions-box` = FALSE,
                                              `none-selected-text` = "Selectionner 3!",
@@ -462,7 +462,55 @@ shinyUI(
                    min = 0,
                    max = 20000,
                    step = 100
-                 )
+                 ),
+                numericInput(
+                  inputId = "sucre",
+                  label = "Consommation en sucre (mg)",
+                  value = 2000,
+                  min = 0,
+                  max = 20000,
+                  step = 100
+                ),
+                numericInput(
+                  inputId = "humidite",
+                  label = "Consommation en humidité (mg)",
+                  value = 2000,
+                  min = 0,
+                  max = 20000,
+                  step = 100
+                ),
+                numericInput(
+                  inputId = "choles",
+                  label = "Consommation en cholesterol (mg)",
+                  value = 2000,
+                  min = 0,
+                  max = 20000,
+                  step = 100
+                ),
+                numericInput(
+                  inputId = "proteines",
+                  label = "Consommation en protéines (mg)",
+                  value = 2000,
+                  min = 0,
+                  max = 20000,
+                  step = 100
+                ),
+                numericInput(
+                  inputId = "fer",
+                  label = "Consommation en fer (mg)",
+                  value = 2000,
+                  min = 0,
+                  max = 20000,
+                  step = 100
+                ),
+                numericInput(
+                  inputId = "cafeine",
+                  label = "Consommation en caféine (mg)",
+                  value = 2000,
+                  min = 0,
+                  max = 20000,
+                  step = 100
+                )
                )))),
                mainPanel(
                  div(HTML("<b>Les resultats de la prediction</b>"), align = "center"),
