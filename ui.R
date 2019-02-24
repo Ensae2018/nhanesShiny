@@ -101,7 +101,7 @@ shinyUI(
           selectInput(inputId = "varhyp", label = p(span("Hypertension", style = "color:blue"),
                       ": choisissez la variable à explorer"),choices=colnames(donHyp)),
           selectInput(inputId = "varcho", label = p(span("Cholestérol", style = "color:blue"),
-                      ": choisissez la variable à explorer"),choices=colnames(donChol[,-c(1,21)])),#enlever le SEQN et le Y dans la liste deroulante
+                      ": choisissez la variable à explorer"),choices=colnames(donChol[,-c(1,2,93)])),#enlever le X, le SEQN et le Y dans la liste deroulante
           selectInput(inputId = "vardia", label = p(span("Diabète", style = "color:blue"), 
                       ": choisissez la variable à explorer"),choices=colnames(donDia[,-1]))#je mets -1 pour enlever le SEQN dans la liste deroulante
           ),
@@ -294,9 +294,10 @@ shinyUI(
 #----------------------------------------------------------------  
     tabPanel(title = "Prediction",
              sidebarLayout(
-             sidebarPanel("Les donnees sur l'individu",
+             sidebarPanel("Les données sur l'individu :",
                           
-             #Premiere colonne du questionnaire             
+             #Premiere colonne du questionnaire
+             #Hypothèses : value = mean, faible = 1q, moyen = median, fort = 3q, min=min, max=max
              fluidRow(column(6,
                  selectInput(
                    inputId = "sexe",
@@ -307,7 +308,7 @@ shinyUI(
                  numericInput(
                    inputId = "age",
                    label = "Selectionner votre age",
-                   value = 46,
+                   value = 30,
                    min = 16,
                    max = 150
                  ),
@@ -370,18 +371,21 @@ shinyUI(
                  numericInput(
                    inputId = "poids",
                    label = "Entrez votre poids(kg)",
-                   value = 80,
-                   min = 3,
+                   value = 65,#mean=80
+                   min = 30,
                    max = 200,
-                   step = 5
-                 ),numericInput(
+                   step = 1
+                 ),
+                 helpText ("faible~24?, moyen~28?, élevé~33?"),
+                 numericInput(
                    inputId = "bmi",
                    label = "Entrez votre indice masse corporel (kg/m^2)",
-                   value = 30,
+                   value = 34,#mean=30
                    min = 11,
                    max = 70,
-                   step = 5
+                   step = 1
                  ),
+                 helpText ("faible~112, moyen~122, élevé~134"),
                  numericInput(
                    inputId = "pression_sys",
                    label = "Entrez votre pression systolique (mm Hg)",
@@ -390,10 +394,11 @@ shinyUI(
                    max = 300,
                    step = 10
                  ),
+                 helpText ("faible~62, moyen~68, élevé~76"),
                  numericInput(
                    inputId = "pression_dia",
                    label = "Entrez votre pression diastolique (mm Hg)",
-                   value = 70,
+                   value = 69,
                    min = 0,
                    max = 200,
                    step = 10
@@ -416,6 +421,7 @@ shinyUI(
                                  2),
                    selected = 2
                  ),
+                helpText ("faible~10, moyen~15, élevé~22"),
                 numericInput(
                    inputId = "fibre",
                    label = "Entrez votre niveau de fibre alimentaire(g)",
@@ -423,22 +429,25 @@ shinyUI(
                    min = 0,
                    max = 100
                  ),
+                 helpText ("faible~126, moyen~185, élevé~266"),
                  numericInput(
                    inputId = "foodfolate",
                    label = "Entrez votre niveau de folate alimentaire(g)",
-                   value = 200,
-                   min = 0,
+                   value = 210,
+                   min = 3,
                    max = 2000,
-                   step = 30
-                 ),                 
+                   step = 10
+                 ),
+                 helpText ("faible~390, moyen~900, élevé~1600"),
                  numericInput(
                    inputId = "waterdrank",
                    label = "Entrez l'eau plate consommée hier(g)",
-                   value = 1200,
+                   value = 1100,
                    min = 0,
                    max = 15000,
                    step = 200
-                 ),                
+                 ),
+                 helpText ("faible~?, moyen~?, élevé~?"),
                  numericInput(
                    inputId = "alcool",
                    label = "Entrez votre niveau d'alcool(g)",
@@ -447,69 +456,77 @@ shinyUI(
                    max = 500,
                    step = 2
                  ),
-                 numericInput(
+                helpText ("faible~900, moyen~1200, élevé~1600"),
+                numericInput(
                    inputId = "phosphorus",
                    label = "Entrez votre consommation en phosphorus(mg)",
-                   value = 2000,
-                   min = 0,
+                   value = 1300,
+                   min = 50,
                    max = 8000,
-                   step = 100
+                   step = 10
                  ),
-                 numericInput(
+                helpText ("faible~2300, moyen~3150, élevé~4150"),
+                numericInput(
                    inputId = "sodium",
                    label = "Entrez votre consommation en sodium (mg)",
-                   value = 2000,
-                   min = 0,
+                   value = 3350,
+                   min = 80,
                    max = 20000,
-                   step = 100
+                   step = 10
                  ),
+                helpText ("faible~57, moyen~88, élevé~128"),
                 numericInput(
                   inputId = "sucre",
                   label = "Consommation en sucre (mg)",
-                  value = 2000,
+                  value = 100,
                   min = 0,
-                  max = 20000,
-                  step = 100
+                  max = 1000,
+                  step = 10
                 ),
+                helpText ("faible~1800, moyen~2500, élevé~3400"),
                 numericInput(
                   inputId = "humidite",
                   label = "Consommation en humidité (mg)",
-                  value = 2000,
-                  min = 0,
+                  value = 2700,
+                  min = 70,
                   max = 20000,
-                  step = 100
+                  step = 10
                 ),
+                helpText ("faible~155, moyen~250, élevé~390"),
                 numericInput(
                   inputId = "choles",
                   label = "Consommation en cholesterol (mg)",
-                  value = 2000,
+                  value = 290,
                   min = 0,
-                  max = 20000,
-                  step = 100
+                  max = 2000,
+                  step = 10
                 ),
+                helpText ("faible~55, moyen~73, élevé~97"),
                 numericInput(
                   inputId = "proteines",
                   label = "Consommation en protéines (mg)",
-                  value = 2000,
+                  value = 79,
                   min = 0,
-                  max = 20000,
-                  step = 100
+                  max = 500,
+                  step = 10
                 ),
+                helpText ("faible~8, moyen~12, élevé~16"),
                 numericInput(
                   inputId = "fer",
                   label = "Consommation en fer (mg)",
-                  value = 2000,
+                  value = 13,
                   min = 0,
-                  max = 20000,
-                  step = 100
+                  max = 100,
+                  step = 10
                 ),
+                helpText ("faible~19, moyen~81, élevé~177"),
                 numericInput(
                   inputId = "cafeine",
                   label = "Consommation en caféine (mg)",
-                  value = 2000,
+                  value = 128,
                   min = 0,
-                  max = 20000,
-                  step = 100
+                  max = 5000,
+                  step = 10
                 )
                )))),
                mainPanel(
@@ -604,9 +621,11 @@ shinyUI(
                plotOutput("indicehierarchieplot")),
       tabPanel("Comparaison",
                column(width=6,
+               "Kmeans",
                plotOutput("acpnutrimentplotkm"),
                plotOutput("contri1")),
                column(width=6,
+               "CAH",
                plotOutput("acpnutrimentplotcah"),
                plotOutput("contri2"))),
       tabPanel("Tableau",
@@ -640,13 +659,35 @@ tabPanel(
   sidebarLayout(
     sidebarPanel(
       radioButtons(inputId = "idRadioC", label = "Plan", selected = 3,
-                   choices = c("Choix des meilleurs modèles" = 1, "Prédiction trimaladie" = 2, "Classification" = 3, "Perspectives" = 4))
+                   choices = c("Contexte des données" = 1,"Choix des meilleures variables" = 2, "Choix des meilleurs modèles" = 3, "Prédiction trimaladie" = 4, "Classification" = 5, "Nouvelles perspectives" = 6))
       
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
       conditionalPanel(condition="input.idRadioC == 1",
+                       br(),
+                       br(),
+                       h2("Données Diabètes : ...",align="center"),
+                       br(),
+                       h2("Données Cholésterol : ...",align="center"),
+                       br(),
+                       br(),
+                       h2("Données Hypertension : ...",align="center"),
+                       br(),
+                       br()),
+      conditionalPanel(condition="input.idRadioC == 2",
+                       br(),
+                       br(),
+                       h2("Meilleures variables pour Diabètes : ...",align="center"),
+                       br(),
+                       h2("Meilleures variables pour Cholésterol : ...",align="center"),
+                       br(),
+                       br(),
+                       h2("Meilleures variables pour Hypertension : ...",align="center"),
+                       br(),
+                       br()),
+      conditionalPanel(condition="input.idRadioC == 3",
                        br(),
                        br(),
                        h2("Meilleur modèle pour Diabètes : forêt avec ...",align="center"),
@@ -658,7 +699,7 @@ tabPanel(
                        br(),
                        br()),
       
-      conditionalPanel(condition="input.idRadioC == 2",
+      conditionalPanel(condition="input.idRadioC == 4",
                        br(),
                        br(),
                        h2("Modèle trimaladie : logistique avec step...",align="center"),
@@ -667,7 +708,7 @@ tabPanel(
                        h2("Meilleures variables répresentatives : age, ...",align="center"),
                        br(),
                        br()),
-      conditionalPanel(condition="input.idRadioC == 3",
+      conditionalPanel(condition="input.idRadioC == 5",
                        br(),
                        br(),
                        h2("Kmeans : ",align="center"),
@@ -679,7 +720,7 @@ tabPanel(
                        h2("Croisement : ",align="center"),
                        br(),
                        br()),
-      conditionalPanel(condition="input.idRadioC == 4",
+      conditionalPanel(condition="input.idRadioC == 6",
                        br(),
                        br(),
                        h2("Nutriments versus aliments",align="center"),

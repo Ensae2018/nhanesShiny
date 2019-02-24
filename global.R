@@ -19,7 +19,8 @@ donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hyperten
 
 # on importe les donnees necessaire pour le projet
 #donChol <- read.csv("data/nhanes_chol_mice_faux.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
-donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
+#donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
+donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 
 # on importe les donnees necessaire pour le projet: partie diabete
 donDia <- read.csv("data/nhanes_dia_mice_apres.csv", sep=",",dec=".",row.names=1)# donnee diabete transcodifie et avec imputation mice
@@ -46,7 +47,7 @@ donDia$HEQ030_heq<-as.factor(donDia$HEQ030_heq)
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)
 #levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
-donChol$nhanes.y <- as.numeric(donChol$nhanes.y)
+donChol$nhanes.y <- as.numeric(donChol$nhanes.y) #si jamais
 #levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
 
 # algorithme de prediction hypertension

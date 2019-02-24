@@ -291,7 +291,7 @@ shinyServer(function(input, output) {
   tempo <- as.data.frame(km()$cluster)
   tempo <- cbind(row.names(tempo),tempo)
   row.names(tempo) <- NULL
-  colnames(tempo) <- c("nutriment","classe")
+  colnames(tempo) <- c("nutriment Kmeans","classe")
   datatable(tempo,class = 'cell-border stripe',filter = 'bottom',
             extensions = c('Buttons'), rownames = FALSE,
             options=list(autoWidth = TRUE, 
@@ -303,7 +303,7 @@ shinyServer(function(input, output) {
     tempo <- as.data.frame(cutree(cah(), h=input$nivo_cah))
     tempo <- cbind(row.names(tempo),tempo)
     row.names(tempo) <- NULL
-    colnames(tempo) <- c("nutriment","classe")
+    colnames(tempo) <- c("nutriment CAH","classe")
     datatable(tempo,class = 'cell-border stripe',filter = 'bottom',
               extensions = c('Buttons'), rownames = FALSE,
               options=list(autoWidth = TRUE, 
