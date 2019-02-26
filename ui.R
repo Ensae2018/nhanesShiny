@@ -120,11 +120,12 @@ shinyUI(
 #----------------------------------------------------------------    
 
       navbarMenu(
-      title = "Choix modele",
+      title = "Choix modèle",
       
       # Choix modele pour Diabete
-      tabPanel("modele diabete",
+      tabPanel("modèle diabètes",
                navlistPanel(widths=c(2,10),
+                            "Modèle Diabètes",
                             tabPanel(title = "choix variable",
                                      fluidRow(
                               column(
@@ -178,8 +179,9 @@ shinyUI(
                
       
       # Choix modele pour Cholesterol
-      tabPanel("modele cholesterol",
+      tabPanel("modèle cholésterol",
                navlistPanel(widths=c(2,10),
+                            "Modèle Cholésterol",
                             tabPanel(title = "choix variable",
                                      fluidRow(
                                        column(
@@ -234,8 +236,9 @@ shinyUI(
                ),
       
       # Choix modele pour Hypertension
-      tabPanel("modele hypertension",
+      tabPanel("modèle hypertension",
                navlistPanel(widths=c(2,10),
+                "Modèle Hypertension",
                  tabPanel(title = "choix variable",
                           fluidRow(
                             column(
@@ -292,7 +295,7 @@ shinyUI(
 #----------------------------------------------------------------  
 #tabPanel : PREDICTION
 #----------------------------------------------------------------  
-    tabPanel(title = "Prediction",
+    tabPanel(title = "Prédiction",
              sidebarLayout(
              sidebarPanel("Les données sur l'individu :",
                           
@@ -335,14 +338,14 @@ shinyUI(
                  ),
                  checkboxGroupInput(
                    inputId = "cholesterol",
-                   label = "Taux eleve de cholesterol?",
+                   label = "Taux élevé de cholésterol?",
                    choices = c("Oui" = "Yes", "Non" =
                                  "No"),
                    selected = "No"
                  ),
                  checkboxGroupInput(
                    inputId = "risquehypertension",
-                   label = "Taux eleve d'hypertension?",
+                   label = "Taux élevé d'hypertension?",
                    choices = c("Oui" = 1, "Non" =
                                  2),
                    selected = 2
@@ -495,7 +498,7 @@ shinyUI(
                 helpText ("faible~155, moyen~250, élevé~390"),
                 numericInput(
                   inputId = "choles",
-                  label = "Consommation en cholesterol (mg)",
+                  label = "Consommation en cholésterol (mg)",
                   value = 290,
                   min = 0,
                   max = 2000,
@@ -530,7 +533,7 @@ shinyUI(
                 )
                )))),
                mainPanel(
-                 div(HTML("<b>Les resultats de la prediction</b>"), align = "center"),
+                 div(HTML("<b>Les résultats de la prédiction</b>"), align = "center"),
                  br(),
                  fluidRow(column(4,
                    wellPanel(
@@ -591,7 +594,7 @@ shinyUI(
         label = "Choisir la maladie:", 
         grid = TRUE, 
         force_edges = TRUE,
-        choices = c("cholesterol","diabete","hypertension")
+        choices = c("cholesterol","diabetes","hypertension")
       ), align="center"),
       div(sliderTextInput(
         inputId = "afficherind", 
@@ -724,6 +727,10 @@ tabPanel(
                        br(),
                        br(),
                        h2("Nutriments versus aliments",align="center"),
+                       br(),
+                       br(),
+                       br(),
+                       h2("Données d'autres années (2013, 2011, ...)",align="center"),
                        br(),
                        br(),
                        h2("Modèle français",align="center"),

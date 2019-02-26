@@ -13,12 +13,14 @@ var <- get_pca_var(acp)
 ind <- get_pca_ind(acp)
 
 # Kmeans
+#selon la conso des nutriments
 partition <- 1:15
 for (i in 1:15){
   kmk <- kmeans(var$coord,centers = i, nstart = 10)
   partition[i]= kmk$tot.withinss/kmk$totss*100
 }
 
+#selon le comportement des individus 
 partitionbis <- 1:15
 for (i in 1:15){
   kmk <- kmeans(ind$coord,centers = i, nstart = 10)

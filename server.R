@@ -240,7 +240,7 @@ shinyServer(function(input, output) {
     fviz_pca_ind(
       acp,
       habillage = (switch(input$choixmaladie,
-                          "cholesterol"=1,"diabete"=2,"hypertension"=3)),
+                          "cholesterol"=1,"diabetes"=2,"hypertension"=3)), #pas utiliser des accents
       addEllipses = T,
       geom = c(ifelse(input$afficherind=="oui","text","point"))
     )
@@ -251,7 +251,7 @@ shinyServer(function(input, output) {
     fviz_pca_biplot(
       acp,
       habillage = (switch(input$choixmaladie,
-                          "cholesterol"=1,"diabete"=2,"hypertension"=3)),
+                          "cholesterol"=1,"diabetes"=2,"hypertension"=3)), #pas utiliser des accents
       label="var",
       col.var = grp,
       invisible = "quanti.sup"
