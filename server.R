@@ -515,33 +515,170 @@ observeEvent(input$methodedia==3,{
   })
 })
 
+
+
 #=================================
 #Graphiques pour l'onglet CONTEXTE
 #=================================
 
-
-output$graphhyp<-renderPlot({
-  xhyp<-donHyp[,input$varhyp]
-  if (class(xhyp) %in% c("numeric","integer")) {
-  ggplot(data=donHyp,aes(x=xhyp))+geom_histogram(binwidth=1,fill="light blue")} else {
-      ggplot(data=donHyp,aes(x=xhyp))+geom_bar(fill="light blue")}})
-
-output$graphcho<-renderPlot({
-  xcho<-donChol[,input$varcho]
-  if (class(xcho) %in% c("numeric","integer")) {
-  ggplot(data=donChol,aes(x=xcho))+geom_histogram(binwidth=1,fill="light blue")} else {
-    ggplot(data=donChol,aes(x=xcho))+geom_bar(fill="light blue")}})
-
-output$graphdia<-renderPlot({
-  xdia<-donDia[,input$vardia]
+#DIABETE
+#-------
+output$tabstatdia<-renderTable({
+  xdia<-donDia[,input$vardiax]
   if (class(xdia) %in% c("numeric","integer")) {
-  ggplot(data=donDia,aes(x=xdia))+geom_histogram(binwidth=1,fill="light blue")} else {
-    ggplot(data=donDia,aes(x=xdia))+geom_bar(fill="light blue")
-    
-  }
-    
-    
-    })
+   tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
+   colnames(tabstat)<-c("Type","Valeur")
+   tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
+   tabstat[1,2]<-class(xdia)
+   tabstat[2,2]<-quantile(xdia)[1]
+   tabstat[3,2]<-quantile(xdia)[2]
+   tabstat[4,2]<-quantile(xdia)[3]
+   tabstat[5,2]<-quantile(xdia)[4]
+   tabstat[6,2]<-quantile(xdia)[5]
+   tabstat} else {
+     tabstat<-data.frame(table(xdia))
+     colnames(tabstat)<-c("Modalité","Effectif")
+     tabstat
+   }
+  })
 
+output$graph1dia<-renderPlotly({
+  x1dia<-donDia[,input$vardiax]
+  x2dia<-donDia[donDia$DIQ010_diq=="1",input$vardiax]
+  if (class(x1dia) %in% c("numeric","integer")) {
+    
+    ggplot(donDia, aes(x=x1dia, color=donDia$DIQ010_diq)) +
+      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
+  } else {
+    g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    ggplotly(g) }
+  
+})
 
+output$graph2dia<-renderPlotly({
+  x1dia<-donDia[,input$vardiaxy[1]]
+  x2dia<-donDia[,input$vardiaxy[2]]
+  
+  if (input$idgraphtype==1) {
+    g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))
+    ggplotly(g)
+  } else {
+    if (input$idgraphtype==2) {
+      
+          g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()
+          ggplotly(g) } else {
+            
+            if (input$idgraphtype==3) {
+              g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
+              ggplotly(g)}}}
+ 
+  })
+
+#HYPERTENSION
+#------------
+output$tabstathyp<-renderTable({
+  xhyp<-donHyp[,input$varhypx]
+  if (class(xhyp) %in% c("numeric","integer")) {
+    tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
+    colnames(tabstat)<-c("Type","Valeur")
+    tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
+    tabstat[1,2]<-class(xhyp)
+    tabstat[2,2]<-quantile(xhyp)[1]
+    tabstat[3,2]<-quantile(xhyp)[2]
+    tabstat[4,2]<-quantile(xhyp)[3]
+    tabstat[5,2]<-quantile(xhyp)[4]
+    tabstat[6,2]<-quantile(xhyp)[5]
+    tabstat} else {
+      tabstat<-data.frame(table(xhyp))
+      colnames(tabstat)<-c("Modalité","Effectif")
+      tabstat
+    }
+})
+
+output$graph1hyp<-renderPlotly({
+  x1hyp<-donHyp[,input$varhypx]
+  x2hyp<-donHyp[donHyp$Y=="1",input$varhypx]
+  if (class(x1hyp) %in% c("numeric","integer")) {
+    
+    ggplot(donHyp, aes(x=x1hyp, color=donHyp$Y)) +
+      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
+  } else {
+    g<-ggplot(data=donHyp, aes(x=x1hyp,fill=donHyp$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    ggplotly(g) }
+  
+})
+
+output$graph2hyp<-renderPlotly({
+  x1hyp<-donHyp[,input$varhypxy[1]]
+  x2hyp<-donHyp[,input$varhypxy[2]]
+  
+  if (input$idgraphtypehyp==1) {
+    g<-qplot(x=x1hyp,y=x2hyp,data=donHyp,color=donHyp$Y,geom="point")+scale_color_manual(values=c("green","red"))
+    ggplotly(g)
+  } else {
+    if (input$idgraphtypehyp==2) {
+      
+      g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_boxplot()
+      ggplotly(g) } else {
+        
+        if (input$idgraphtypehyp==3) {
+          g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
+          ggplotly(g)}}}
+  
+})
+  
+#CHOLESTEROL
+#-----------
+output$tabstatcho<-renderTable({
+  xcho<-donChol[,input$varchox]
+  if (class(xcho) %in% c("numeric","integer")) {
+    tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
+    colnames(tabstat)<-c("Type","Valeur")
+    tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
+    tabstat[1,2]<-class(xcho)
+    tabstat[2,2]<-quantile(xcho)[1]
+    tabstat[3,2]<-quantile(xcho)[2]
+    tabstat[4,2]<-quantile(xcho)[3]
+    tabstat[5,2]<-quantile(xcho)[4]
+    tabstat[6,2]<-quantile(xcho)[5]
+    tabstat} else {
+      tabstat<-data.frame(table(xcho))
+      colnames(tabstat)<-c("Modalité","Effectif")
+      tabstat
+    }
+})
+
+output$graph1cho<-renderPlotly({
+  x1cho<-donChol[,input$varchox]
+  x2cho<-donChol[donChol$nhanes.y==1,input$varchox]
+  if (class(x1cho) %in% c("numeric","integer")) {
+    
+    ggplot(donChol, aes(x=x1cho, color=donChol$nhanes.y)) +
+      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
+  } else {
+    g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$nhanes.y))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    ggplotly(g) }
+  
+})
+
+output$graph2cho<-renderPlotly({
+  x1cho<-donChol[,input$varchoxy[1]]
+  x2cho<-donChol[,input$varchoxy[2]]
+  
+  if (input$idgraphtypecho==1) {
+    g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$nhanes.y,geom="point")+scale_color_manual(values=c("green","red"))
+    ggplotly(g)
+  } else {
+    if (input$idgraphtypecho==2) {
+      
+      g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_boxplot()
+      ggplotly(g) } else {
+        
+        if (input$idgraphtypecho==3) {
+          g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
+          ggplotly(g)}}}
+  
+    
+  })
+    
 })

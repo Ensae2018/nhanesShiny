@@ -13,6 +13,9 @@ library(DT)#utile pour la table interactive
 library(pROC)#Etude courbe ROC et AUC
 library(shinyWidgets)#widgets avancés pour Shiny
 library(igraph) # des graphe type phylogenic 
+library(plotly)#graphes interactifs
+
+
 
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
