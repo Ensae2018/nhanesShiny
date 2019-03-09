@@ -14,9 +14,9 @@ shinyServer(function(input, output) {
   
   seuil <- reactive({
     switch (input$sensibilite,
-      Fragile = 0.4,
-      Normal = 0.5,
-      fort=0.6
+            Fragile = 0.4,
+            Normal = 0.5,
+            fort=0.6
     )
   })
   
@@ -57,10 +57,10 @@ shinyServer(function(input, output) {
   #   
   # })
   
-
-####
-# La Prediction
-####  
+  
+  ####
+  # La Prediction
+  ####  
   tempoHyp <- 999
   tempoChol <- 999
   tempoDiab <- 999
@@ -68,74 +68,74 @@ shinyServer(function(input, output) {
   # j'ajoute une observation  sur la button pour lancer la prédiction
   observeEvent(input$predict==TRUE, {
     
-  output$resultat_hypertension <- renderText({
+    output$resultat_hypertension <- renderText({
+      
+      tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
+                                            Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
+                                            high_cholesterol_level=input$cholesterol,
+                                            Body_Mass_Index_kg_m_2=input$bmi,
+                                            Doctor_ever_said_you_were_overweight=input$surpoids,
+                                            Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
+                                            Phosphorus_mg=input$phosphorus,
+                                            Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
+                                            Sodium_mg=input$sodium
+      ),type="response")
+      ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
+    })
     
-  tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
-             Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
-             high_cholesterol_level=input$cholesterol,
-             Body_Mass_Index_kg_m_2=input$bmi,
-             Doctor_ever_said_you_were_overweight=input$surpoids,
-             Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
-             Phosphorus_mg=input$phosphorus,
-             Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
-             Sodium_mg=input$sodium
-             ),type="response")
-  ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
-  })
-  
-#Changement variables retenus pour Cholestérol
-  # #How many rooms are in this home? Count the kitchen but not the bathroom.
-  # unique(donCholStep$HOD050_hoq) #int 7   6   5   4  10   1   3   8   9 777   2  12  11  13 =>num
-  # 
-  # #In a typical week {do you/does SP} walk or use a bicycle for at least 10 minutes continuously to get to and from places? => factor
-  # unique(donCholStep$PAQ635_paq) #int 2 1 9
-  # 
-  # #Lutein + zeaxanthin (mcg)
-  # unique(donCholStep$DR1TLZ_dr1tot) #num
-  # 
-  # #Vitamin C (mg)
-  # unique(donCholStep$DR1TVC_dr1tot) #num
-  # 
-  # #Moisture (gm)
-  # unique(donCholStep$DR1TMOIS_dr1tot) #num
-  #
-  # #Sexe => pas significatif
-  # #Water drank => pas significatif
-  
-  output$resultat_cholesterol <- renderText({
+    #Changement variables retenus pour Cholestérol
+    # #How many rooms are in this home? Count the kitchen but not the bathroom.
+    # unique(donCholStep$HOD050_hoq) #int 7   6   5   4  10   1   3   8   9 777   2  12  11  13 =>num
+    # 
+    # #In a typical week {do you/does SP} walk or use a bicycle for at least 10 minutes continuously to get to and from places? => factor
+    # unique(donCholStep$PAQ635_paq) #int 2 1 9
+    # 
+    # #Lutein + zeaxanthin (mcg)
+    # unique(donCholStep$DR1TLZ_dr1tot) #num
+    # 
+    # #Vitamin C (mg)
+    # unique(donCholStep$DR1TVC_dr1tot) #num
+    # 
+    # #Moisture (gm)
+    # unique(donCholStep$DR1TMOIS_dr1tot) #num
+    #
+    # #Sexe => pas significatif
+    # #Water drank => pas significatif
     
-    tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
-                                            HOD050_hoq=input$piecesmaison,
-                                            PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
-                                            DR1TLZ_dr1tot=input$LuteineZeaxanthine,
-                                            DR1TVC_dr1tot=input$vitamineC,
-                                            DR1TMOIS_dr1tot=input$humidite,
-                                            #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
-                                            BPXSY3_bpx=input$pression_sys,
-                                            BMXBMI_bmx=input$bmi,
-                                            MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
-                                            SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
-                                            BPXDI2_bpx=input$pression_dia,
-                                            INDFMPIR_demo=input$pauvretefamille,
-                                            Var_TRAVAIL=input$travail,
-                                            BMXHT_bmx=input$hauteur,
-                                            BMXWT_bmx=input$poids,
-                                            BPQ020_bpq=input$risquehypertension,
-                                            DIQ010_diq=input$risquediabetes,
-                                            OHAREC_ohxref=input$dentaire,
-                                            DRQSDIET_dr1tot=input$diete,
-                                            DR1TFIBE_dr1tot=input$fibre,
-                                            DR1TALCO_dr1tot=input$alcool,
-                                            DR1TFF_dr1tot=input$foodfolate
-                                            #DR1.320Z_dr1tot=input$waterdrank
-    ),type="response")
-    ifelse(tempoChol>seuil(),"Danger!!", ";-)")
-  })
-
-  
-  output$resultat_diabetes <- renderText({
+    output$resultat_cholesterol <- renderText({
+      
+      tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
+                                              HOD050_hoq=input$piecesmaison,
+                                              PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
+                                              DR1TLZ_dr1tot=input$LuteineZeaxanthine,
+                                              DR1TVC_dr1tot=input$vitamineC,
+                                              DR1TMOIS_dr1tot=input$humidite,
+                                              #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
+                                              BPXSY3_bpx=input$pression_sys,
+                                              BMXBMI_bmx=input$bmi,
+                                              MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
+                                              SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
+                                              BPXDI2_bpx=input$pression_dia,
+                                              INDFMPIR_demo=input$pauvretefamille,
+                                              Var_TRAVAIL=input$travail,
+                                              BMXHT_bmx=input$hauteur,
+                                              BMXWT_bmx=input$poids,
+                                              BPQ020_bpq=input$risquehypertension,
+                                              DIQ010_diq=input$risquediabetes,
+                                              OHAREC_ohxref=input$dentaire,
+                                              DRQSDIET_dr1tot=input$diete,
+                                              DR1TFIBE_dr1tot=input$fibre,
+                                              DR1TALCO_dr1tot=input$alcool,
+                                              DR1TFF_dr1tot=input$foodfolate
+                                              #DR1.320Z_dr1tot=input$waterdrank
+      ),type="response")
+      ifelse(tempoChol>seuil(),"Danger!!", ";-)")
+    })
     
-    tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
+    
+    output$resultat_diabetes <- renderText({
+      
+      tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
                                               DR1TSUGR_dr1tot=input$sucre,
                                               BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
                                               MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
@@ -150,33 +150,33 @@ shinyServer(function(input, output) {
                                               DR1TIRON_dr1tot=input$fer,
                                               Var_TENSIONDI=input$pression_dia,
                                               DR1TCAFF_dr1tot=input$cafeine
-    ),type="response")
-    ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
-  })
-  
-  output$im_hyp_g <- renderImage({
-    filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg'))
-    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-  
-  output$im_hyp_b <- renderImage({
-    filename <- normalizePath(file.path('./www/img/hypertensionbad.jpg'))
-    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-  
-  output$im_cho_g <- renderImage({
-    filename <- normalizePath(file.path('./www/img/Cholesterolgood.jpg'))
-    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-  
-  output$im_cho_b <- renderImage({
-    filename <- normalizePath(file.path('./www/img/Cholesterolbad.png'))
-    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-  
-  output$im_dia_g <- renderImage({
-    filename <- normalizePath(file.path('./www/img/diabetegood.jpg'))
-    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-  
-  output$im_dia_b <- renderImage({
-    filename <- normalizePath(file.path('./www/img/diabetebad.png'))
-    list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+      ),type="response")
+      ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
+    })
+    
+    output$im_hyp_g <- renderImage({
+      filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg'))
+      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+    
+    output$im_hyp_b <- renderImage({
+      filename <- normalizePath(file.path('./www/img/hypertensionbad.jpg'))
+      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+    
+    output$im_cho_g <- renderImage({
+      filename <- normalizePath(file.path('./www/img/Cholesterolgood.jpg'))
+      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+    
+    output$im_cho_b <- renderImage({
+      filename <- normalizePath(file.path('./www/img/Cholesterolbad.png'))
+      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+    
+    output$im_dia_g <- renderImage({
+      filename <- normalizePath(file.path('./www/img/diabetegood.jpg'))
+      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
+    
+    output$im_dia_b <- renderImage({
+      filename <- normalizePath(file.path('./www/img/diabetebad.png'))
+      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
   })
   
   output$tableHypertension <- renderTable({
@@ -204,9 +204,9 @@ shinyServer(function(input, output) {
   })
   
   
-####
-# La Classification
-####  
+  ####
+  # La Classification
+  ####  
   
   output$inertienutrimentplot <- renderPlot({
     ggplot(as.data.frame(partition),
@@ -283,11 +283,11 @@ shinyServer(function(input, output) {
   })
   
   output$partitionkm <- renderPlot({
-  fviz_cluster(km(),data=var$coord,main = "Partitioning Clustering Plot",
-               repel = TRUE,
-               geom = c(ifelse(input$afficherind=="oui","text","point")),
-               axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
-                        ifelse(input$choixaxe=="dim1-dim2",2,4)))
+    fviz_cluster(km(),data=var$coord,main = "Partitioning Clustering Plot",
+                 repel = TRUE,
+                 geom = c(ifelse(input$afficherind=="oui","text","point")),
+                 axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+                          ifelse(input$choixaxe=="dim1-dim2",2,4)))
   })
   
   output$partitionkmbis <- renderPlot({
@@ -296,7 +296,7 @@ shinyServer(function(input, output) {
                  axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
                           ifelse(input$choixaxe=="dim1-dim2",2,4)))
   })
-
+  
   output$dendrogramme <- renderPlot({
     fviz_dend(
       cah(),
@@ -312,15 +312,15 @@ shinyServer(function(input, output) {
   
   
   output$groupekm <- renderDataTable({
-  tempo <- as.data.frame(km()$cluster)
-  tempo <- cbind(row.names(tempo),tempo)
-  row.names(tempo) <- NULL
-  colnames(tempo) <- c("nutriment Kmeans","classe")
-  datatable(tempo,class = 'cell-border stripe',filter = 'bottom',
-            extensions = c('Buttons'), rownames = FALSE,
-            options=list(autoWidth = TRUE, 
-                         dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
-                         pageLength=20))
+    tempo <- as.data.frame(km()$cluster)
+    tempo <- cbind(row.names(tempo),tempo)
+    row.names(tempo) <- NULL
+    colnames(tempo) <- c("nutriment Kmeans","classe")
+    datatable(tempo,class = 'cell-border stripe',filter = 'bottom',
+              extensions = c('Buttons'), rownames = FALSE,
+              options=list(autoWidth = TRUE, 
+                           dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
+                           pageLength=20))
   })
   
   output$groupecah <- renderDataTable({
@@ -342,7 +342,7 @@ shinyServer(function(input, output) {
   output$contri2 <- renderPlot({
     fviz_contrib(acp, choice = "var", axes = 2, top = input$topcontrib)
   })
-
+  
   ####
   # Les choix de variables pour Hypertension
   ####
@@ -350,25 +350,25 @@ shinyServer(function(input, output) {
   rang_val_hyp <- reactive(tabselvar_hyp[,-1][which(max_val_hyp==input$priohyp, arr.ind=TRUE)])
   
   output$tabselvarhyp <- renderDataTable({
-  
+    
     datatable(tabselvar_hyp,class = 'cell-border stripe',filter = 'bottom',
               extensions = c('Buttons'), rownames = FALSE,
               options=list(autoWidth = TRUE, 
                            dom = 'flrBtip', buttons=c('copy', 'csv',I('colvis')),
                            pageLength=20)
-              ) %>% 
+    ) %>% 
       formatStyle(
-                columns = 2:length(tabselvar_hyp), 
-                backgroundColor = styleEqual(levels = rang_val_hyp(), 
-                                             values = rep("yellow", length(rang_val_hyp())))) 
-    })
+        columns = 2:length(tabselvar_hyp), 
+        backgroundColor = styleEqual(levels = rang_val_hyp(), 
+                                     values = rep("yellow", length(rang_val_hyp())))) 
+  })
   
-####
-# Les choix de variables pour Cholesterol
-####  
+  ####
+  # Les choix de variables pour Cholesterol
+  ####  
   
   rang_val_chol <- reactive(tabselvar_chol[,-1][which(max_val_chol==input$priochol, arr.ind=TRUE)]) 
-
+  
   output$tabselvarchol <- renderDataTable({
     
     datatable(tabselvar_chol,class = 'cell-border stripe',filter = 'bottom',
@@ -382,11 +382,11 @@ shinyServer(function(input, output) {
         backgroundColor = styleEqual(levels = rang_val_chol(),
                                      values = rep("yellow", length(rang_val_chol()))))
   })
-
   
-####
-# Les choix de variables pour Diabetes
-####  
+  
+  ####
+  # Les choix de variables pour Diabetes
+  ####  
   
   rang_val_dia <- reactive(tabselvar_dia[,-1][which(max_val_dia==input$priodia, arr.ind=TRUE)])
   
@@ -404,305 +404,322 @@ shinyServer(function(input, output) {
   })
   
   
-
-####
-# Les metriques pour Hypertension
-####
-observeEvent(input$methodehyp==3,{
-  output$choixmethode <- renderPlot({
-    plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC")
-    lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[2]]), col="red")
-    lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[3]]), col="green")
-    legend("bottomright",legend = c(input$methodehyp[1],input$methodehyp[2], input$methodehyp[3]), col=c("black","red","green"), lty = 1)
-  })
-
-  output$valAUC <- renderTable({
-    tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),
-               auc(res_hyp[,1],res_hyp[,input$methodehyp[2]]),
-               auc(res_hyp[,1],res_hyp[,input$methodehyp[3]])
-    )
-    names(tabauc) <- input$methodehyp    
-    tabauc
-  })
   
-  output$matconf <- renderTable({
-    tabconf <- cbind(as.data.frame(monerreur(res_hyp[,input$methodehyp[1]],res_hyp[,1])),
-          as.data.frame(monerreur(res_hyp[,input$methodehyp[2]],res_hyp[,1]))[,3],
-          as.data.frame(monerreur(res_hyp[,input$methodehyp[3]],res_hyp[,1]))[,3]
-    )
-    names(tabconf)[3:length(names(tabconf))] <- input$methodehyp
-    names(tabconf)[1] <- "seuil"
-    tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-    tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-    tabconf$seuil <- as.character(tabconf$seuil)
-    tabconf$seuil[5] <- "Sensibilité"
-    tabconf$seuil[6] <- "Spécificité"
-    tabconf
-  })
-  
-  output$matprecision <- renderTable({
-    tabprecision <- data.frame(precision(res_hyp[,input$methodehyp[1]],res_hyp[,1]),
-          precision(res_hyp[,input$methodehyp[2]],res_hyp[,1]),
-          precision(res_hyp[,input$methodehyp[3]],res_hyp[,1]))
-    names(tabprecision) <- input$methodehyp
-    tabprecision
-  })
-})
-
-####
-# Les metriques pour Cholesterol
-####
-observeEvent(input$methodechol==3,{
-  output$choixmethode_chol <- renderPlot({
-    plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC")
-    lines(roc(res_chol[,1],res_chol[,input$methodechol[2]]), col="red")
-    lines(roc(res_chol[,1],res_chol[,input$methodechol[3]]), col="green")
-    legend("bottomright",legend = c(input$methodechol[1],input$methodechol[2], input$methodechol[3]), col=c("black","red","green"), lty = 1)
-  })
-  
-  output$valAUC_chol <- renderTable({
-    tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]),
-                         auc(res_chol[,1],res_chol[,input$methodechol[2]]),
-                         auc(res_chol[,1],res_chol[,input$methodechol[3]])
-    )
-    names(tabauc) <- input$methodechol    
-    tabauc
-  })
-  
-  output$matconf_chol <- renderTable({
-    tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol)),
-                     as.data.frame(monerreur(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol))[,3],
-                     as.data.frame(monerreur(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))[,3]
-    )
-    names(tabconf)[3:length(names(tabconf))] <- input$methodechol
-    names(tabconf)[1] <- "seuil"
-    tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-    tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-    tabconf$seuil <- as.character(tabconf$seuil)
-    tabconf$seuil[5] <- "Sensibilité"
-    tabconf$seuil[6] <- "Spécificité"
-    tabconf
-  })
-  
-  output$matprecision_chol <- renderTable({
-    tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol),
-                               precision(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol),
-                               precision(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))
-    names(tabprecision) <- input$methodechol
-    tabprecision
-  })
-})
-
-
-####
-# Les metriques pour le diabete
-####
-observeEvent(input$methodedia==3,{
-  output$choixmethode_dia <- renderPlot({
-    plot(roc(res_dia[,1],res_dia[,input$methodedia[1]]),col="black",main="Courbes ROC")
-    lines(roc(res_dia[,1],res_dia[,input$methodedia[2]]), col="red")
-    lines(roc(res_dia[,1],res_dia[,input$methodedia[3]]), col="green")
-    legend("bottomright",legend = c(input$methodedia[1],input$methodedia[2], input$methodedia[3]), col=c("black","red","green"), lty = 1)
-  })
-  
-  output$valAUC_dia <- renderTable({
-    tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methodedia[1]]),
-                         auc(res_dia[,1],res_dia[,input$methodedia[2]]),
-                         auc(res_dia[,1],res_dia[,input$methodedia[3]])
-    )
-    names(tabauc) <- input$methodedia    
-    tabauc
-  })
-  
-  output$matconf_dia <- renderTable({
-    tabconf <- cbind(as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia)),
-                     as.data.frame(monerreur(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia))[,3],
-                     as.data.frame(monerreur(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))[,3]
-    )
+  ####
+  # Les metriques pour Hypertension
+  ####
+  observeEvent(input$methodehyp==3,{
+    output$choixmethode <- renderPlot({
+      plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC")
+      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[2]]), col="red")
+      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[3]]), col="green")
+      legend("bottomright",legend = c(input$methodehyp[1],input$methodehyp[2], input$methodehyp[3]), col=c("black","red","green"), lty = 1)
+    })
     
-    names(tabconf)[3:length(names(tabconf))] <- input$methodedia
-    names(tabconf)[1] <- "seuil"
-    tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-    tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-    tabconf$seuil <- as.character(tabconf$seuil)
-    tabconf$seuil[5] <- "Sensibilité"
-    tabconf$seuil[6] <- "Spécificité"
-    tabconf
-  })
-  
-  output$matprecision_dia <- renderTable({
-    tabprecision <- data.frame(precision(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia),
-                               precision(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia),
-                               precision(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))
-    names(tabprecision) <- input$methodedia
-    tabprecision
-  })
-})
-
-
-
-#=================================
-#Graphiques pour l'onglet CONTEXTE
-#=================================
-
-#DIABETE
-#-------
-output$tabstatdia<-renderTable({
-  xdia<-donDia[,input$vardiax]
-  if (class(xdia) %in% c("numeric","integer")) {
-   tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
-   colnames(tabstat)<-c("Type","Valeur")
-   tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
-   tabstat[1,2]<-class(xdia)
-   tabstat[2,2]<-quantile(xdia)[1]
-   tabstat[3,2]<-quantile(xdia)[2]
-   tabstat[4,2]<-quantile(xdia)[3]
-   tabstat[5,2]<-quantile(xdia)[4]
-   tabstat[6,2]<-quantile(xdia)[5]
-   tabstat} else {
-     tabstat<-data.frame(table(xdia))
-     colnames(tabstat)<-c("Modalité","Effectif")
-     tabstat
-   }
-  })
-
-output$graph1dia<-renderPlotly({
-  x1dia<-donDia[,input$vardiax]
-  x2dia<-donDia[donDia$DIQ010_diq=="1",input$vardiax]
-  if (class(x1dia) %in% c("numeric","integer")) {
+    output$valAUC <- renderTable({
+      tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),
+                           auc(res_hyp[,1],res_hyp[,input$methodehyp[2]]),
+                           auc(res_hyp[,1],res_hyp[,input$methodehyp[3]])
+      )
+      names(tabauc) <- input$methodehyp    
+      tabauc
+    })
     
-    ggplot(donDia, aes(x=x1dia, color=donDia$DIQ010_diq)) +
-      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
-  } else {
-    g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))
-    ggplotly(g) }
+    output$matconf <- renderTable({
+      tabconf <- cbind(as.data.frame(monerreur(res_hyp[,input$methodehyp[1]],res_hyp[,1])),
+                       as.data.frame(monerreur(res_hyp[,input$methodehyp[2]],res_hyp[,1]))[,3],
+                       as.data.frame(monerreur(res_hyp[,input$methodehyp[3]],res_hyp[,1]))[,3]
+      )
+      names(tabconf)[3:length(names(tabconf))] <- input$methodehyp
+      names(tabconf)[1] <- "seuil"
+      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
+      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
+      tabconf$seuil <- as.character(tabconf$seuil)
+      tabconf$seuil[5] <- "Sensibilité"
+      tabconf$seuil[6] <- "Spécificité"
+      tabconf
+    })
+    
+    output$matprecision <- renderTable({
+      tabprecision <- data.frame(precision(res_hyp[,input$methodehyp[1]],res_hyp[,1]),
+                                 precision(res_hyp[,input$methodehyp[2]],res_hyp[,1]),
+                                 precision(res_hyp[,input$methodehyp[3]],res_hyp[,1]))
+      names(tabprecision) <- input$methodehyp
+      tabprecision
+    })
+  })
   
-})
-
-output$graph2dia<-renderPlotly({
-  x1dia<-donDia[,input$vardiaxy[1]]
-  x2dia<-donDia[,input$vardiaxy[2]]
+  ####
+  # Les metriques pour Cholesterol
+  ####
+  observeEvent(input$methodechol==3,{
+    output$choixmethode_chol <- renderPlot({
+      plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC")
+      lines(roc(res_chol[,1],res_chol[,input$methodechol[2]]), col="red")
+      lines(roc(res_chol[,1],res_chol[,input$methodechol[3]]), col="green")
+      legend("bottomright",legend = c(input$methodechol[1],input$methodechol[2], input$methodechol[3]), col=c("black","red","green"), lty = 1)
+    })
+    
+    output$valAUC_chol <- renderTable({
+      tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]),
+                           auc(res_chol[,1],res_chol[,input$methodechol[2]]),
+                           auc(res_chol[,1],res_chol[,input$methodechol[3]])
+      )
+      names(tabauc) <- input$methodechol    
+      tabauc
+    })
+    
+    output$matconf_chol <- renderTable({
+      tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol)),
+                       as.data.frame(monerreur(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol))[,3],
+                       as.data.frame(monerreur(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))[,3]
+      )
+      names(tabconf)[3:length(names(tabconf))] <- input$methodechol
+      names(tabconf)[1] <- "seuil"
+      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
+      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
+      tabconf$seuil <- as.character(tabconf$seuil)
+      tabconf$seuil[5] <- "Sensibilité"
+      tabconf$seuil[6] <- "Spécificité"
+      tabconf
+    })
+    
+    output$matprecision_chol <- renderTable({
+      tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol),
+                                 precision(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol),
+                                 precision(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))
+      names(tabprecision) <- input$methodechol
+      tabprecision
+    })
+  })
   
-  if (input$idgraphtype==1) {
-    g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))
-    ggplotly(g)
-  } else {
-    if (input$idgraphtype==2) {
+  
+  ####
+  # Les metriques pour le diabete
+  ####
+  observeEvent(input$methodedia==3,{
+    output$choixmethode_dia <- renderPlot({
+      plot(roc(res_dia[,1],res_dia[,input$methodedia[1]]),col="black",main="Courbes ROC")
+      lines(roc(res_dia[,1],res_dia[,input$methodedia[2]]), col="red")
+      lines(roc(res_dia[,1],res_dia[,input$methodedia[3]]), col="green")
+      legend("bottomright",legend = c(input$methodedia[1],input$methodedia[2], input$methodedia[3]), col=c("black","red","green"), lty = 1)
+    })
+    
+    output$valAUC_dia <- renderTable({
+      tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methodedia[1]]),
+                           auc(res_dia[,1],res_dia[,input$methodedia[2]]),
+                           auc(res_dia[,1],res_dia[,input$methodedia[3]])
+      )
+      names(tabauc) <- input$methodedia    
+      tabauc
+    })
+    
+    output$matconf_dia <- renderTable({
+      tabconf <- cbind(as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia)),
+                       as.data.frame(monerreur(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia))[,3],
+                       as.data.frame(monerreur(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))[,3]
+      )
       
-          g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()
-          ggplotly(g) } else {
-            
-            if (input$idgraphtype==3) {
-              g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
-              ggplotly(g)}}}
- 
-  })
-
-#HYPERTENSION
-#------------
-output$tabstathyp<-renderTable({
-  xhyp<-donHyp[,input$varhypx]
-  if (class(xhyp) %in% c("numeric","integer")) {
-    tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
-    colnames(tabstat)<-c("Type","Valeur")
-    tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
-    tabstat[1,2]<-class(xhyp)
-    tabstat[2,2]<-quantile(xhyp)[1]
-    tabstat[3,2]<-quantile(xhyp)[2]
-    tabstat[4,2]<-quantile(xhyp)[3]
-    tabstat[5,2]<-quantile(xhyp)[4]
-    tabstat[6,2]<-quantile(xhyp)[5]
-    tabstat} else {
-      tabstat<-data.frame(table(xhyp))
-      colnames(tabstat)<-c("Modalité","Effectif")
-      tabstat
-    }
-})
-
-output$graph1hyp<-renderPlotly({
-  x1hyp<-donHyp[,input$varhypx]
-  x2hyp<-donHyp[donHyp$Y=="1",input$varhypx]
-  if (class(x1hyp) %in% c("numeric","integer")) {
+      names(tabconf)[3:length(names(tabconf))] <- input$methodedia
+      names(tabconf)[1] <- "seuil"
+      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
+      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
+      tabconf$seuil <- as.character(tabconf$seuil)
+      tabconf$seuil[5] <- "Sensibilité"
+      tabconf$seuil[6] <- "Spécificité"
+      tabconf
+    })
     
-    ggplot(donHyp, aes(x=x1hyp, color=donHyp$Y)) +
-      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
-  } else {
-    g<-ggplot(data=donHyp, aes(x=x1hyp,fill=donHyp$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))
-    ggplotly(g) }
+    output$matprecision_dia <- renderTable({
+      tabprecision <- data.frame(precision(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia),
+                                 precision(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia),
+                                 precision(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))
+      names(tabprecision) <- input$methodedia
+      tabprecision
+    })
+  })
   
-})
-
-output$graph2hyp<-renderPlotly({
-  x1hyp<-donHyp[,input$varhypxy[1]]
-  x2hyp<-donHyp[,input$varhypxy[2]]
   
-  if (input$idgraphtypehyp==1) {
-    g<-qplot(x=x1hyp,y=x2hyp,data=donHyp,color=donHyp$Y,geom="point")+scale_color_manual(values=c("green","red"))
-    ggplotly(g)
-  } else {
-    if (input$idgraphtypehyp==2) {
+  
+  #=================================
+  #Graphiques pour l'onglet CONTEXTE
+  #=================================
+  
+  #DIABETE
+  #-------
+  output$tabstatdia<-renderTable({
+    xdia<-donDia[,input$vardiax]
+    if (class(xdia) %in% c("numeric","integer")) {
+      tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
+      colnames(tabstat)<-c("Type","Valeur")
+      tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
+      tabstat[1,2]<-class(xdia)
+      tabstat[2,2]<-quantile(xdia)[1]
+      tabstat[3,2]<-quantile(xdia)[2]
+      tabstat[4,2]<-quantile(xdia)[3]
+      tabstat[5,2]<-quantile(xdia)[4]
+      tabstat[6,2]<-quantile(xdia)[5]
+      tabstat} else {
+        tabstat<-data.frame(table(xdia))
+        colnames(tabstat)<-c("Modalité","Effectif")
+        tabstat
+      }
+  })
+  
+  output$graph1dia<-renderPlotly({
+    x1dia<-donDia[,input$vardiax]
+    x2dia<-donDia[donDia$DIQ010_diq=="1",input$vardiax]
+    
+    if (class(x1dia) %in% c("numeric","integer")) {
       
-      g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_boxplot()
-      ggplotly(g) } else {
+      ggplot(donDia, aes(x=x1dia, color=donDia$DIQ010_diq)) +
+        geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
+        xlab(input$vardiax)
+    } else {
+      
+      g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+        xlab(input$vardiax)
+      ggplotly(g) }
+    
+  })
+  
+  output$graph2dia<-renderPlotly({
+    x1dia<-donDia[,input$vardiaxy[1]]
+    x2dia<-donDia[,input$vardiaxy[2]]
+    
+    if (input$idgraphtype==1) {
+      g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))+
+        xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
+      ggplotly(g)
+    } else {
+      if (input$idgraphtype==2) {
         
-        if (input$idgraphtypehyp==3) {
-          g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
-          ggplotly(g)}}}
-  
-})
-  
-#CHOLESTEROL
-#-----------
-output$tabstatcho<-renderTable({
-  xcho<-donChol[,input$varchox]
-  if (class(xcho) %in% c("numeric","integer")) {
-    tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
-    colnames(tabstat)<-c("Type","Valeur")
-    tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
-    tabstat[1,2]<-class(xcho)
-    tabstat[2,2]<-quantile(xcho)[1]
-    tabstat[3,2]<-quantile(xcho)[2]
-    tabstat[4,2]<-quantile(xcho)[3]
-    tabstat[5,2]<-quantile(xcho)[4]
-    tabstat[6,2]<-quantile(xcho)[5]
-    tabstat} else {
-      tabstat<-data.frame(table(xcho))
-      colnames(tabstat)<-c("Modalité","Effectif")
-      tabstat
-    }
-})
-
-output$graph1cho<-renderPlotly({
-  x1cho<-donChol[,input$varchox]
-  x2cho<-donChol[donChol$Y==1,input$varchox]
-  if (class(x1cho) %in% c("numeric","integer")) {
-    
-    ggplot(donChol, aes(x=x1cho, color=donChol$Y)) +
-      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
-  } else {
-    g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))
-    ggplotly(g) }
-  
-})
-
-output$graph2cho<-renderPlotly({
-  x1cho<-donChol[,input$varchoxy[1]]
-  x2cho<-donChol[,input$varchoxy[2]]
-  
-  if (input$idgraphtypecho==1) {
-    g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$Y,geom="point")+scale_color_manual(values=c("green","red"))
-    ggplotly(g)
-  } else {
-    if (input$idgraphtypecho==2) {
-      
-      g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_boxplot()
-      ggplotly(g) } else {
-        
-        if (input$idgraphtypecho==3) {
-          g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
-          ggplotly(g)}}}
-  
+        g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()+
+          xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
+        ggplotly(g) } else {
+          
+          if (input$idgraphtype==3) {
+            g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+              xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
+            ggplotly(g)}}}
     
   })
+  
+  #HYPERTENSION
+  #------------
+  output$tabstathyp<-renderTable({
+    xhyp<-donHyp[,input$varhypx]
+    if (class(xhyp) %in% c("numeric","integer")) {
+      tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
+      colnames(tabstat)<-c("Type","Valeur")
+      tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
+      tabstat[1,2]<-class(xhyp)
+      tabstat[2,2]<-quantile(xhyp)[1]
+      tabstat[3,2]<-quantile(xhyp)[2]
+      tabstat[4,2]<-quantile(xhyp)[3]
+      tabstat[5,2]<-quantile(xhyp)[4]
+      tabstat[6,2]<-quantile(xhyp)[5]
+      tabstat} else {
+        tabstat<-data.frame(table(xhyp))
+        colnames(tabstat)<-c("Modalité","Effectif")
+        tabstat
+      }
+  })
+  
+  output$graph1hyp<-renderPlotly({
+    x1hyp<-donHyp[,input$varhypx]
+    x2hyp<-donHyp[donHyp$Y=="1",input$varhypx]
+    if (class(x1hyp) %in% c("numeric","integer")) {
+      
+      ggplot(donHyp, aes(x=x1hyp, color=donHyp$Y)) +
+        geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
+        xlab(input$varhypx)
+    } else {
+      g<-ggplot(data=donHyp, aes(x=x1hyp,fill=donHyp$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+        xlab(input$varhypx)
+      ggplotly(g) }
     
+  })
+  
+  output$graph2hyp<-renderPlotly({
+    x1hyp<-donHyp[,input$varhypxy[1]]
+    x2hyp<-donHyp[,input$varhypxy[2]]
+    
+    if (input$idgraphtypehyp==1) {
+      g<-qplot(x=x1hyp,y=x2hyp,data=donHyp,color=donHyp$Y,geom="point")+scale_color_manual(values=c("green","red"))+
+        xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
+      ggplotly(g)
+    } else {
+      if (input$idgraphtypehyp==2) {
+        
+        g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_boxplot()+
+          xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
+        ggplotly(g) } else {
+          
+          if (input$idgraphtypehyp==3) {
+            g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+              xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
+            ggplotly(g)}}}
+    
+  })
+  
+  #CHOLESTEROL
+  #-----------
+  output$tabstatcho<-renderTable({
+    xcho<-donChol[,input$varchox]
+    if (class(xcho) %in% c("numeric","integer")) {
+      tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
+      colnames(tabstat)<-c("Type","Valeur")
+      tabstat[,1]<-c("Type","Min","1er quartile","2ème quartile","3ème quartile","Max")
+      tabstat[1,2]<-class(xcho)
+      tabstat[2,2]<-quantile(xcho)[1]
+      tabstat[3,2]<-quantile(xcho)[2]
+      tabstat[4,2]<-quantile(xcho)[3]
+      tabstat[5,2]<-quantile(xcho)[4]
+      tabstat[6,2]<-quantile(xcho)[5]
+      tabstat} else {
+        tabstat<-data.frame(table(xcho))
+        colnames(tabstat)<-c("Modalité","Effectif")
+        tabstat
+      }
+  })
+  
+  output$graph1cho<-renderPlotly({
+    x1cho<-donChol[,input$varchox]
+    x2cho<-donChol[donChol$Y==1,input$varchox]
+    if (class(x1cho) %in% c("numeric","integer")) {
+      
+      ggplot(donChol, aes(x=x1cho, color=donChol$Y)) +
+        geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
+        xlab(input$varchox)
+    } else {
+      g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+        xlab(input$varchox)
+      ggplotly(g) }
+    
+  })
+  
+  output$graph2cho<-renderPlotly({
+    x1cho<-donChol[,input$varchoxy[1]]
+    x2cho<-donChol[,input$varchoxy[2]]
+    
+    if (input$idgraphtypecho==1) {
+      g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$Y,geom="point")+scale_color_manual(values=c("green","red"))+
+        xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
+      ggplotly(g)
+    } else {
+      if (input$idgraphtypecho==2) {
+        
+        g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_boxplot()+
+          xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
+        ggplotly(g) } else {
+          
+          if (input$idgraphtypecho==3) {
+            g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+              xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
+            ggplotly(g)}}}
+    
+    
+  })
+  
 })

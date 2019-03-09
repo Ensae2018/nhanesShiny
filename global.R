@@ -25,8 +25,10 @@ donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hyperten
 #donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 str(donChol)
+
 # on importe les donnees necessaire pour le projet: partie diabete
 donDia <- read.csv("data/nhanes_dia_mice_apres.csv", sep=",",dec=".",row.names=1)# donnee diabete transcodifie et avec imputation mice
+
 
 # Transformer toutes les variables avec dif levels en FACTOR
 #RIDSTATR_demo  : Factor w/ 1 level "2": 1
@@ -55,7 +57,6 @@ donChol$SLQ050_slq <- as.factor(donChol$SLQ050_slq)
 #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
 donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
 
-
 #Conversion en facteurs de variables diabete
 donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
 donDia$DIQ010_diq<-factor(donDia$DIQ010_diq)
@@ -74,9 +75,12 @@ donDia$MCQ160N_mcq<-as.factor(donDia$MCQ160N_mcq)
 donDia$SLQ050_slq<-as.factor(donDia$SLQ050_slq)
 donDia$HEQ010_heq<-as.factor(donDia$HEQ010_heq)
 donDia$HEQ030_heq<-as.factor(donDia$HEQ030_heq)
+donDia$DIQ010_diq<-factor(donDia$DIQ010,levels=c(0,1),labels=c("Sains","Malades"))
 
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)
+donHyp$Y<-factor(donHyp$Y,levels=c(0,1),labels=c("Sains","Malades"))
+
 #levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
 #donChol$Y <- as.numeric(donChol$Y) #si jamais
 donChol$Y <- as.factor(donChol$Y)
@@ -120,7 +124,6 @@ modChol <- glm(Y~RIDAGEYR_demo+
                  DR1TLZ_dr1tot+
                  DR1TVC_dr1tot+
                  DR1TMOIS_dr1tot,data=donChol,family="binomial")
-
 
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique step réduit aux 15 variables d'importance
