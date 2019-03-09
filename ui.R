@@ -199,6 +199,70 @@ tabPanel(
              plotlyOutput(outputId="graph2dia"))
     )
     ),
+
+#----------------------------------------------------------------  
+#tabPanel : CLASSIFICATION
+#----------------------------------------------------------------  
+tabPanel(
+  title = "Classification",
+  column(
+    width=2,
+    div(sliderInput("nb_classe", "Nombre de classe Kmeans", 3, 8, value=5), align="center"),
+    div(sliderInput("nivo_cah", "Nombre de classe CAH", 3,8,value=5,step=1),align="center"),
+    div(sliderTextInput(
+      inputId = "choixmaladie", 
+      label = "Choisir la maladie:", 
+      grid = TRUE, 
+      force_edges = TRUE,
+      choices = c("cholesterol","diabetes","hypertension")
+    ), align="center"),
+    div(sliderTextInput(
+      inputId = "afficherind", 
+      label = "Afficher les libellés des individus?", 
+      grid = TRUE, 
+      force_edges = TRUE,
+      choices = c("oui","non")), align="center"),
+    div(sliderTextInput(
+      inputId = "choixaxe", 
+      label = "Choisir les axes des dimensions", 
+      grid = TRUE, 
+      force_edges = TRUE,
+      choices = c("dim1-dim2","dim3-dim4")), align="center"),
+    div(sliderInput("topcontrib", "nombre de contribution", 3, 15, value=5), align="center")
+  ),
+  column(
+    width=10,
+    tabsetPanel(
+      tabPanel("Kmeans",
+               plotOutput("partitionkm"),
+               plotOutput("inertienutrimentplot")),
+      tabPanel("Kmeans_ind",
+               plotOutput("partitionkmbis"),
+               plotOutput("inertienutrimentplotbis")),
+      tabPanel("CAH",
+               plotOutput("dendrogramme"),
+               plotOutput("indicehierarchieplot")),
+      tabPanel("Comparaison",
+               column(width=6,
+                      "Kmeans",
+                      plotOutput("acpnutrimentplotkm"),
+                      plotOutput("contri1")),
+               column(width=6,
+                      "CAH",
+                      plotOutput("acpnutrimentplotcah"),
+                      plotOutput("contri2"))),
+      tabPanel("Tableau",
+               column(width=6,
+                      dataTableOutput("groupecah")),
+               column(width=6,
+                      dataTableOutput("groupekm"))),
+      tabPanel("Croisement",
+               fluidRow(
+                 plotOutput("acpplotind"),
+                 plotOutput("acpplotdual")
+               ))))
+),
+
   #----------------------------------------------------------------  
   #navbarMenu : CHOIX MODELE
   #----------------------------------------------------------------    
@@ -663,6 +727,19 @@ tabPanel(
                                    force_edges = TRUE,
                                    choices = c("Fragile","Normale","Fort")
                                  ) 
+                               ),
+                               wellPanel(
+                                 sliderTextInput(
+                                   inputId = "typepatient", 
+                                   label = "Selectionnez votre type de patient", 
+                                   grid = TRUE, 
+                                   force_edges = TRUE,
+                                   choices = c("nouveauPatient", "proHyp","proChol","proDiab")
+                                 ),
+                                 h4("nouveauPatient : veuillez renseigner les données sur l'individu", align = "center"),
+                                 h4("proHyp : c'est un individu avec...", align = "center"),
+                                 h4("proChol : c'est un individu avec...", align = "center"),
+                                 h4("proDiab : c'est un individu avec...", align = "center") 
                                )
                )),
                conditionalPanel(condition="input.predict==true",
@@ -674,7 +751,9 @@ tabPanel(
                                          imageOutput("im_hyp_g",width="10px", height="10px","auto", inline = FALSE),
                                          conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
                                                           imageOutput("im_hyp_b",width="10px", height="10px","auto", inline = FALSE)
-                                         )),
+                                         ),
+                                         h4("Précision :...", align = "center") #outputId ="precision_hyp"
+                                         ),
                                   column(width=4,
                                          div(h4(
                                            textOutput(outputId = "resultat_cholesterol"), align = "center"
@@ -682,7 +761,9 @@ tabPanel(
                                          imageOutput("im_cho_g",width="10px", height="10px","auto", inline = FALSE),
                                          conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'",
                                                           imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
-                                         )),
+                                         ),
+                                         h4("Précision :...", align = "center") #outputId ="precision_chol"
+                                         ),
                                   column(width=4,
                                          div(h4(
                                            textOutput(outputId = "resultat_diabetes"), align = "center"
@@ -690,74 +771,13 @@ tabPanel(
                                          imageOutput("im_dia_g",width="10px", height="10px","auto", inline = FALSE),
                                          conditionalPanel(condition="output.resultat_diabetes=='Danger!!'",
                                                           imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
-                                         ))
+                                         ),
+                                         h4("Précision :...", align = "center") #outputId ="precision_dia"
+                                         )
                                 )
                )
              )
            )),
-  
-  #----------------------------------------------------------------  
-  #tabPanel : CLASSIFICATION
-  #----------------------------------------------------------------  
-  tabPanel(
-    title = "Classification",
-    column(
-      width=2,
-      div(sliderInput("nb_classe", "Nombre de classe Kmeans", 3, 8, value=5), align="center"),
-      div(sliderInput("nivo_cah", "Nombre de classe CAH", 3,8,value=5,step=1),align="center"),
-      div(sliderTextInput(
-        inputId = "choixmaladie", 
-        label = "Choisir la maladie:", 
-        grid = TRUE, 
-        force_edges = TRUE,
-        choices = c("cholesterol","diabetes","hypertension")
-      ), align="center"),
-      div(sliderTextInput(
-        inputId = "afficherind", 
-        label = "Afficher les libellés des individus?", 
-        grid = TRUE, 
-        force_edges = TRUE,
-        choices = c("oui","non")), align="center"),
-      div(sliderTextInput(
-        inputId = "choixaxe", 
-        label = "Choisir les axes des dimensions", 
-        grid = TRUE, 
-        force_edges = TRUE,
-        choices = c("dim1-dim2","dim3-dim4")), align="center"),
-      div(sliderInput("topcontrib", "nombre de contribution", 3, 15, value=5), align="center")
-    ),
-    column(
-      width=10,
-      tabsetPanel(
-        tabPanel("Kmeans",
-                 plotOutput("partitionkm"),
-                 plotOutput("inertienutrimentplot")),
-        tabPanel("Kmeans_ind",
-                 plotOutput("partitionkmbis"),
-                 plotOutput("inertienutrimentplotbis")),
-        tabPanel("CAH",
-                 plotOutput("dendrogramme"),
-                 plotOutput("indicehierarchieplot")),
-        tabPanel("Comparaison",
-                 column(width=6,
-                        "Kmeans",
-                        plotOutput("acpnutrimentplotkm"),
-                        plotOutput("contri1")),
-                 column(width=6,
-                        "CAH",
-                        plotOutput("acpnutrimentplotcah"),
-                        plotOutput("contri2"))),
-        tabPanel("Tableau",
-                 column(width=6,
-                        dataTableOutput("groupecah")),
-                 column(width=6,
-                        dataTableOutput("groupekm"))),
-        tabPanel("Croisement",
-                 fluidRow(
-                   plotOutput("acpplotind"),
-                   plotOutput("acpplotdual")
-                 ))))
-  ),
   
   #----------------------------------------------------------------  
   #tabPanel : CONCLUSION

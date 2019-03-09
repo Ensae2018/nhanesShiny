@@ -69,8 +69,9 @@ shinyServer(function(input, output) {
   observeEvent(input$predict==TRUE, {
     
     output$resultat_hypertension <- renderText({
-      
-      tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
+      if (input$typepatient == "proHyp")
+      {
+        tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
                                             Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
                                             high_cholesterol_level=input$cholesterol,
                                             Body_Mass_Index_kg_m_2=input$bmi,
@@ -80,6 +81,20 @@ shinyServer(function(input, output) {
                                             Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                             Sodium_mg=input$sodium
       ),type="response")
+      }
+      else
+      {
+        tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
+                                              Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
+                                              high_cholesterol_level=input$cholesterol,
+                                              Body_Mass_Index_kg_m_2=input$bmi,
+                                              Doctor_ever_said_you_were_overweight=input$surpoids,
+                                              Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
+                                              Phosphorus_mg=input$phosphorus,
+                                              Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
+                                              Sodium_mg=input$sodium
+        ),type="response")
+      }
       ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
     })
     
@@ -103,38 +118,69 @@ shinyServer(function(input, output) {
     # #Water drank => pas significatif
     
     output$resultat_cholesterol <- renderText({
-      
-      tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
-                                              HOD050_hoq=input$piecesmaison,
-                                              PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
-                                              DR1TLZ_dr1tot=input$LuteineZeaxanthine,
-                                              DR1TVC_dr1tot=input$vitamineC,
-                                              DR1TMOIS_dr1tot=input$humidite,
+      if (input$typepatient == "proChol")
+      {
+      tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=48,
+                                              HOD050_hoq=2,
+                                              PAQ635_paq="2",
+                                              DR1TLZ_dr1tot=400,
+                                              DR1TVC_dr1tot=30,
+                                              DR1TMOIS_dr1tot=1500,
                                               #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
-                                              BPXSY3_bpx=input$pression_sys,
-                                              BMXBMI_bmx=input$bmi,
-                                              MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
-                                              SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
-                                              BPXDI2_bpx=input$pression_dia,
-                                              INDFMPIR_demo=input$pauvretefamille,
+                                              BPXSY3_bpx=120,
+                                              BMXBMI_bmx=21,
+                                              MCQ080_mcq="1",
+                                              SLQ050_slq="1",
+                                              BPXDI2_bpx=69,
+                                              INDFMPIR_demo=3,
                                               Var_TRAVAIL=input$travail,
-                                              BMXHT_bmx=input$hauteur,
-                                              BMXWT_bmx=input$poids,
-                                              BPQ020_bpq=input$risquehypertension,
-                                              DIQ010_diq=input$risquediabetes,
-                                              OHAREC_ohxref=input$dentaire,
-                                              DRQSDIET_dr1tot=input$diete,
-                                              DR1TFIBE_dr1tot=input$fibre,
-                                              DR1TALCO_dr1tot=input$alcool,
-                                              DR1TFF_dr1tot=input$foodfolate
+                                              BMXHT_bmx=170,
+                                              BMXWT_bmx=60,
+                                              BPQ020_bpq="1",
+                                              DIQ010_diq="1",
+                                              OHAREC_ohxref="4",
+                                              DRQSDIET_dr1tot="2",
+                                              DR1TFIBE_dr1tot=20,
+                                              DR1TALCO_dr1tot=8,
+                                              DR1TFF_dr1tot=210
                                               #DR1.320Z_dr1tot=input$waterdrank
       ),type="response")
+      }
+      else
+      {
+        tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
+                                                HOD050_hoq=input$piecesmaison,
+                                                PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
+                                                DR1TLZ_dr1tot=input$LuteineZeaxanthine,
+                                                DR1TVC_dr1tot=input$vitamineC,
+                                                DR1TMOIS_dr1tot=input$humidite,
+                                                #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
+                                                BPXSY3_bpx=input$pression_sys,
+                                                BMXBMI_bmx=input$bmi,
+                                                MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
+                                                SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
+                                                BPXDI2_bpx=input$pression_dia,
+                                                INDFMPIR_demo=input$pauvretefamille,
+                                                Var_TRAVAIL=input$travail,
+                                                BMXHT_bmx=input$hauteur,
+                                                BMXWT_bmx=input$poids,
+                                                BPQ020_bpq=input$risquehypertension,
+                                                DIQ010_diq=input$risquediabetes,
+                                                OHAREC_ohxref=input$dentaire,
+                                                DRQSDIET_dr1tot=input$diete,
+                                                DR1TFIBE_dr1tot=input$fibre,
+                                                DR1TALCO_dr1tot=input$alcool,
+                                                DR1TFF_dr1tot=input$foodfolate
+                                                #DR1.320Z_dr1tot=input$waterdrank
+        ),type="response")
+      }
       ifelse(tempoChol>seuil(),"Danger!!", ";-)")
     })
     
     
     output$resultat_diabetes <- renderText({
-      
+      if (input$typepatient == "proDiab")
+      {
       tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
                                               DR1TSUGR_dr1tot=input$sucre,
                                               BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
@@ -151,6 +197,26 @@ shinyServer(function(input, output) {
                                               Var_TENSIONDI=input$pression_dia,
                                               DR1TCAFF_dr1tot=input$cafeine
       ),type="response")
+      }
+      else
+      {
+        tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
+                                                DR1TSUGR_dr1tot=input$sucre,
+                                                BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
+                                                MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
+                                                BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
+                                                DR1TALCO_dr1tot=input$alcool,
+                                                DR1TMOIS_dr1tot=input$humidite,
+                                                RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("0")),
+                                                DR1.320Z_dr1tot=input$waterdrank,
+                                                DR1TCHOL_dr1tot=input$choles,
+                                                DR1TPROT_dr1tot=input$proteines,
+                                                INDFMPIR_demo=input$pauvretefamille,
+                                                DR1TIRON_dr1tot=input$fer,
+                                                Var_TENSIONDI=input$pression_dia,
+                                                DR1TCAFF_dr1tot=input$cafeine
+        ),type="response")
+      }
       ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
     })
     
