@@ -545,12 +545,16 @@ output$tabstatdia<-renderTable({
 output$graph1dia<-renderPlotly({
   x1dia<-donDia[,input$vardiax]
   x2dia<-donDia[donDia$DIQ010_diq=="1",input$vardiax]
+  
   if (class(x1dia) %in% c("numeric","integer")) {
     
     ggplot(donDia, aes(x=x1dia, color=donDia$DIQ010_diq)) +
-      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
+      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
+      xlab(input$vardiax)
   } else {
-    g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    
+    g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+      xlab(input$vardiax)
     ggplotly(g) }
   
 })
@@ -560,16 +564,19 @@ output$graph2dia<-renderPlotly({
   x2dia<-donDia[,input$vardiaxy[2]]
   
   if (input$idgraphtype==1) {
-    g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))
+    g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))+
+      xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
     ggplotly(g)
   } else {
     if (input$idgraphtype==2) {
       
-          g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()
+          g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()+
+            xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
           ggplotly(g) } else {
             
             if (input$idgraphtype==3) {
-              g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
+              g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+                xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
               ggplotly(g)}}}
  
   })
@@ -601,9 +608,11 @@ output$graph1hyp<-renderPlotly({
   if (class(x1hyp) %in% c("numeric","integer")) {
     
     ggplot(donHyp, aes(x=x1hyp, color=donHyp$Y)) +
-      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
+      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
+      xlab(input$varhypx)
   } else {
-    g<-ggplot(data=donHyp, aes(x=x1hyp,fill=donHyp$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    g<-ggplot(data=donHyp, aes(x=x1hyp,fill=donHyp$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+      xlab(input$varhypx)
     ggplotly(g) }
   
 })
@@ -613,16 +622,19 @@ output$graph2hyp<-renderPlotly({
   x2hyp<-donHyp[,input$varhypxy[2]]
   
   if (input$idgraphtypehyp==1) {
-    g<-qplot(x=x1hyp,y=x2hyp,data=donHyp,color=donHyp$Y,geom="point")+scale_color_manual(values=c("green","red"))
+    g<-qplot(x=x1hyp,y=x2hyp,data=donHyp,color=donHyp$Y,geom="point")+scale_color_manual(values=c("green","red"))+
+      xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
     ggplotly(g)
   } else {
     if (input$idgraphtypehyp==2) {
       
-      g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_boxplot()
+      g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_boxplot()+
+        xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
       ggplotly(g) } else {
         
         if (input$idgraphtypehyp==3) {
-          g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
+          g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+            xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
           ggplotly(g)}}}
   
 })
@@ -654,9 +666,11 @@ output$graph1cho<-renderPlotly({
   if (class(x1cho) %in% c("numeric","integer")) {
     
     ggplot(donChol, aes(x=x1cho, color=donChol$nhanes.y)) +
-      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
+      geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
+      xlab(input$varchox)
   } else {
-    g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$nhanes.y))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$nhanes.y))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+      xlab(input$varchox)
     ggplotly(g) }
   
 })
@@ -666,16 +680,19 @@ output$graph2cho<-renderPlotly({
   x2cho<-donChol[,input$varchoxy[2]]
   
   if (input$idgraphtypecho==1) {
-    g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$nhanes.y,geom="point")+scale_color_manual(values=c("green","red"))
+    g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$nhanes.y,geom="point")+scale_color_manual(values=c("green","red"))+
+      xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
     ggplotly(g)
   } else {
     if (input$idgraphtypecho==2) {
       
-      g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_boxplot()
+      g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_boxplot()+
+        xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
       ggplotly(g) } else {
         
         if (input$idgraphtypecho==3) {
-          g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")
+          g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+            xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
           ggplotly(g)}}}
   
     

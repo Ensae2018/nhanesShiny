@@ -28,6 +28,7 @@ donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee c
 # on importe les donnees necessaire pour le projet: partie diabete
 donDia <- read.csv("data/nhanes_dia_mice_apres.csv", sep=",",dec=".",row.names=1)# donnee diabete transcodifie et avec imputation mice
 
+
 #Conversion en facteurs de variables diabete
 donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
 donDia$DIQ010_diq<-factor(donDia$DIQ010_diq)
@@ -46,9 +47,12 @@ donDia$MCQ160N_mcq<-as.factor(donDia$MCQ160N_mcq)
 donDia$SLQ050_slq<-as.factor(donDia$SLQ050_slq)
 donDia$HEQ010_heq<-as.factor(donDia$HEQ010_heq)
 donDia$HEQ030_heq<-as.factor(donDia$HEQ030_heq)
+donDia$DIQ010_diq<-factor(donDia$DIQ010,levels=c(0,1),labels=c("Sains","Malades"))
 
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)
+donHyp$Y<-factor(donHyp$Y,levels=c(0,1),labels=c("Sains","Malades"))
+
 #levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
 donChol$nhanes.y <- as.numeric(donChol$nhanes.y) #si jamais
 #levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
