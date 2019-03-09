@@ -209,7 +209,7 @@ tabPanel(
     # Choix modele pour Diabete
     tabPanel("modèle diabète",
              navlistPanel(widths=c(2,10),
-                          "Modèle Diabètes",
+                          "Modèle Diabète",
                           tabPanel(title = "choix variable",
                                    fluidRow(
                                      column(
@@ -263,9 +263,9 @@ tabPanel(
     
     
     # Choix modele pour Cholesterol
-    tabPanel("modèle cholésterol",
+    tabPanel("modèle cholestérol",
              navlistPanel(widths=c(2,10),
-                          "Modèle Cholésterol",
+                          "Modèle Cholestérol",
                           tabPanel(title = "choix variable",
                                    fluidRow(
                                      column(
@@ -400,12 +400,26 @@ tabPanel(
                                             max = 150
                                           ),
                                           checkboxGroupInput(
+                                            inputId = "marchevelodixmin",
+                                            label = "Faites-vous de la marche ou du vélo?",
+                                            choices = c("Oui" = "Yes", "Non" =
+                                                          "No"),
+                                            selected = "No"
+                                          ), 
+                                          checkboxGroupInput(
                                             inputId = "travail",
                                             label = "Avez-vous travaillez la semaine dernière?",
                                             choices = c("Oui" = "oui", "Non" =
                                                           "non"),
                                             selected = "non"
-                                          ),                 
+                                          ), 
+                                          numericInput(
+                                            inputId = "piecesmaison",
+                                            label = "Entrez le nbr de pièces chez vous",
+                                            value = 2,
+                                            min = 0,
+                                            max = 10
+                                          ),
                                           numericInput(
                                             inputId = "pauvretefamille",
                                             label = "Entrez le taux de pauvreté de votre famille",
@@ -422,7 +436,7 @@ tabPanel(
                                           ),
                                           checkboxGroupInput(
                                             inputId = "cholesterol",
-                                            label = "Taux élevé de cholésterol?",
+                                            label = "Taux élevé de cholestérol?",
                                             choices = c("Oui" = "Yes", "Non" =
                                                           "No"),
                                             selected = "No"
@@ -436,7 +450,7 @@ tabPanel(
                                           ),
                                           checkboxGroupInput(
                                             inputId = "risquediabetes",
-                                            label = "Diabètes?",
+                                            label = "Diabète?",
                                             choices = c("Oui" = 1, "Non" =
                                                           2),
                                             selected = 2
@@ -582,7 +596,7 @@ tabPanel(
                                           helpText ("faible~155, moyen~250, élevé~390"),
                                           numericInput(
                                             inputId = "choles",
-                                            label = "Consommation en cholésterol (mg)",
+                                            label = "Consommation en cholestérol (mg)",
                                             value = 290,
                                             min = 0,
                                             max = 2000,
@@ -613,6 +627,24 @@ tabPanel(
                                             value = 128,
                                             min = 0,
                                             max = 5000,
+                                            step = 10
+                                          ),
+                                          helpText ("faible~26, moyen~57, élevé~108"),
+                                          numericInput(
+                                            inputId = "vitamineC",
+                                            label = "Consommation en vitamine C (mg)",
+                                            value = 79,
+                                            min = 0,
+                                            max = 1000,
+                                            step = 10
+                                          ),
+                                          helpText ("faible~418, moyen~778, élevé~1462"),
+                                          numericInput(
+                                            inputId = "LuteineZeaxanthine",
+                                            label = "Consommation en Lutéine et Zéaxanthine (mg)",
+                                            value = 1550,
+                                            min = 0,
+                                            max = 80000,
                                             step = 10
                                           )
                           )))),
@@ -755,9 +787,9 @@ tabPanel(
         conditionalPanel(condition="input.idRadioC == 1",
                          br(),
                          br(),
-                         h2("Données Diabètes : ...",align="center"),
+                         h2("Données Diabète : ...",align="center"),
                          br(),
-                         h2("Données Cholésterol : ...",align="center"),
+                         h2("Données Cholestérol : ...",align="center"),
                          br(),
                          br(),
                          h2("Données Hypertension : ...",align="center"),
@@ -766,9 +798,9 @@ tabPanel(
         conditionalPanel(condition="input.idRadioC == 2",
                          br(),
                          br(),
-                         h2("Meilleures variables pour Diabètes : ...",align="center"),
+                         h2("Meilleures variables pour Diabète : ...",align="center"),
                          br(),
-                         h2("Meilleures variables pour Cholésterol : ...",align="center"),
+                         h2("Meilleures variables pour Cholestérol : ...",align="center"),
                          br(),
                          br(),
                          h2("Meilleures variables pour Hypertension : ...",align="center"),
@@ -777,9 +809,9 @@ tabPanel(
         conditionalPanel(condition="input.idRadioC == 3",
                          br(),
                          br(),
-                         h2("Meilleur modèle pour Diabètes : forêt avec ...",align="center"),
+                         h2("Meilleur modèle pour Diabète : forêt avec ...",align="center"),
                          br(),
-                         h2("Meilleur modèle pour Cholésterol : forêt avec ...",align="center"),
+                         h2("Meilleur modèle pour Cholestérol : forêt avec ...",align="center"),
                          br(),
                          br(),
                          h2("Meilleur modèle pour Hypertension : forêt avec ...",align="center"),

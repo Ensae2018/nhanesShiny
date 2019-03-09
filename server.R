@@ -83,27 +83,51 @@ shinyServer(function(input, output) {
   ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
   })
   
+#Changement variables retenus pour Cholestérol
+  # #How many rooms are in this home? Count the kitchen but not the bathroom.
+  # unique(donCholStep$HOD050_hoq) #int 7   6   5   4  10   1   3   8   9 777   2  12  11  13 =>num
+  # 
+  # #In a typical week {do you/does SP} walk or use a bicycle for at least 10 minutes continuously to get to and from places? => factor
+  # unique(donCholStep$PAQ635_paq) #int 2 1 9
+  # 
+  # #Lutein + zeaxanthin (mcg)
+  # unique(donCholStep$DR1TLZ_dr1tot) #num
+  # 
+  # #Vitamin C (mg)
+  # unique(donCholStep$DR1TVC_dr1tot) #num
+  # 
+  # #Moisture (gm)
+  # unique(donCholStep$DR1TMOIS_dr1tot) #num
+  #
+  # #Sexe => pas significatif
+  # #Water drank => pas significatif
+  
   output$resultat_cholesterol <- renderText({
     
     tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
-                                            RIAGENDR_demo=ifelse(input$sexe=="Male", 1, 0),
+                                            HOD050_hoq=input$piecesmaison,
+                                            PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
+                                            DR1TLZ_dr1tot=input$LuteineZeaxanthine,
+                                            DR1TVC_dr1tot=input$vitamineC,
+                                            DR1TMOIS_dr1tot=input$humidite,
+                                            #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
                                             BPXSY3_bpx=input$pression_sys,
                                             BMXBMI_bmx=input$bmi,
-                                            MCQ080_mcq=ifelse(input$surpoids=="Yes",1,0),
-                                            SLQ050_slq=ifelse(input$trouble_sommeil=="Yes",1,0),
+                                            MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
+                                            SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
                                             BPXDI2_bpx=input$pression_dia,
                                             INDFMPIR_demo=input$pauvretefamille,
                                             Var_TRAVAIL=input$travail,
                                             BMXHT_bmx=input$hauteur,
                                             BMXWT_bmx=input$poids,
-                                            BPQ020_bpq=as.numeric(input$risquehypertension),
-                                            DIQ010_diq=as.numeric(input$risquediabetes),
-                                            OHAREC_ohxref=as.numeric(input$dentaire),
-                                            DRQSDIET_dr1tot=as.numeric(input$diete),
+                                            BPQ020_bpq=input$risquehypertension,
+                                            DIQ010_diq=input$risquediabetes,
+                                            OHAREC_ohxref=input$dentaire,
+                                            DRQSDIET_dr1tot=input$diete,
                                             DR1TFIBE_dr1tot=input$fibre,
                                             DR1TALCO_dr1tot=input$alcool,
-                                            DR1TFF_dr1tot=input$foodfolate,
-                                            DR1.320Z_dr1tot=input$waterdrank
+                                            DR1TFF_dr1tot=input$foodfolate
+                                            #DR1.320Z_dr1tot=input$waterdrank
     ),type="response")
     ifelse(tempoChol>seuil(),"Danger!!", ";-)")
   })
@@ -650,13 +674,13 @@ output$tabstatcho<-renderTable({
 
 output$graph1cho<-renderPlotly({
   x1cho<-donChol[,input$varchox]
-  x2cho<-donChol[donChol$nhanes.y==1,input$varchox]
+  x2cho<-donChol[donChol$Y==1,input$varchox]
   if (class(x1cho) %in% c("numeric","integer")) {
     
-    ggplot(donChol, aes(x=x1cho, color=donChol$nhanes.y)) +
+    ggplot(donChol, aes(x=x1cho, color=donChol$Y)) +
       geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))
   } else {
-    g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$nhanes.y))+geom_bar()+scale_fill_manual(values = c("green","red"))
+    g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))
     ggplotly(g) }
   
 })
@@ -666,7 +690,7 @@ output$graph2cho<-renderPlotly({
   x2cho<-donChol[,input$varchoxy[2]]
   
   if (input$idgraphtypecho==1) {
-    g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$nhanes.y,geom="point")+scale_color_manual(values=c("green","red"))
+    g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$Y,geom="point")+scale_color_manual(values=c("green","red"))
     ggplotly(g)
   } else {
     if (input$idgraphtypecho==2) {

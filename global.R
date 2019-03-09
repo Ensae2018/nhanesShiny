@@ -24,9 +24,37 @@ donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hyperten
 #donChol <- read.csv("data/nhanes_chol_mice_faux.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 #donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
-
+str(donChol)
 # on importe les donnees necessaire pour le projet: partie diabete
 donDia <- read.csv("data/nhanes_dia_mice_apres.csv", sep=",",dec=".",row.names=1)# donnee diabete transcodifie et avec imputation mice
+
+# Transformer toutes les variables avec dif levels en FACTOR
+#RIDSTATR_demo  : Factor w/ 1 level "2": 1
+#donChol$RIDSTATR_demo <- as.factor(don$RIDSTATR_demo)
+donChol$RIAGENDR_demo <- as.factor(donChol$RIAGENDR_demo)
+#donChol$INDHHIN2_demo <- as.factor(donChol$INDHHIN2_demo) #contexte
+#donChol$INDFMIN2_demo <- as.factor(donChol$INDFMIN2_demo) #contexte
+donChol$BPQ020_bpq <- as.factor(donChol$BPQ020_bpq)
+donChol$DIQ010_diq <- as.factor(donChol$DIQ010_diq)
+donChol$HEQ010_heq <- as.factor(donChol$HEQ010_heq)
+donChol$HEQ030_heq <- as.factor(donChol$HEQ030_heq)
+donChol$HOQ065_hoq <- as.factor(donChol$HOQ065_hoq)
+donChol$HIQ011_hiq <- as.factor(donChol$HIQ011_hiq)
+donChol$IMQ020_imq <- as.factor(donChol$IMQ020_imq)
+donChol$IMQ011_imq <- as.factor(donChol$IMQ011_imq)
+donChol$MCQ010_mcq <- as.factor(donChol$MCQ010_mcq)
+donChol$MCQ080_mcq <- as.factor(donChol$MCQ080_mcq)
+donChol$OHAREC_ohxref <- as.factor(donChol$OHAREC_ohxref)
+donChol$PAQ605_paq <- as.factor(donChol$PAQ605_paq)
+donChol$PAQ620_paq <- as.factor(donChol$PAQ620_paq)
+donChol$PAQ635_paq <- as.factor(donChol$PAQ635_paq)
+donChol$PAQ650_paq <- as.factor(donChol$PAQ650_paq)
+donChol$PAQ665_paq <- as.factor(donChol$PAQ665_paq)
+donChol$SLQ050_slq <- as.factor(donChol$SLQ050_slq)
+#DRABF_dr1tot   : Factor w/ 1 level "2": 1
+#donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
+donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
+
 
 #Conversion en facteurs de variables diabete
 donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
@@ -50,7 +78,8 @@ donDia$HEQ030_heq<-as.factor(donDia$HEQ030_heq)
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)
 #levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
-donChol$nhanes.y <- as.numeric(donChol$nhanes.y) #si jamais
+#donChol$Y <- as.numeric(donChol$Y) #si jamais
+donChol$Y <- as.factor(donChol$Y)
 #levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
 
 # algorithme de prediction hypertension
@@ -63,10 +92,35 @@ modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
 # algorithme de prediction CHOLESTEROL
 ## Utilisation du modele logistique avec le choix d'une dizaine de variables prépondérantes
 # modChol <- glm(nhanes.y~.,data=donChol,family="binomial")
-modChol <- glm(nhanes.y~RIDAGEYR_demo+RIAGENDR_demo+INDFMPIR_demo+Var_TRAVAIL+
-                 BMXHT_bmx+BMXWT_bmx+BMXBMI_bmx+BPQ020_bpq+MCQ080_mcq+DIQ010_diq+
-                 BPXDI2_bpx+BPXSY3_bpx+SLQ050_slq+OHAREC_ohxref+
-                 DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
+# modChol <- glm(Y~RIDAGEYR_demo+RIAGENDR_demo+INDFMPIR_demo+Var_TRAVAIL+
+#                  BMXHT_bmx+BMXWT_bmx+BMXBMI_bmx+BPQ020_bpq+MCQ080_mcq+DIQ010_diq+
+#                  BPXDI2_bpx+BPXSY3_bpx+SLQ050_slq+OHAREC_ohxref+
+#                  DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
+modChol <- glm(Y~RIDAGEYR_demo+
+                 #RIAGENDR_demo+
+                 INDFMPIR_demo+
+                 Var_TRAVAIL+
+                 BMXHT_bmx+
+                 BMXWT_bmx+
+                 BMXBMI_bmx+
+                 BPQ020_bpq+
+                 MCQ080_mcq+
+                 DIQ010_diq+
+                 BPXDI2_bpx+
+                 BPXSY3_bpx+
+                 SLQ050_slq+
+                 OHAREC_ohxref+
+                 DRQSDIET_dr1tot+
+                 DR1TFIBE_dr1tot+
+                 DR1TALCO_dr1tot+
+                 DR1TFF_dr1tot+
+                 #DR1.320Z_dr1tot,
+                 HOD050_hoq+
+                 PAQ635_paq+
+                 DR1TLZ_dr1tot+
+                 DR1TVC_dr1tot+
+                 DR1TMOIS_dr1tot,data=donChol,family="binomial")
+
 
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique step réduit aux 15 variables d'importance
