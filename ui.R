@@ -66,13 +66,13 @@ shinyUI(
                            br(),
                            h2(span(strong("Variété",style = "color:darkblue"))),
           
-          h3("-",span(strong("démographiques")),": âge, sexe, niveau d'éducation, revenus..."),
+          h3("-",span(strong("démographiques")),": âge, sexe, niveau d'éducation, taux de pauvreté..."),
           h3("-",span(strong("médicales")),":"),
           h4("* caractéristiques générales: poids, taille, IMC, santé dentaire..."),
           h4("* analyses de laboratoire: plomb, insuline, test d'urine..."),
           h4("* maladies déjà connues: hypertension, cholestérol, diabète, problème coronaires, infarctus..."),
           h3("-", span(strong("alimentaires")),": les menus complets de 2 jours non consécutifs d'alimentation"),
-          h3("-",span(strong("habitudes de vie")),": alcool, drogue, assuré ou non, propriétaire ou locataire, activité physique...")),
+          h3("-",span(strong("habitudes de vie")),": travail/chômage, qualité du sommeil, activité physique...")),
         
         
         
