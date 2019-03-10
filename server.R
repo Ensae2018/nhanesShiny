@@ -475,15 +475,19 @@ shinyServer(function(input, output) {
   # Les metriques pour Hypertension
   ####
   output$choixmethode <- renderPlot({
-    plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC")
+    plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC",
+         print.thres = "best", print.thres.best.method = "closest.topleft")
     i=1
     traithyp <- c(input$methodehyp[1])
+    seuil <- c(round(coords(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]), "best", best.method = "closest.topleft")[1],3))
     repeat{
       i=i+1
       if(i>length(input$methodehyp)) break
-      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[i]]), col= i)
+      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[i]]), col= i,
+            print.thres = "best", print.thres.best.method = "closest.topleft")
       traithyp <- c(traithyp,input$methodehyp[i])
-      legend("bottomright",legend = traithyp, col=1:i, lty = 1)
+      seuil <- c(seuil,round(coords(roc(res_hyp[,1],res_hyp[,input$methodehyp[i]]), "best", best.method = "closest.topleft")[1],3))
+      legend("bottomright",legend = paste(traithyp,seuil,sep = "_"), col=1:i, lty = 1)
     }
   })
   
