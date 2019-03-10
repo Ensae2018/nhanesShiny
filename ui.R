@@ -413,8 +413,7 @@ tabPanel(
                                          selected = colnames(res_hyp[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner 3!",
-                                           `max-options` = 3
+                                           `none-selected-text` = "Selectionner"
                                          )
                                        )
                                      ),
@@ -422,21 +421,19 @@ tabPanel(
                                             sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
                                      )
                                    ),
-                                   conditionalPanel(
-                                     condition="input.methodehyp.length==3",
                                      fluidRow(
                                        plotOutput("choixmethode")),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Les valeurs d'AUC</h4>"),
                                             tableOutput("valAUC"),
                                             HTML("<h4>Les valeurs de precision</h4>"),
                                             tableOutput("matprecision")
                                      ),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Matrice de confusion</h4>"),     
                                             tableOutput("matconf")
                                      )
-                                   ))
+                                   )
              ))
   ), 
   

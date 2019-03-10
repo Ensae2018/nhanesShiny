@@ -474,45 +474,60 @@ shinyServer(function(input, output) {
   ####
   # Les metriques pour Hypertension
   ####
-  observeEvent(input$methodehyp==3,{
-    output$choixmethode <- renderPlot({
-      plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC")
-      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[2]]), col="red")
-      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[3]]), col="green")
-      legend("bottomright",legend = c(input$methodehyp[1],input$methodehyp[2], input$methodehyp[3]), col=c("black","red","green"), lty = 1)
-    })
-    
-    output$valAUC <- renderTable({
-      tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),
-                           auc(res_hyp[,1],res_hyp[,input$methodehyp[2]]),
-                           auc(res_hyp[,1],res_hyp[,input$methodehyp[3]])
-      )
-      names(tabauc) <- input$methodehyp    
-      tabauc
-    })
-    
-    output$matconf <- renderTable({
-      tabconf <- cbind(as.data.frame(monerreur(res_hyp[,input$methodehyp[1]],res_hyp[,1])),
-                       as.data.frame(monerreur(res_hyp[,input$methodehyp[2]],res_hyp[,1]))[,3],
-                       as.data.frame(monerreur(res_hyp[,input$methodehyp[3]],res_hyp[,1]))[,3]
-      )
-      names(tabconf)[3:length(names(tabconf))] <- input$methodehyp
-      names(tabconf)[1] <- "seuil"
-      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-      tabconf$seuil <- as.character(tabconf$seuil)
-      tabconf$seuil[5] <- "Sensibilité"
-      tabconf$seuil[6] <- "Spécificité"
-      tabconf
-    })
-    
-    output$matprecision <- renderTable({
-      tabprecision <- data.frame(precision(res_hyp[,input$methodehyp[1]],res_hyp[,1]),
-                                 precision(res_hyp[,input$methodehyp[2]],res_hyp[,1]),
-                                 precision(res_hyp[,input$methodehyp[3]],res_hyp[,1]))
-      names(tabprecision) <- input$methodehyp
-      tabprecision
-    })
+  output$choixmethode <- renderPlot({
+    plot(roc(res_hyp[,1],res_hyp[,input$methodehyp[1]]),col="black",main="Courbes ROC")
+    i=1
+    traithyp <- c(input$methodehyp[1])
+    repeat{
+      i=i+1
+      if(i>length(input$methodehyp)) break
+      lines(roc(res_hyp[,1],res_hyp[,input$methodehyp[i]]), col= i)
+      traithyp <- c(traithyp,input$methodehyp[i])
+      legend("bottomright",legend = traithyp, col=1:i, lty = 1)
+    }
+  })
+  
+  
+  output$valAUC <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_hyp[,1],res_hyp[,input$methodehyp[1]]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodehyp)) break
+      tabauc <- cbind(tabauc,auc(res_hyp[,1],res_hyp[,input$methodehyp[i]]))
+    }
+    names(tabauc) <- input$methodehyp
+    tabauc
+  })
+  
+  output$matconf <- renderTable({
+    tabconf <- as.data.frame(monerreur(res_hyp[,input$methodehyp[1]],res_hyp[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodehyp)) break
+      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_hyp[,input$methodehyp[i]],res_hyp[,1]))[,3])
+    }
+    names(tabconf)[3:length(names(tabconf))] <- input$methodehyp
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:length(names(tabconf))] <- tabconf[4,3:length(names(tabconf))]/(tabconf[4,3:length(names(tabconf))]+tabconf[3,3:length(names(tabconf))])
+    tabconf[6,3:length(names(tabconf))] <- tabconf[1,3:length(names(tabconf))]/(tabconf[1,3:length(names(tabconf))]+tabconf[2,3:length(names(tabconf))])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilité"
+    tabconf$seuil[6] <- "Spécificité"
+    tabconf
+  })
+  
+  output$matprecision <- renderTable({
+    tabprecision <- data.frame(precision(res_hyp[,input$methodehyp[1]],res_hyp[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodehyp)) break
+      tabprecision <- cbind(tabprecision,precision(res_hyp[,input$methodehyp[i]],res_hyp[,1]))
+    }
+    names(tabprecision) <- input$methodehyp
+    tabprecision
   })
   
   ####
