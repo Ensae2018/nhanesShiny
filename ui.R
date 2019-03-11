@@ -11,6 +11,34 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(
+  fluidPage(
+    # Some custom CSS
+    tags$head(
+      tags$style(HTML("
+        /* Smaller font for preformatted text */
+        pre, table.table {
+          font-size: smaller;
+        }
+
+        body {
+          min-height: 2000px;
+        }
+
+        .option-group {
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          padding: 0px 5px;
+          margin: 5px-10px;
+          background-color: #c5c5c5;
+        }
+
+        .option-header {
+          color: #80d;
+          text-transform: uppercase;
+          margin-bottom: 5px;
+        }
+      "))
+    ),
   navbarPage(
     theme = shinytheme("cerulean"),
     title = "Etude Nhanes",
@@ -437,13 +465,50 @@ tabPanel(
   #----------------------------------------------------------------  
   #tabPanel : PREDICTION
   #----------------------------------------------------------------  
+  
+
+# fluidPage(
+#   # Some custom CSS
+#   tags$head(
+#     tags$style(HTML("
+#         /* Smaller font for preformatted text */
+#         pre, table.table {
+#           font-size: smaller;
+#         }
+# 
+#         body {
+#           min-height: 2000px;
+#         }
+# 
+#         .option-group {
+#           border: 1px solid #ccc;
+#           border-radius: 6px;
+#           padding: 0px 5px;
+#           margin: 5px-10px;
+#           background-color: #c5c5c5;
+#         }
+# 
+#         .option-header {
+#           color: #80d;
+#           text-transform: uppercase;
+#           margin-bottom: 5px;
+#         }
+#       "))
+#   )),
+
+
+
   tabPanel(title = "Prédiction",
+           
            sidebarLayout(
              sidebarPanel("Les données sur l'individu :",
                           
                           #Premiere colonne du questionnaire
                           #Hypothèses : value = mean, faible = 1q, moyen = median, fort = 3q, min=min, max=max
-                          fluidRow(column(6,
+                          fluidRow(column(width=6,
+                                          
+                                    div(class = "option-group",
+                                      div(class = "option-header", "Habitudes"),
                                           selectInput(
                                             inputId = "sexe",
                                             label = "Selectionner votre sexe",
@@ -484,7 +549,10 @@ tabPanel(
                                             value = 2,
                                             min = 0,
                                             max = 5
-                                          ),
+                                          )
+                                    ),
+                                    div(class = "option-group",
+                                        div(class = "option-header", "Santé"),
                                           checkboxGroupInput(
                                             inputId = "trouble_sommeil",
                                             label = "Trouble de sommeil?",
@@ -562,10 +630,13 @@ tabPanel(
                                             max = 200,
                                             step = 10
                                           )
+                                    )
                           ),
                           
                           #Deuxieme colonne du questionnaire 
                           fluidRow(column(6,
+                                        div(class = "option-group",
+                                              div(class = "option-header", "Alimentation"),
                                           checkboxGroupInput(
                                             inputId = "dentaire",
                                             label = "Quelle recommendation pour votre santé dentaire ?",
@@ -722,12 +793,13 @@ tabPanel(
                                             min = 0,
                                             max = 1000,
                                             step = 10
-                                          )
+                                          ))
                           )))),
              mainPanel(
                div(HTML("<b>Les résultats de la prédiction</b>"), align = "center"),
                br(),
                fluidRow(column(4,
+                               
                                wellPanel(
                                  switchInput(inputId = "predict", value = FALSE)
                                ),
@@ -740,20 +812,14 @@ tabPanel(
                                    choices = c("Fragile","Normale","Fort")
                                  ) 
                                ),
+                               div(class = "option-group",
+                                   div(class = "option-header", "Votre prédiction"),
                                wellPanel(
-                                 sliderTextInput(
-                                   inputId = "typepatient", 
-                                   label = "Selectionnez votre type de patient", 
-                                   grid = TRUE, 
-                                   force_edges = TRUE,
-                                   choices = c("nouveauPatient", "proHyp","proChol","proDiab")
-                                 ),
-                                 h4("nouveauPatient : veuillez renseigner les données sur l'individu", align = "center"),
-                                 h4("proHyp : c'est un individu avec...", align = "center"),
-                                 h4("proChol : c'est un individu avec...", align = "center"),
-                                 h4("proDiab : c'est un individu avec...", align = "center") 
-                               )
+                              radioButtons("typepatient", "Choisir votre type de patient",
+                                           c("nouveauPatient","proHyp","proChol","proDiab")))
+                              )
                )),
+               
                conditionalPanel(condition="input.predict==true",
                                 fluidRow(
                                   column(width=4,
@@ -888,4 +954,4 @@ tabPanel(
                          br(),
                          br())
       )))
-))
+)))
