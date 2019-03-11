@@ -560,47 +560,65 @@ shinyServer(function(input, output,session) {
   ####
   # Les metriques pour Cholesterol
   ####
-  observeEvent(input$methodechol==3,{
-    output$choixmethode_chol <- renderPlot({
-      plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC")
-      lines(roc(res_chol[,1],res_chol[,input$methodechol[2]]), col="red")
-      lines(roc(res_chol[,1],res_chol[,input$methodechol[3]]), col="green")
-      legend("bottomright",legend = c(input$methodechol[1],input$methodechol[2], input$methodechol[3]), col=c("black","red","green"), lty = 1)
-    })
-    
-    output$valAUC_chol <- renderTable({
-      tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]),
-                           auc(res_chol[,1],res_chol[,input$methodechol[2]]),
-                           auc(res_chol[,1],res_chol[,input$methodechol[3]])
-      )
-      names(tabauc) <- input$methodechol    
-      tabauc
-    })
-    
-    output$matconf_chol <- renderTable({
-      tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol)),
-                       as.data.frame(monerreur(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol))[,3],
-                       as.data.frame(monerreur(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))[,3]
-      )
-      names(tabconf)[3:length(names(tabconf))] <- input$methodechol
-      names(tabconf)[1] <- "seuil"
-      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-      tabconf$seuil <- as.character(tabconf$seuil)
-      tabconf$seuil[5] <- "Sensibilité"
-      tabconf$seuil[6] <- "Spécificité"
-      tabconf
-    })
-    
-    output$matprecision_chol <- renderTable({
-      tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol),
-                                 precision(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol),
-                                 precision(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))
-      names(tabprecision) <- input$methodechol
-      tabprecision
-    })
+  
+  output$choixmethode_chol <- renderPlot({
+    plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC",
+         print.thres = "best", print.thres.best.method = "closest.topleft")
+    i=1
+    traitchol <- c(input$methodechol[1])
+    seuil <- c(round(coords(roc(res_chol[,1],res_chol[,input$methodechol[1]]), "best", best.method = "closest.topleft")[1],3))
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      lines(roc(res_chol[,1],res_chol[,input$methodechol[i]]), col= i,
+            print.thres = "best", print.thres.best.method = "closest.topleft")
+      traitchol <- c(traitchol,input$methodechol[i])
+      seuil <- c(seuil,round(coords(roc(res_chol[,1],res_chol[,input$methodechol[i]]), "best", best.method = "closest.topleft")[1],3))
+      legend("bottomright",legend = paste(traitchol,seuil,sep = "_"), col=1:i, lty = 1)
+    }
   })
   
+  output$valAUC_chol <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      tabauc <- cbind(tabauc,auc(res_chol[,1],res_chol[,input$methodechol[i]]))
+    }
+    names(tabauc) <- input$methodechol
+    tabauc
+  })
+  
+  output$matconf_chol <- renderTable({
+    tabconf <- as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_chol[,input$methodechol[i]],res_chol[,1]))[,3])
+    }
+    names(tabconf)[3:length(names(tabconf))] <- input$methodechol
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:length(names(tabconf))] <- tabconf[4,3:length(names(tabconf))]/(tabconf[4,3:length(names(tabconf))]+tabconf[3,3:length(names(tabconf))])
+    tabconf[6,3:length(names(tabconf))] <- tabconf[1,3:length(names(tabconf))]/(tabconf[1,3:length(names(tabconf))]+tabconf[2,3:length(names(tabconf))])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilité"
+    tabconf$seuil[6] <- "Spécificité"
+    tabconf
+  })
+  
+  output$matprecision_chol <- renderTable({
+    tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      tabprecision <- cbind(tabprecision,precision(res_chol[,input$methodechol[i]],res_chol[,1]))
+    }
+    names(tabprecision) <- input$methodechol
+    tabprecision
+  })
   
   ####
   # Les metriques pour le diabete
