@@ -43,7 +43,7 @@ donChol$HEQ030_heq <- as.factor(donChol$HEQ030_heq)
 donChol$HOQ065_hoq <- as.factor(donChol$HOQ065_hoq)
 donChol$HIQ011_hiq <- as.factor(donChol$HIQ011_hiq)
 donChol$IMQ020_imq <- as.factor(donChol$IMQ020_imq)
-donChol$IMQ011_imq <- as.factor(donChol$IMQ011_imq)
+#donChol$IMQ011_imq <- as.factor(donChol$IMQ011_imq)
 donChol$MCQ010_mcq <- as.factor(donChol$MCQ010_mcq)
 donChol$MCQ080_mcq <- as.factor(donChol$MCQ080_mcq)
 donChol$OHAREC_ohxref <- as.factor(donChol$OHAREC_ohxref)
@@ -83,7 +83,8 @@ donHyp$Y<-factor(donHyp$Y,levels=c(0,1),labels=c("Sains","Malades"))
 
 #levels(donChol$Y) <- c(0,1) #pas besoin pour jdd cholesterol
 #donChol$Y <- as.numeric(donChol$Y) #si jamais
-donChol$Y <- as.factor(donChol$Y)
+#donChol$Y <- as.factor(donChol$Y)
+donChol$Y<-factor(donChol$Y,levels=c(0,1),labels=c("Sains","Malades"))
 #levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
 
 # algorithme de prediction hypertension
@@ -165,7 +166,7 @@ tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",dec=".
 
 #tabselvar_chol <- read.table("data/choix_var_chol_faux.csv", header=T, sep=";",row.names = NULL) 
 max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
-tabselvar_chol[,-1]<-round(tabselvar_chol[,-1],3)
+tabselvar_chol[,-1]<-round(tabselvar_chol[,-1],3) #pour regler le problème de yellow avec les rangs
 
 # on charge la table de selection des variable pour le diabete
 tabselvar_dia <- read.table("data/choix_var_dia.csv", header=T, sep=";",dec=",",row.names = NULL)

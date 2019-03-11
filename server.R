@@ -10,7 +10,7 @@
 library(shiny)
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+shinyServer(function(input, output,session) {
   
   seuil <- reactive({
     switch (input$sensibilite,
@@ -64,6 +64,23 @@ shinyServer(function(input, output) {
   tempoHyp <- 999
   tempoChol <- 999
   tempoDiab <- 999
+  
+#   observeEvent(input$typepatient,
+# {
+#   switch(input$typepatient,
+#          "proChol" = 
+#     
+#     
+#   )
+#   updateNumericInput(session,"age",value = 48)
+#                   
+# })
+  
+#   observeEvent(input$typepatient=="proChol",
+# {
+#     updateNumericInput(session,"age",value = 48)
+#                  
+# })
   
   # j'ajoute une observation  sur la button pour lancer la prédiction
   observeEvent(input$predict==TRUE, {
