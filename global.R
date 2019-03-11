@@ -42,7 +42,7 @@ donChol$HEQ010_heq <- as.factor(donChol$HEQ010_heq)
 donChol$HEQ030_heq <- as.factor(donChol$HEQ030_heq)
 donChol$HOQ065_hoq <- as.factor(donChol$HOQ065_hoq)
 donChol$HIQ011_hiq <- as.factor(donChol$HIQ011_hiq)
-donChol$IMQ020_imq <- as.factor(donChol$IMQ020_imq)
+#donChol$IMQ020_imq <- as.factor(donChol$IMQ020_imq)
 #donChol$IMQ011_imq <- as.factor(donChol$IMQ011_imq)
 donChol$MCQ010_mcq <- as.factor(donChol$MCQ010_mcq)
 donChol$MCQ080_mcq <- as.factor(donChol$MCQ080_mcq)
@@ -101,9 +101,10 @@ modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
 #                  BMXHT_bmx+BMXWT_bmx+BMXBMI_bmx+BPQ020_bpq+MCQ080_mcq+DIQ010_diq+
 #                  BPXDI2_bpx+BPXSY3_bpx+SLQ050_slq+OHAREC_ohxref+
 #                  DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
+# finalement les 15 var retenues avec le choix var de Log90
 modChol <- glm(Y~RIDAGEYR_demo+
-                 #RIAGENDR_demo+
-                 INDFMPIR_demo+
+                 RIAGENDR_demo+
+                 #INDFMPIR_demo+
                  Var_TRAVAIL+
                  BMXHT_bmx+
                  BMXWT_bmx+
@@ -111,20 +112,23 @@ modChol <- glm(Y~RIDAGEYR_demo+
                  BPQ020_bpq+
                  MCQ080_mcq+
                  DIQ010_diq+
-                 BPXDI2_bpx+
-                 BPXSY3_bpx+
+                 #BPXDI2_bpx+
+                 #BPXSY3_bpx+
                  SLQ050_slq+
-                 OHAREC_ohxref+
+                 #OHAREC_ohxref+
                  DRQSDIET_dr1tot+
                  DR1TFIBE_dr1tot+
-                 DR1TALCO_dr1tot+
-                 DR1TFF_dr1tot+
+                 #DR1TALCO_dr1tot+
+                 #DR1TFF_dr1tot+
                  #DR1.320Z_dr1tot,
-                 HOD050_hoq+
-                 PAQ635_paq+
-                 DR1TLZ_dr1tot+
-                 DR1TVC_dr1tot+
-                 DR1TMOIS_dr1tot,data=donChol,family="binomial")
+                 #HOD050_hoq+
+                 #PAQ635_paq+
+                 #DR1TLZ_dr1tot+
+                 #DR1TVC_dr1tot+
+                 #DR1TMOIS_dr1tot,
+                 DR1TVB6_dr1tot+
+                 DR1TCHOL_dr1tot+
+                 DR1TB12A_dr1tot,data=donChol,family="binomial")
 
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique step réduit aux 15 variables d'importance

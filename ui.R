@@ -707,6 +707,24 @@ tabPanel(
                                             min = 0,
                                             max = 80000,
                                             step = 10
+                                          ),
+                                          helpText ("faible~26, moyen~57, élevé~108"),
+                                          numericInput(
+                                            inputId = "vitB6",
+                                            label = "Consommation en vitamine B6 (mg)",
+                                            value = 79,
+                                            min = 0,
+                                            max = 1000,
+                                            step = 10
+                                          ),
+                                          helpText ("faible~26, moyen~57, élevé~108"),
+                                          numericInput(
+                                            inputId = "vitB12",
+                                            label = "Consommation en vitamine B12 (mg)",
+                                            value = 79,
+                                            min = 0,
+                                            max = 1000,
+                                            step = 10
                                           )
                           )))),
              mainPanel(
