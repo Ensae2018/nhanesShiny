@@ -86,7 +86,7 @@ shinyServer(function(input, output,session) {
   observeEvent(input$predict==TRUE, {
     
     output$resultat_hypertension <- renderText({
-      if (input$typepatient == "proHyp")
+      if (input$typepatient == "individu avec Hyp")
       {
         tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
                                             Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
@@ -115,27 +115,9 @@ shinyServer(function(input, output,session) {
       ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
     })
     
-    #Changement variables retenus pour Cholestérol
-    # #How many rooms are in this home? Count the kitchen but not the bathroom.
-    # unique(donCholStep$HOD050_hoq) #int 7   6   5   4  10   1   3   8   9 777   2  12  11  13 =>num
-    # 
-    # #In a typical week {do you/does SP} walk or use a bicycle for at least 10 minutes continuously to get to and from places? => factor
-    # unique(donCholStep$PAQ635_paq) #int 2 1 9
-    # 
-    # #Lutein + zeaxanthin (mcg)
-    # unique(donCholStep$DR1TLZ_dr1tot) #num
-    # 
-    # #Vitamin C (mg)
-    # unique(donCholStep$DR1TVC_dr1tot) #num
-    # 
-    # #Moisture (gm)
-    # unique(donCholStep$DR1TMOIS_dr1tot) #num
-    #
-    # #Sexe => pas significatif
-    # #Water drank => pas significatif
     
     output$resultat_cholesterol <- renderText({
-      if (input$typepatient == "proChol")
+      if (input$typepatient == "individu avec Chol")
       {
       tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=48,
                                               #HOD050_hoq=2,
@@ -202,7 +184,7 @@ shinyServer(function(input, output,session) {
     
     
     output$resultat_diabetes <- renderText({
-      if (input$typepatient == "proDiab")
+      if (input$typepatient == "individu avec Diab")
       {
       tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
                                               DR1TSUGR_dr1tot=input$sucre,

@@ -29,11 +29,13 @@ shinyUI(
           border-radius: 6px;
           padding: 0px 5px;
           margin: 5px-10px;
-          background-color: #c5c5c5;
+          #background-color: #98f5ff;
+          background-color: #b2dfee;
         }
 
         .option-header {
-          color: #80d;
+          #color: #80d;
+          color: #8b3a3a;
           text-transform: uppercase;
           margin-bottom: 5px;
         }
@@ -466,58 +468,30 @@ tabPanel(
   #tabPanel : PREDICTION
   #----------------------------------------------------------------  
   
-
-# fluidPage(
-#   # Some custom CSS
-#   tags$head(
-#     tags$style(HTML("
-#         /* Smaller font for preformatted text */
-#         pre, table.table {
-#           font-size: smaller;
-#         }
-# 
-#         body {
-#           min-height: 2000px;
-#         }
-# 
-#         .option-group {
-#           border: 1px solid #ccc;
-#           border-radius: 6px;
-#           padding: 0px 5px;
-#           margin: 5px-10px;
-#           background-color: #c5c5c5;
-#         }
-# 
-#         .option-header {
-#           color: #80d;
-#           text-transform: uppercase;
-#           margin-bottom: 5px;
-#         }
-#       "))
-#   )),
-
-
-
   tabPanel(title = "Prédiction",
            
            sidebarLayout(
-             sidebarPanel("Les données sur l'individu :",
-                          
+             sidebarPanel("Les données sur l'individu :",align = "center",
+                          br(),
+                          br(),
+           
                           #Premiere colonne du questionnaire
                           #Hypothèses : value = mean, faible = 1q, moyen = median, fort = 3q, min=min, max=max
-                          fluidRow(column(width=6,
+                          fluidRow(
+                            
+                            column(width=4,
                                           
                                     div(class = "option-group",
                                       div(class = "option-header", "Habitudes"),
                                           selectInput(
                                             inputId = "sexe",
-                                            label = "Selectionner votre sexe",
+                                            label = "Votre sexe",
                                             selected = "M",
                                             choices = c("M" = "Male", "F" = "Female")
                                           ),
                                           numericInput(
                                             inputId = "age",
-                                            label = "Selectionner votre age",
+                                            label = "Votre age",
                                             value = 30,
                                             min = 16,
                                             max = 150
@@ -538,19 +512,23 @@ tabPanel(
                                           ), 
                                           numericInput(
                                             inputId = "piecesmaison",
-                                            label = "Entrez le nbr de pièces chez vous",
+                                            label = "Le nbr de pièces chez vous",
                                             value = 2,
                                             min = 0,
                                             max = 10
                                           ),
                                           numericInput(
                                             inputId = "pauvretefamille",
-                                            label = "Entrez le taux de pauvreté de votre famille",
+                                            label = "Le taux de pauvreté de votre famille",
                                             value = 2,
                                             min = 0,
                                             max = 5
                                           )
-                                    ),
+                                    )),
+                                    
+                              
+                            column(width=4,
+                                   
                                     div(class = "option-group",
                                         div(class = "option-header", "Santé"),
                                           checkboxGroupInput(
@@ -590,14 +568,14 @@ tabPanel(
                                           ),
                                           numericInput(
                                             inputId = "hauteur",
-                                            label = "Entrez votre hauteur(cm)",
+                                            label = "Votre hauteur(cm)",
                                             value = 160,
                                             min = 80,
                                             max = 200
                                           ),
                                           numericInput(
                                             inputId = "poids",
-                                            label = "Entrez votre poids(kg)",
+                                            label = "Votre poids(kg)",
                                             value = 65,#mean=80
                                             min = 30,
                                             max = 200,
@@ -606,7 +584,7 @@ tabPanel(
                                           helpText ("faible~24?, moyen~28?, élevé~33?"),
                                           numericInput(
                                             inputId = "bmi",
-                                            label = "Entrez votre indice masse corporel (kg/m^2)",
+                                            label = "Votre indice masse corporel (kg/m^2)",
                                             value = 34,#mean=30
                                             min = 11,
                                             max = 70,
@@ -615,7 +593,7 @@ tabPanel(
                                           helpText ("faible~112, moyen~122, élevé~134"),
                                           numericInput(
                                             inputId = "pression_sys",
-                                            label = "Entrez votre pression systolique (mm Hg)",
+                                            label = "Votre pression systolique (mm Hg)",
                                             value = 120,
                                             min = 70,
                                             max = 300,
@@ -624,17 +602,16 @@ tabPanel(
                                           helpText ("faible~62, moyen~68, élevé~76"),
                                           numericInput(
                                             inputId = "pression_dia",
-                                            label = "Entrez votre pression diastolique (mm Hg)",
+                                            label = "Votre pression diastolique (mm Hg)",
                                             value = 69,
                                             min = 0,
                                             max = 200,
                                             step = 10
                                           )
-                                    )
-                          ),
-                          
-                          #Deuxieme colonne du questionnaire 
-                          fluidRow(column(6,
+                                    )),
+                           
+                        
+                            column(width=4,         
                                         div(class = "option-group",
                                               div(class = "option-header", "Alimentation"),
                                           checkboxGroupInput(
@@ -654,7 +631,7 @@ tabPanel(
                                           helpText ("faible~10, moyen~15, élevé~22"),
                                           numericInput(
                                             inputId = "fibre",
-                                            label = "Entrez votre niveau de fibre alimentaire(g)",
+                                            label = "Votre niveau de fibre alimentaire(g)",
                                             value = 20,
                                             min = 0,
                                             max = 100
@@ -662,7 +639,7 @@ tabPanel(
                                           helpText ("faible~126, moyen~185, élevé~266"),
                                           numericInput(
                                             inputId = "foodfolate",
-                                            label = "Entrez votre niveau de folate alimentaire(g)",
+                                            label = "Votre niveau de folate alimentaire(g)",
                                             value = 210,
                                             min = 3,
                                             max = 2000,
@@ -671,7 +648,7 @@ tabPanel(
                                           helpText ("faible~390, moyen~900, élevé~1600"),
                                           numericInput(
                                             inputId = "waterdrank",
-                                            label = "Entrez l'eau plate consommée hier(g)",
+                                            label = "L'eau plate consommée hier(g)",
                                             value = 1100,
                                             min = 0,
                                             max = 15000,
@@ -680,7 +657,7 @@ tabPanel(
                                           helpText ("faible~?, moyen~?, élevé~?"),
                                           numericInput(
                                             inputId = "alcool",
-                                            label = "Entrez votre niveau d'alcool(g)",
+                                            label = "Votre niveau d'alcool(g)",
                                             value = 8,
                                             min = 0,
                                             max = 500,
@@ -689,7 +666,7 @@ tabPanel(
                                           helpText ("faible~900, moyen~1200, élevé~1600"),
                                           numericInput(
                                             inputId = "phosphorus",
-                                            label = "Entrez votre consommation en phosphorus(mg)",
+                                            label = "Consommation en phosphorus(mg)",
                                             value = 1300,
                                             min = 50,
                                             max = 8000,
@@ -698,7 +675,7 @@ tabPanel(
                                           helpText ("faible~2300, moyen~3150, élevé~4150"),
                                           numericInput(
                                             inputId = "sodium",
-                                            label = "Entrez votre consommation en sodium (mg)",
+                                            label = "Consommation en sodium (mg)",
                                             value = 3350,
                                             min = 80,
                                             max = 20000,
@@ -793,13 +770,23 @@ tabPanel(
                                             min = 0,
                                             max = 1000,
                                             step = 10
-                                          ))
-                          )))),
+                                          )))
+                          )),
              mainPanel(
                div(HTML("<b>Les résultats de la prédiction</b>"), align = "center"),
                br(),
-               fluidRow(column(4,
-                               
+               fluidRow(
+                 column(4,
+                               div(class = "option-group",
+                                   div(class = "option-header"),
+                               wellPanel(
+                              radioButtons("typepatient", "Choisir votre type de patient",
+                                           c("nouveau individu","individu avec Hyp","individu avec Chol","individu avec Diab")))
+                              )
+               ),
+                 column(4,
+                               div(class = "option-group",
+                                   div(class = "option-header"),
                                wellPanel(
                                  switchInput(inputId = "predict", value = FALSE)
                                ),
@@ -811,28 +798,46 @@ tabPanel(
                                    force_edges = TRUE,
                                    choices = c("Fragile","Normale","Fort")
                                  ) 
-                               ),
-                               div(class = "option-group",
-                                   div(class = "option-header", "Votre prédiction"),
-                               wellPanel(
-                              radioButtons("typepatient", "Choisir votre type de patient",
-                                           c("nouveauPatient","proHyp","proChol","proDiab")))
-                              )
-               )),
+                               ))
+               
+                 )),
                
                conditionalPanel(condition="input.predict==true",
                                 fluidRow(
                                   column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         
                                          div(h4(
                                            textOutput(outputId = "resultat_hypertension"), align = "center"
                                          )),
+                                         
                                          imageOutput("im_hyp_g",width="10px", height="10px","auto", inline = FALSE),
                                          conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
                                                           imageOutput("im_hyp_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
-                                         h4("Précision :...", align = "center") #outputId ="precision_hyp"
-                                         ),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                        HTML("<h4> La proba Hyp </h4>"),
+                                        tableOutput("probaHyp")
+                                        ),
+                                  
                                   column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         
                                          div(h4(
                                            textOutput(outputId = "resultat_cholesterol"), align = "center"
                                          )),
@@ -840,9 +845,25 @@ tabPanel(
                                          conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'",
                                                           imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
-                                         h4("Précision :...", align = "center") #outputId ="precision_chol"
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         HTML("<h4> La proba Chol </h4>"),
+                                         tableOutput("probaChol")
                                          ),
                                   column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         
                                          div(h4(
                                            textOutput(outputId = "resultat_diabetes"), align = "center"
                                          )),
@@ -850,8 +871,19 @@ tabPanel(
                                          conditionalPanel(condition="output.resultat_diabetes=='Danger!!'",
                                                           imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
-                                         h4("Précision :...", align = "center") #outputId ="precision_dia"
-                                         )
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         HTML("<h4> La proba Diab </h4>"),
+                                         tableOutput("probaDia")
+                                  )
                                 )
                )
              )

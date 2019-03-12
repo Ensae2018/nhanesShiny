@@ -21,8 +21,6 @@ library(plotly)#graphes interactifs
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
 
 # on importe les donnees necessaire pour le projet
-#donChol <- read.csv("data/nhanes_chol_mice_faux.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
-#donChol <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 str(donChol)
 
@@ -85,6 +83,7 @@ donHyp$Y<-factor(donHyp$Y,levels=c(0,1),labels=c("Sains","Malades"))
 #donChol$Y <- as.numeric(donChol$Y) #si jamais
 #donChol$Y <- as.factor(donChol$Y)
 donChol$Y<-factor(donChol$Y,levels=c(0,1),labels=c("Sains","Malades"))
+
 #levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
 
 # algorithme de prediction hypertension
@@ -96,11 +95,6 @@ modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
 
 # algorithme de prediction CHOLESTEROL
 ## Utilisation du modele logistique avec le choix d'une dizaine de variables prépondérantes
-# modChol <- glm(nhanes.y~.,data=donChol,family="binomial")
-# modChol <- glm(Y~RIDAGEYR_demo+RIAGENDR_demo+INDFMPIR_demo+Var_TRAVAIL+
-#                  BMXHT_bmx+BMXWT_bmx+BMXBMI_bmx+BPQ020_bpq+MCQ080_mcq+DIQ010_diq+
-#                  BPXDI2_bpx+BPXSY3_bpx+SLQ050_slq+OHAREC_ohxref+
-#                  DRQSDIET_dr1tot+DR1TFIBE_dr1tot+DR1TALCO_dr1tot+DR1TFF_dr1tot+DR1.320Z_dr1tot,data=donChol,family="binomial")
 # finalement les 15 var retenues avec le choix var de Log90
 modChol <- glm(Y~RIDAGEYR_demo+
                  RIAGENDR_demo+
@@ -163,12 +157,8 @@ tabselvar_hyp <- read.table("data/choix_var.csv", header=T, sep=";",row.names = 
 max_val_hyp <- apply(tabselvar_hyp[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 
 # on charge la table de selection des variable pour le Cholesterol => Yfan format CSV specifique à reproduire
-#tabselvar_chol <- read.csv2("data/choix_var_chol.csv",row.names = NULL)
-#tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",row.names = NULL)
-tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",dec=".",row.names = NULL)
-#tabselvar_chol <- read.table("data/choix_var_chol_num.csv", header=T, sep=";",dec=".",row.names = NULL)
-
-#tabselvar_chol <- read.table("data/choix_var_chol_faux.csv", header=T, sep=";",row.names = NULL) 
+#tabselvar_chol <- read.table("data/choix_var_chol.csv", header=T, sep=";",dec=".",row.names = NULL)
+tabselvar_chol <- read.table("data/choix_var_chol_transco.csv", header=T, sep=";",dec=".",row.names = NULL)
 max_val_chol <- apply(tabselvar_chol[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 tabselvar_chol[,-1]<-round(tabselvar_chol[,-1],3) #pour regler le problème de yellow avec les rangs
 
