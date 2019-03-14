@@ -496,6 +496,7 @@ tabPanel(
                                             min = 16,
                                             max = 150
                                           ),
+                                      #finalement pas besoin
                                           checkboxGroupInput(
                                             inputId = "marchevelodixmin",
                                             label = "Faites-vous de la marche ou du vélo?",
@@ -510,6 +511,7 @@ tabPanel(
                                                           "non"),
                                             selected = "non"
                                           ), 
+                                      #finalement pas besoin
                                           numericInput(
                                             inputId = "piecesmaison",
                                             label = "Le nbr de pièces chez vous",
@@ -636,6 +638,7 @@ tabPanel(
                                             min = 0,
                                             max = 100
                                           ),
+                                          #finalement pas besoin
                                           helpText ("faible~126, moyen~185, élevé~266"),
                                           numericInput(
                                             inputId = "foodfolate",
@@ -735,6 +738,7 @@ tabPanel(
                                             max = 5000,
                                             step = 10
                                           ),
+                                          #finalement pas besoin
                                           helpText ("faible~26, moyen~57, élevé~108"),
                                           numericInput(
                                             inputId = "vitamineC",
@@ -744,6 +748,7 @@ tabPanel(
                                             max = 1000,
                                             step = 10
                                           ),
+                                          #finalement pas besoin
                                           helpText ("faible~418, moyen~778, élevé~1462"),
                                           numericInput(
                                             inputId = "LuteineZeaxanthine",
@@ -810,12 +815,8 @@ tabPanel(
                                          br(),
                                          br(),
                                          
-                                         div(h4(
-                                           textOutput(outputId = "resultat_hypertension"), align = "center"
-                                         )),
-                                         
                                          imageOutput("im_hyp_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                                         conditionalPanel(condition="output.resultat_hypertension=='Danger!!'", # <seuilhyp
                                                           imageOutput("im_hyp_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
                                          br(),
@@ -828,21 +829,19 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                        HTML("<h4> La proba Hyp </h4>"),
-                                        tableOutput("probaHyp")
-                                        ),
+                                         h4("La proba Hyp",align="center"),
+                                         div(h4(
+                                           textOutput(outputId = "resultat_hypertension"), align = "center"
+                                         ))),
                                   
                                   column(width=4,
                                          br(),
                                          br(),
                                          br(),
                                          br(),
-                                         
-                                         div(h4(
-                                           textOutput(outputId = "resultat_cholesterol"), align = "center"
-                                         )),
+                                        
                                          imageOutput("im_cho_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'",
+                                         conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'", # <seuilchol
                                                           imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
                                          br(),
@@ -855,20 +854,19 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         HTML("<h4> La proba Chol </h4>"),
-                                         tableOutput("probaChol")
-                                         ),
+                                         h4("La proba Chol",align="center"),
+                                         div(h4(
+                                           textOutput(outputId = "resultat_cholesterol"), align = "center"
+                                         ))),
+                                         
                                   column(width=4,
                                          br(),
                                          br(),
                                          br(),
                                          br(),
-                                         
-                                         div(h4(
-                                           textOutput(outputId = "resultat_diabetes"), align = "center"
-                                         )),
+                                        
                                          imageOutput("im_dia_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_diabetes=='Danger!!'",
+                                         conditionalPanel(condition="output.resultat_diabetes=='Danger!!'", # <seuildiab
                                                           imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
                                          br(),
@@ -881,8 +879,10 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         HTML("<h4> La proba Diab </h4>"),
-                                         tableOutput("probaDia")
+                                         h4("La proba Diab",align="center"),
+                                         div(h4(
+                                           textOutput(outputId = "resultat_diabetes"), align = "center"
+                                         ))
                                   )
                                 )
                )

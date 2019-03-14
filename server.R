@@ -10,8 +10,9 @@
 library(shiny)
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output,session) {
+shinyServer(function(input, output, session) {
   
+  #A MODIFIER AVEC LE MEILLEUR SEUIL DE CHAQUE MODELE
   seuil <- reactive({
     switch (input$sensibilite,
             Fragile = 0.4,
@@ -65,21 +66,12 @@ shinyServer(function(input, output,session) {
   tempoChol <- 999
   tempoDiab <- 999
   
-#   observeEvent(input$typepatient,
-# {
-#   switch(input$typepatient,
-#          "proChol" = 
-#     
-#     
-#   )
-#   updateNumericInput(session,"age",value = 48)
-#                   
-# })
-  
-#   observeEvent(input$typepatient=="proChol",
+
+# CA NE MARCHE PAS
+#   observeEvent(input$typepatient=="individu avec Chol",
 # {
 #     updateNumericInput(session,"age",value = 48)
-#                  
+# 
 # })
   
   # j'ajoute une observation  sur la button pour lancer la prédiction
@@ -112,7 +104,7 @@ shinyServer(function(input, output,session) {
                                               Sodium_mg=input$sodium
         ),type="response")
       }
-      ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
+      ifelse(tempoHyp>seuil(),tempoHyp, tempoHyp)
     })
     
     
@@ -179,7 +171,7 @@ shinyServer(function(input, output,session) {
                                                 DR1TB12A_dr1tot=input$vitB12
         ),type="response")
       }
-      ifelse(tempoChol>seuil(),"Danger!!", ";-)")
+      ifelse(tempoChol>seuil(),tempoChol, tempoChol)
     })
     
     
@@ -222,7 +214,7 @@ shinyServer(function(input, output,session) {
                                                 DR1TCAFF_dr1tot=input$cafeine
         ),type="response")
       }
-      ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
+      ifelse(tempoDiab>seuil(),tempoDiab, tempoDiab)
     })
     
     output$im_hyp_g <- renderImage({

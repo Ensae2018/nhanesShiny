@@ -22,6 +22,8 @@ donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hyperten
 
 # on importe les donnees necessaire pour le projet
 donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
+# A TRAITER
+#don2Chol <- read.csv("data/nhanes_chol_mice_finale_transco.csv", header=T, sep=";", dec=".", row.names = 1)
 str(donChol)
 
 # on importe les donnees necessaire pour le projet: partie diabete
@@ -54,6 +56,32 @@ donChol$SLQ050_slq <- as.factor(donChol$SLQ050_slq)
 #DRABF_dr1tot   : Factor w/ 1 level "2": 1
 #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
 donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
+
+# #RIDSTATR_demo  : Factor w/ 1 level "2": 1
+# #donChol$RIDSTATR_demo <- as.factor(don$RIDSTATR_demo)
+# donChol$"Gender" <- as.factor(donChol$"Gender")
+# #donChol$INDHHIN2_demo <- as.factor(donChol$INDHHIN2_demo) #contexte
+# #donChol$INDFMIN2_demo <- as.factor(donChol$INDFMIN2_demo) #contexte
+# donChol$"Ever told you had high blood pressure" <- as.factor(donChol$"Ever told you had high blood pressure")
+# donChol$"Doctor told you have diabetes" <- as.factor(donChol$"Doctor told you have diabetes")
+# donChol$"Ever told you have Hepatitis B?" <- as.factor(donChol$"Ever told you have Hepatitis B?")
+# donChol$"Ever told you have Hepatitis C?" <- as.factor(donChol$"Ever told you have Hepatitis C?")
+# donChol$"Home owned, bought, rented, other" <- as.factor(donChol$"Home owned, bought, rented, other")
+# donChol$"Covered by health insurance" <- as.factor(donChol$"Covered by health insurance")
+# #donChol$IMQ020_imq <- as.factor(donChol$IMQ020_imq)
+# #donChol$IMQ011_imq <- as.factor(donChol$IMQ011_imq)
+# donChol$"Ever been told you have asthma" <- as.factor(donChol$"Ever been told you have asthma")
+# donChol$"Doctor ever said you were overweight" <- as.factor(donChol$"Doctor ever said you were overweight")
+# donChol$"Overall recommendation for care" <- as.factor(donChol$"Overall recommendation for care")
+# donChol$"Vigorous work activity" <- as.factor(donChol$"Vigorous work activity")
+# donChol$"Moderate work activity" <- as.factor(donChol$"Moderate work activity")
+# donChol$"Walk or bicycle" <- as.factor(donChol$"Walk or bicycle")
+# donChol$"Vigorous recreational activities" <- as.factor(donChol$"Vigorous recreational activities")
+# donChol$"Moderate recreational activities" <- as.factor(donChol$"Moderate recreational activities")
+# donChol$"Ever told doctor had trouble sleeping?" <- as.factor(donChol$"Ever told doctor had trouble sleeping?")
+# #DRABF_dr1tot   : Factor w/ 1 level "2": 1
+# #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
+# donChol$"On special diet?" <- as.factor(donChol$"On special diet?")
 
 #Conversion en facteurs de variables diabete
 donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
