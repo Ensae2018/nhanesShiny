@@ -15,7 +15,7 @@ library(shinyWidgets)#widgets avancés pour Shiny
 library(igraph) # des graphe type phylogenic 
 library(plotly)#graphes interactifs
 
-
+#options(error=recover)
 
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
@@ -27,8 +27,7 @@ donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee c
 str(donChol)
 
 # on importe les donnees necessaire pour le projet: partie diabete
-donDia <- read.csv("data/nhanes_dia_mice_apres.csv", sep=",",dec=".",row.names=1)# donnee diabete transcodifie et avec imputation mice
-
+donDia <- read.csv2("data/nhanes_diab_mice_avant_transco.csv", sep=",",dec=".",row.names = 1)# donnee diabete transcodifie et avec imputation mice
 
 # Transformer toutes les variables avec dif levels en FACTOR
 #RIDSTATR_demo  : Factor w/ 1 level "2": 1
@@ -102,6 +101,39 @@ donDia$SLQ050_slq<-as.factor(donDia$SLQ050_slq)
 donDia$HEQ010_heq<-as.factor(donDia$HEQ010_heq)
 donDia$HEQ030_heq<-as.factor(donDia$HEQ030_heq)
 donDia$DIQ010_diq<-factor(donDia$DIQ010,levels=c(0,1),labels=c("Sains","Malades"))
+
+
+donDia_transco<-donDia
+names(donDia_transco)<-c("SEQN","Gender", "Age.in.years.at.screening.", "Total.number.of.people.in.the.Household", 
+                         "Annual.household.income", "Ratio.of.family.income.to.poverty", 
+                         "Weight..kg.", "Standing.Height..cm.", "Body.Mass.Index..kg.m..2.", 
+                         "Ever.told.you.had.high.blood.pressure", "high.cholesterol.level", 
+                         "Doctor.told.you.have.diabetes", "Ever.told.you.have.Hepatitis.B.", 
+                         "Ever.told.you.have.Hepatitis.C.", "Number.of.rooms.in.home", 
+                         "Doctor.ever.said.you.were.overweight", "Doctor.ever.said.you.had.arthritis", "Doctor.ever.told.you.that.you.had.gout", 
+                         "Ever.told.had.congestive.heart.failure", "Ever.told.you.had.coronary.hart.disease", "Ever.told.you.had.angina.pectoris", "Ever.told.you.had.heart.attack", "Ever.told.you.had.a .stoke", 
+                         "Ever.told.you.had.emphysema", "Ever.told.you.had.thyroid.problem", "Sleep.hours.", "Ever.told.doctor.had.trouble.sleeping.", 
+                         "Energy..kcal.", "Protein..gm.", "Carbohydrate..gm.", "Total.sugars..gm.", 
+                         "Dietary.fiber..gm.", "Total.fat..gm.", "Total.saturated.fatty.acids..gm.", 
+                         "Total.monounsaturated.fatty.acids..gm.", "Total.polyunsaturated.fatty.acids..gm.", 
+                         "Cholesterol..mg.", "tocopherol..mg.", "tocopherol..Vitamin.E...mg.", 
+                         "Retinol..mcg.", "Vitamin.A..RAE..mcg.", "carotene..mcg.", "carotene..mcg..1", 
+                         "cryptoxanthin..mcg.", "Lycopene..mcg.", "Lutein...zeaxanthin..mcg.", 
+                         "Thiamin..Vitamin.B1...mg.", "Riboflavin..Vitamin.B2...mg.", 
+                         "Niacin..mg.", "Vitamin.B6..mg.", "Total.folate..mcg.", "Folic.acid..mcg.", 
+                         "Food.folate..mcg.", "Folate..DFE..mcg.", "Total.choline..mg..", 
+                         "Vitamin.B12..mcg.", "Added.vitamin.B12..mcg.", "Vitamin.C..mg.", 
+                         "Vitamin.D..D2...D3...mcg.", "Vitamin.K..mcg.", "Calcium..mg.", 
+                         "Phosphorus..mg.", "Magnesium..mg.", "Iron..mg.", "Zinc..mg.", 
+                         "Copper..mg.", "Sodium..mg.", "Potassium..mg.", "Selenium..mcg.", 
+                         "Caffeine..mg.", "Theobromine..mg.", "Alcohol..gm.", "Moisture..gm.", 
+                         "DR1.320Z_DR1TOT", "VAR_EDUCATION", "VAR_TRAVAIL", "VAR_DEPRESSION", 
+                         "VAR_SITUATION", "VAR_COFUMEUR", "VAR_TENSIONSY", "VAR_TENSIONDI", 
+                         "VAR_ARGENTALIM", "VAR_DENTISTE", "VAR_ASSURE", "VAR_ACTIVITE")
+
+
+
+
 
 # Conversion du facteur Yes/No vers 1/0 pour Y
 levels(donHyp$Y) <- c(0,1)

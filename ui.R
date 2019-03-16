@@ -137,12 +137,12 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Hypertension", style = "color:blue"))),
                        
-               selectInput(inputId = "varhypx", label = "1 variable",
+               selectInput(inputId = "varhypx", label = "Table et Graphique 1",
                            choices=colnames(donHyp[,-1]),selected=colnames(donHyp[,-1])[2]),br(),
                
                pickerInput(
                  "varhypxy",
-                 label = "2 variables",
+                 label = "Graphique 2",
                  choices = colnames(donHyp[,-1]),
                  multiple = TRUE,
                  selected = colnames(donHyp[, c(3,28)]),
@@ -151,7 +151,7 @@ tabPanel(
                    `max-options` = 2
                  )
                ),
-                             radioButtons(inputId = "idgraphtypehyp", label = "Type graphe 2", selected = 3,
+                             radioButtons(inputId = "idgraphtypehyp", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
                )),
@@ -168,12 +168,12 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Cholestérol", style = "color:blue"))),
                        
-                       selectInput(inputId = "varchox", label = "1 variable",
+                       selectInput(inputId = "varchox", label = "Table et Graphique 1",
                                    choices=colnames(donChol[,-1]),selected=colnames(donChol[,-1])[2]),br(),
                        
                        pickerInput(
                          "varchoxy",
-                         label = "2 variables",
+                         label = "Graphique 2",
                          choices = colnames(donChol[,-1]),
                          multiple = TRUE,
                          selected = colnames(donChol[, c(3,28)]),
@@ -182,7 +182,7 @@ tabPanel(
                            `max-options` = 2
                          )
                        ),
-                       radioButtons(inputId = "idgraphtypecho", label = "Type graphe 2", selected = 3,
+                       radioButtons(inputId = "idgraphtypecho", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
              )),
@@ -202,21 +202,21 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Diabète", style = "color:blue"))),
                        
-                       selectInput(inputId = "vardiax", label = "1 variable",
-                                   choices=colnames(donDia[,-1]),selected=colnames(donDia[,-1])[2]),br(),
+                       selectInput(inputId = "vardiax", label = "Table et Graphique 1",
+                                   choices=colnames(donDia_transco[,-1]),selected=colnames(donDia_transco[,-1])[2]),br(),
                        
                        pickerInput(
                          "vardiaxy",
-                         label = "2 variables",
-                         choices = colnames(donDia[,-1]),
+                         label = "Graphique 2",
+                         choices = colnames(donDia_transco[,-1]),
                          multiple = TRUE,
-                         selected = colnames(donDia[, c(3,28)]),
+                         selected = colnames(donDia_transco[, c(3,28)]),
                          options = list(
                            `actions-box` = FALSE,
                            `max-options` = 2
                          )
                        ),
-                       radioButtons(inputId = "idgraphtype", label = "Type graphe 2", selected = 1,
+                       radioButtons(inputId = "idgraphtype", label = "Type Graphique 2", selected = 1,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
              )),
@@ -486,7 +486,7 @@ tabPanel(
                                           selectInput(
                                             inputId = "sexe",
                                             label = "Votre sexe",
-                                            selected = "M",
+                                            selected = "Female",
                                             choices = c("M" = "Male", "F" = "Female")
                                           ),
                                           numericInput(
@@ -497,20 +497,24 @@ tabPanel(
                                             max = 150
                                           ),
                                       #finalement pas besoin
-                                          checkboxGroupInput(
-                                            inputId = "marchevelodixmin",
-                                            label = "Faites-vous de la marche ou du vélo?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ), 
-                                          checkboxGroupInput(
-                                            inputId = "travail",
-                                            label = "Avez-vous travaillez la semaine dernière?",
-                                            choices = c("Oui" = "oui", "Non" =
-                                                          "non"),
-                                            selected = "non"
-                                          ), 
+                                      radioButtons(inputId = "marchevelodixmin", label = "Faites-vous de la marche ou du vélo?", selected = "Yes",
+                                                   choices = c("Oui" = "Yes", "Non" = "No")),    
+                                      # checkboxGroupInput(
+                                      #       inputId = "marchevelodixmin",
+                                      #       label = "Faites-vous de la marche ou du vélo?",
+                                      #       choices = c("Oui" = "Yes", "Non" =
+                                      #                     "No"),
+                                      #       selected = "No"
+                                      #     ), 
+                                      radioButtons(inputId = "travail", label = "Avez-vous travaillez la semaine dernière?", selected = "oui",
+                                                   choices = c("Oui" = "oui", "Non" = "non")),   
+                                          # checkboxGroupInput(
+                                          #   inputId = "travail",
+                                          #   label = "Avez-vous travaillez la semaine dernière?",
+                                          #   choices = c("Oui" = "oui", "Non" =
+                                          #                 "non"),
+                                          #   selected = "non"
+                                          # ), 
                                       #finalement pas besoin
                                           numericInput(
                                             inputId = "piecesmaison",
@@ -533,41 +537,55 @@ tabPanel(
                                    
                                     div(class = "option-group",
                                         div(class = "option-header", "Santé"),
-                                          checkboxGroupInput(
-                                            inputId = "trouble_sommeil",
-                                            label = "Trouble de sommeil?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "cholesterol",
-                                            label = "Taux élevé de cholestérol?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "risquehypertension",
-                                            label = "Taux élevé d'hypertension?",
-                                            choices = c("Oui" = 1, "Non" =
-                                                          2),
-                                            selected = 2
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "risquediabetes",
-                                            label = "Diabète?",
-                                            choices = c("Oui" = 1, "Non" =
-                                                          2),
-                                            selected = 2
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "surpoids",
-                                            label = "Obèse?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ),
+                                        radioButtons(inputId = "trouble_sommeil", label = "Trouble de sommeil?", selected = "Yes",
+                                                     choices = c("Oui" = "Yes", "Non" = "No")),     
+                                        # checkboxGroupInput(
+                                        #     inputId = "trouble_sommeil",
+                                        #     label = "Trouble de sommeil?",
+                                        #     choices = c("Oui" = "Yes", "Non" =
+                                        #                   "No"),
+                                        #     selected = "No"
+                                        #   ),
+                                        radioButtons(inputId = "cholesterol", label = "Taux élevé de cholestérol?", selected = "Yes",
+                                                     choices = c("Oui" = "Yes", "Non" ="No")),    
+                                          # checkboxGroupInput(
+                                          #   inputId = "cholesterol",
+                                          #   label = "Taux élevé de cholestérol?",
+                                          #   choices = c("Oui" = "Yes", "Non" =
+                                          #                 "No"),
+                                          #   selected = "No"
+                                          # ),
+                                        radioButtons(inputId = "risquehypertension", label = "Taux élevé d'hypertension?", 
+                                                     choices = c("Oui" = 1, "Non" = 2),
+                                                     selected = 1),
+                                          # checkboxGroupInput(
+                                          #   inputId = "risquehypertension",
+                                          #   label = "Taux élevé d'hypertension?",
+                                          #   choices = c("Oui" = 1, "Non" =
+                                          #                 2),
+                                          #   selected = 2
+                                          # ),
+                                        radioButtons(inputId = "risquediabete", label = "Diabète?", 
+                                                     choices = c("Oui" = 1, "Non" =
+                                                                   2),
+                                                     selected = 1),  
+                                        # checkboxGroupInput(
+                                        #     inputId = "risquediabetes",
+                                        #     label = "Diabète?",
+                                        #     choices = c("Oui" = 1, "Non" =
+                                        #                   2),
+                                        #     selected = 2
+                                        #   ),
+                                        radioButtons(inputId = "surpoids",label = "Obèse?", 
+                                                     choices = c("Oui" = "Yes", "Non" = "No"), 
+                                                     selected = "Yes"),    
+                                        # checkboxGroupInput(
+                                        #     inputId = "surpoids",
+                                        #     label = "Obèse?",
+                                        #     choices = c("Oui" = "Yes", "Non" =
+                                        #                   "No"),
+                                        #     selected = "No"
+                                        #   ),
                                           numericInput(
                                             inputId = "hauteur",
                                             label = "Votre hauteur(cm)",
@@ -616,24 +634,31 @@ tabPanel(
                             column(width=4,         
                                         div(class = "option-group",
                                               div(class = "option-header", "Alimentation"),
-                                          checkboxGroupInput(
-                                            inputId = "dentaire",
-                                            label = "Quelle recommendation pour votre santé dentaire ?",
-                                            choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
-                                                        "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
-                                            selected = 4
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "diete",
-                                            label = "Prenez-vous un type de diète?",
-                                            choices = c("Oui" = 1, "Non" =
-                                                          2),
-                                            selected = 2
-                                          ),
+                                            radioButtons(inputId = "dentaire",label = "Quelle recommendation pour votre santé dentaire ?", 
+                                                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1), 
+                                                         selected = 1), 
+                                          #   checkboxGroupInput(
+                                          #   inputId = "dentaire",
+                                          #   label = "Quelle recommendation pour votre santé dentaire ?",
+                                          #   choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                          #               "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                                          #   selected = 4
+                                          # ),
+                                          radioButtons(inputId = "diete",label = "Faites-vous un régime?", 
+                                                       choices = c("Oui" = 1, "Non" = 2),
+                                                       selected = 1), 
+                                          # checkboxGroupInput(
+                                          #   inputId = "diete",
+                                          #   label = "Prenez-vous un type de diète?",
+                                          #   choices = c("Oui" = 1, "Non" =
+                                          #                 2),
+                                          #   selected = 2
+                                          # ),
                                           helpText ("faible~10, moyen~15, élevé~22"),
                                           numericInput(
                                             inputId = "fibre",
-                                            label = "Votre niveau de fibre alimentaire(g)",
+                                            label = "Consommation en fibre alimentaire(g)",
                                             value = 20,
                                             min = 0,
                                             max = 100
@@ -642,7 +667,7 @@ tabPanel(
                                           helpText ("faible~126, moyen~185, élevé~266"),
                                           numericInput(
                                             inputId = "foodfolate",
-                                            label = "Votre niveau de folate alimentaire(g)",
+                                            label = "Consommation en folate alimentaire(g)",
                                             value = 210,
                                             min = 3,
                                             max = 2000,
@@ -651,16 +676,25 @@ tabPanel(
                                           helpText ("faible~390, moyen~900, élevé~1600"),
                                           numericInput(
                                             inputId = "waterdrank",
-                                            label = "L'eau plate consommée hier(g)",
+                                            label = "Consommation en eau plate hier (g)",
                                             value = 1100,
                                             min = 0,
                                             max = 15000,
                                             step = 200
                                           ),
+                                          helpText ("faible~1800, moyen~2500, élevé~3400"),
+                                          numericInput(
+                                            inputId = "humidite",
+                                            label = "Consommation en eau contenue dans les aliments (mg)",
+                                            value = 2700,
+                                            min = 70,
+                                            max = 20000,
+                                            step = 10
+                                          ),
                                           helpText ("faible~?, moyen~?, élevé~?"),
                                           numericInput(
                                             inputId = "alcool",
-                                            label = "Votre niveau d'alcool(g)",
+                                            label = "Consommation d'alcool(g)",
                                             value = 8,
                                             min = 0,
                                             max = 500,
@@ -669,7 +703,7 @@ tabPanel(
                                           helpText ("faible~900, moyen~1200, élevé~1600"),
                                           numericInput(
                                             inputId = "phosphorus",
-                                            label = "Consommation en phosphorus(mg)",
+                                            label = "Consommation en phosphore (mg)",
                                             value = 1300,
                                             min = 50,
                                             max = 8000,
@@ -693,15 +727,7 @@ tabPanel(
                                             max = 1000,
                                             step = 10
                                           ),
-                                          helpText ("faible~1800, moyen~2500, élevé~3400"),
-                                          numericInput(
-                                            inputId = "humidite",
-                                            label = "Consommation en humidité (mg)",
-                                            value = 2700,
-                                            min = 70,
-                                            max = 20000,
-                                            step = 10
-                                          ),
+                                          
                                           helpText ("faible~155, moyen~250, élevé~390"),
                                           numericInput(
                                             inputId = "choles",
@@ -786,7 +812,7 @@ tabPanel(
                                    div(class = "option-header"),
                                wellPanel(
                               radioButtons("typepatient", "Choisir votre type de patient",
-                                           c("nouveau individu","individu avec Hyp","individu avec Chol","individu avec Diab")))
+                                           c("Nouvel individu","Individu avec hypertension","Individu avec cholestérol","Individu avec diabète")))
                               )
                ),
                  column(4,
@@ -829,7 +855,7 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("La proba Hyp",align="center"),
+                                         h4("La probabilité d'avoir de l'hypertension est de ",align="center"),
                                          div(h4(
                                            textOutput(outputId = "resultat_hypertension"), align = "center"
                                          ))),
@@ -854,7 +880,7 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("La proba Chol",align="center"),
+                                         h4("La probabilité d'avoir du cholestérol est de ",align="center"),
                                          div(h4(
                                            textOutput(outputId = "resultat_cholesterol"), align = "center"
                                          ))),
@@ -879,7 +905,7 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("La proba Diab",align="center"),
+                                         h4("La probabilité d'avoir du diabète est de ",align="center"),
                                          div(h4(
                                            textOutput(outputId = "resultat_diabetes"), align = "center"
                                          ))

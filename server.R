@@ -66,19 +66,168 @@ shinyServer(function(input, output, session) {
   tempoChol <- 999
   tempoDiab <- 999
   
-
-# CA NE MARCHE PAS
-#   observeEvent(input$typepatient=="individu avec Chol",
-# {
-#     updateNumericInput(session,"age",value = 48)
-# 
-# })
   
+  
+  observe({
+    if (input$typepatient=="Individu avec cholestérol") {
+
+      updateSelectInput(session,inputId="sexe",selected = "Male",
+                        choices = c("M" = "Male", "F" = "Female"))
+      updateNumericInput(session,inputId="age",value = 48)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="travail",selected = "non",
+                         choices = c("Oui" = "oui", "Non" = "non"))
+      updateNumericInput(session,inputId="piecesmaison",value = 3)
+      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 174)
+      updateNumericInput(session,inputId="poids",value = 66)
+      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="pression_sys",value = 80)
+      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateRadioButtons(session,inputId="dentaire",
+                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                         selected = 4)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateNumericInput(session,inputId="fibre",value = 22)
+      updateNumericInput(session,inputId="foodfolate",value = 266)
+      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="humidite",value = 3400)
+      updateNumericInput(session,inputId="alcool",value = 500)
+      updateNumericInput(session,inputId="phosphorus",value = 1600)
+      updateNumericInput(session,inputId="sodium",value = 4000)
+      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="proteines",value = 97)
+      updateNumericInput(session,inputId="fer",value = 16)
+      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="vitamineC",value = 108)
+      updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
+      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB12",value = 108)
+
+    }
+    if (input$typepatient=="Individu avec hypertension") {
+      
+      updateSelectInput(session,inputId="sexe",selected = "Male",
+                        choices = c("M" = "Male", "F" = "Female"))
+      updateNumericInput(session,inputId="age",value = 48)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="travail",selected = "non",
+                         choices = c("Oui" = "oui", "Non" = "non"))
+      updateNumericInput(session,inputId="piecesmaison",value = 3)
+      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 174)
+      updateNumericInput(session,inputId="poids",value = 66)
+      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="pression_sys",value = 80)
+      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateRadioButtons(session,inputId="dentaire",
+                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                         selected = 4)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateNumericInput(session,inputId="fibre",value = 22)
+      updateNumericInput(session,inputId="foodfolate",value = 266)
+      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="humidite",value = 3400)
+      updateNumericInput(session,inputId="alcool",value = 500)
+      updateNumericInput(session,inputId="phosphorus",value = 1600)
+      updateNumericInput(session,inputId="sodium",value = 4000)
+      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="proteines",value = 97)
+      updateNumericInput(session,inputId="fer",value = 16)
+      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="vitamineC",value = 108)
+      updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
+      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB12",value = 108)
+      
+    }
+    
+    if (input$typepatient=="Individu avec diabète") {
+      
+      updateSelectInput(session,inputId="sexe",selected = "Male",
+                        choices = c("M" = "Male", "F" = "Female"))
+      updateNumericInput(session,inputId="age",value = 48)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="travail",selected = "non",
+                         choices = c("Oui" = "oui", "Non" = "non"))
+      updateNumericInput(session,inputId="piecesmaison",value = 3)
+      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 174)
+      updateNumericInput(session,inputId="poids",value = 66)
+      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="pression_sys",value = 80)
+      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateRadioButtons(session,inputId="dentaire",
+                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                         selected = 4)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateNumericInput(session,inputId="fibre",value = 22)
+      updateNumericInput(session,inputId="foodfolate",value = 266)
+      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="humidite",value = 3400)
+      updateNumericInput(session,inputId="alcool",value = 500)
+      updateNumericInput(session,inputId="phosphorus",value = 1600)
+      updateNumericInput(session,inputId="sodium",value = 4000)
+      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="proteines",value = 97)
+      updateNumericInput(session,inputId="fer",value = 16)
+      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="vitamineC",value = 108)
+      updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
+      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB12",value = 108)
+      
+    }
+    })
+  
+#-------------------------------------------------------------  
   # j'ajoute une observation  sur la button pour lancer la prédiction
   observeEvent(input$predict==TRUE, {
     
     output$resultat_hypertension <- renderText({
-      if (input$typepatient == "individu avec Hyp")
+      if (input$typepatient == "Individu avec hypertension")
       {
         tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
                                             Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
@@ -109,7 +258,7 @@ shinyServer(function(input, output, session) {
     
     
     output$resultat_cholesterol <- renderText({
-      if (input$typepatient == "individu avec Chol")
+      if (input$typepatient == "Individu avec cholestérol")
       {
       tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=48,
                                               #HOD050_hoq=2,
@@ -159,7 +308,7 @@ shinyServer(function(input, output, session) {
                                                 BMXHT_bmx=input$hauteur,
                                                 BMXWT_bmx=input$poids,
                                                 BPQ020_bpq=input$risquehypertension,
-                                                DIQ010_diq=input$risquediabetes,
+                                                DIQ010_diq=input$risquediabete,
                                                 #OHAREC_ohxref=input$dentaire,
                                                 DRQSDIET_dr1tot=input$diete,
                                                 DR1TFIBE_dr1tot=input$fibre,
@@ -176,7 +325,7 @@ shinyServer(function(input, output, session) {
     
     
     output$resultat_diabetes <- renderText({
-      if (input$typepatient == "individu avec Diab")
+      if (input$typepatient == "Individu avec diabète")
       {
       tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
                                               DR1TSUGR_dr1tot=input$sucre,
@@ -185,7 +334,7 @@ shinyServer(function(input, output, session) {
                                               BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
                                               DR1TALCO_dr1tot=input$alcool,
                                               DR1TMOIS_dr1tot=input$humidite,
-                                              RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("0")),
+                                              RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
                                               DR1.320Z_dr1tot=input$waterdrank,
                                               DR1TCHOL_dr1tot=input$choles,
                                               DR1TPROT_dr1tot=input$proteines,
@@ -204,7 +353,7 @@ shinyServer(function(input, output, session) {
                                                 BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
                                                 DR1TALCO_dr1tot=input$alcool,
                                                 DR1TMOIS_dr1tot=input$humidite,
-                                                RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("0")),
+                                                RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
                                                 DR1.320Z_dr1tot=input$waterdrank,
                                                 DR1TCHOL_dr1tot=input$choles,
                                                 DR1TPROT_dr1tot=input$proteines,
@@ -648,7 +797,7 @@ shinyServer(function(input, output, session) {
   #DIABETE
   #-------
   output$tabstatdia<-renderTable({
-    xdia<-donDia[,input$vardiax]
+    xdia<-donDia_transco[,input$vardiax]
     if (class(xdia) %in% c("numeric","integer")) {
       tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
       colnames(tabstat)<-c("Type","Valeur")
@@ -667,39 +816,39 @@ shinyServer(function(input, output, session) {
   })
   
   output$graph1dia<-renderPlotly({
-    x1dia<-donDia[,input$vardiax]
-    x2dia<-donDia[donDia$DIQ010_diq=="1",input$vardiax]
+    x1dia<-donDia_transco[,input$vardiax]
+    x2dia<-donDia_transco[donDia_transco[,12]=="1",input$vardiax]
     
     if (class(x1dia) %in% c("numeric","integer")) {
       
-      ggplot(donDia, aes(x=x1dia, color=donDia$DIQ010_diq)) +
+      ggplot(donDia_transco, aes(x=x1dia, color=donDia_transco[,12])) +
         geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
         xlab(input$vardiax)
     } else {
       
-      g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+      g<-ggplot(data=donDia_transco, aes(x=x1dia,fill=donDia_transco[,12]))+geom_bar()+scale_fill_manual(values = c("green","red"))+
         xlab(input$vardiax)
       ggplotly(g) }
     
   })
   
   output$graph2dia<-renderPlotly({
-    x1dia<-donDia[,input$vardiaxy[1]]
-    x2dia<-donDia[,input$vardiaxy[2]]
+    x1dia<-donDia_transco[,input$vardiaxy[1]]
+    x2dia<-donDia_transco[,input$vardiaxy[2]]
     
     if (input$idgraphtype==1) {
-      g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))+
+      g<-qplot(x=x1dia,y=x2dia,data=donDia_transco,color=donDia_transco[,12],geom="point")+scale_color_manual(values=c("green","red"))+
         xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
       ggplotly(g)
     } else {
       if (input$idgraphtype==2) {
         
-        g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()+
+        g<-ggplot(data=donDia_transco,aes(x=x1dia,y=x2dia))+geom_boxplot()+
           xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
         ggplotly(g) } else {
           
           if (input$idgraphtype==3) {
-            g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+            g<-ggplot(data=donDia_transco,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
               xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
             ggplotly(g)}}}
     
