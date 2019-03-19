@@ -157,7 +157,7 @@ tabPanel(
                )),
                        
       column(width = 2,
-             tableOutput(outputId="tabstathyp")),
+             wellPanel(tableOutput(outputId="tabstathyp"))),
       column(width = 4,
              plotlyOutput(outputId="graph1hyp")),
       column(width = 4,
@@ -188,7 +188,7 @@ tabPanel(
              )),
       
       column(width = 2,
-             tableOutput(outputId="tabstatcho")),
+             wellPanel(tableOutput(outputId="tabstatcho"))),
       column(width = 4,
              plotlyOutput(outputId="graph1cho")),
       column(width = 4,
@@ -222,7 +222,7 @@ tabPanel(
              )),
       
       column(width = 2,
-             tableOutput(outputId="tabstatdia")),
+             wellPanel(tableOutput(outputId="tabstatdia"))),
       column(width = 4,
              plotlyOutput(outputId="graph1dia")),
       column(width = 4,
