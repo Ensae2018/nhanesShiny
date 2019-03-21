@@ -53,7 +53,6 @@ shinyUI(
                            h3("Site du ",
                               a(span(strong("Centers for Disease Control and Prevention")),
                                 href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?BeginYear=2015",style = "color:blue"),"(www.cdc.gov)"),
-                           
                            br(),
                            
                            h2(span(strong("Format initial",style = "color:darkblue"))),
