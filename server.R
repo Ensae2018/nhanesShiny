@@ -10,8 +10,9 @@
 library(shiny)
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
+  #A MODIFIER AVEC LE MEILLEUR SEUIL DE CHAQUE MODELE
   seuil <- reactive({
     switch (input$sensibilite,
             Fragile = 0.4,
@@ -65,11 +66,168 @@ shinyServer(function(input, output) {
   tempoChol <- 999
   tempoDiab <- 999
   
+  
+  
+  observe({
+    if (input$typepatient=="Individu avec cholestérol") {
+
+      updateSelectInput(session,inputId="sexe",selected = "Male",
+                        choices = c("M" = "Male", "F" = "Female"))
+      updateNumericInput(session,inputId="age",value = 48)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="travail",selected = "non",
+                         choices = c("Oui" = "oui", "Non" = "non"))
+      updateNumericInput(session,inputId="piecesmaison",value = 3)
+      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 174)
+      updateNumericInput(session,inputId="poids",value = 66)
+      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="pression_sys",value = 80)
+      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateRadioButtons(session,inputId="dentaire",
+                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                         selected = 4)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateNumericInput(session,inputId="fibre",value = 22)
+      updateNumericInput(session,inputId="foodfolate",value = 266)
+      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="humidite",value = 3400)
+      updateNumericInput(session,inputId="alcool",value = 500)
+      updateNumericInput(session,inputId="phosphorus",value = 1600)
+      updateNumericInput(session,inputId="sodium",value = 4000)
+      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="proteines",value = 97)
+      updateNumericInput(session,inputId="fer",value = 16)
+      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="vitamineC",value = 108)
+      updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
+      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB12",value = 108)
+
+    }
+    if (input$typepatient=="Individu avec hypertension") {
+      
+      updateSelectInput(session,inputId="sexe",selected = "Male",
+                        choices = c("M" = "Male", "F" = "Female"))
+      updateNumericInput(session,inputId="age",value = 48)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="travail",selected = "non",
+                         choices = c("Oui" = "oui", "Non" = "non"))
+      updateNumericInput(session,inputId="piecesmaison",value = 3)
+      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 174)
+      updateNumericInput(session,inputId="poids",value = 66)
+      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="pression_sys",value = 80)
+      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateRadioButtons(session,inputId="dentaire",
+                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                         selected = 4)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateNumericInput(session,inputId="fibre",value = 22)
+      updateNumericInput(session,inputId="foodfolate",value = 266)
+      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="humidite",value = 3400)
+      updateNumericInput(session,inputId="alcool",value = 500)
+      updateNumericInput(session,inputId="phosphorus",value = 1600)
+      updateNumericInput(session,inputId="sodium",value = 4000)
+      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="proteines",value = 97)
+      updateNumericInput(session,inputId="fer",value = 16)
+      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="vitamineC",value = 108)
+      updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
+      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB12",value = 108)
+      
+    }
+    
+    if (input$typepatient=="Individu avec diabète") {
+      
+      updateSelectInput(session,inputId="sexe",selected = "Male",
+                        choices = c("M" = "Male", "F" = "Female"))
+      updateNumericInput(session,inputId="age",value = 48)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="travail",selected = "non",
+                         choices = c("Oui" = "oui", "Non" = "non"))
+      updateNumericInput(session,inputId="piecesmaison",value = 3)
+      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+                         choices = c("Oui" = "Yes", "Non" = "No"))
+      updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 174)
+      updateNumericInput(session,inputId="poids",value = 66)
+      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="pression_sys",value = 80)
+      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateRadioButtons(session,inputId="dentaire",
+                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                         selected = 4)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 2)
+      updateNumericInput(session,inputId="fibre",value = 22)
+      updateNumericInput(session,inputId="foodfolate",value = 266)
+      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="humidite",value = 3400)
+      updateNumericInput(session,inputId="alcool",value = 500)
+      updateNumericInput(session,inputId="phosphorus",value = 1600)
+      updateNumericInput(session,inputId="sodium",value = 4000)
+      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="proteines",value = 97)
+      updateNumericInput(session,inputId="fer",value = 16)
+      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="vitamineC",value = 108)
+      updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
+      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB12",value = 108)
+      
+    }
+    })
+  
+#-------------------------------------------------------------  
   # j'ajoute une observation  sur la button pour lancer la prédiction
   observeEvent(input$predict==TRUE, {
     
     output$resultat_hypertension <- renderText({
-      if (input$typepatient == "proHyp")
+      if (input$typepatient == "Individu avec hypertension")
       {
         tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
                                             Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
@@ -95,91 +253,79 @@ shinyServer(function(input, output) {
                                               Sodium_mg=input$sodium
         ),type="response")
       }
-      ifelse(tempoHyp>seuil(),"Danger!!", ";-)")
+      ifelse(tempoHyp>seuil(),tempoHyp, tempoHyp)
     })
     
-    #Changement variables retenus pour Cholestérol
-    # #How many rooms are in this home? Count the kitchen but not the bathroom.
-    # unique(donCholStep$HOD050_hoq) #int 7   6   5   4  10   1   3   8   9 777   2  12  11  13 =>num
-    # 
-    # #In a typical week {do you/does SP} walk or use a bicycle for at least 10 minutes continuously to get to and from places? => factor
-    # unique(donCholStep$PAQ635_paq) #int 2 1 9
-    # 
-    # #Lutein + zeaxanthin (mcg)
-    # unique(donCholStep$DR1TLZ_dr1tot) #num
-    # 
-    # #Vitamin C (mg)
-    # unique(donCholStep$DR1TVC_dr1tot) #num
-    # 
-    # #Moisture (gm)
-    # unique(donCholStep$DR1TMOIS_dr1tot) #num
-    #
-    # #Sexe => pas significatif
-    # #Water drank => pas significatif
     
     output$resultat_cholesterol <- renderText({
-      if (input$typepatient == "proChol")
+      if (input$typepatient == "Individu avec cholestérol")
       {
       tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=48,
-                                              HOD050_hoq=2,
-                                              PAQ635_paq="2",
-                                              DR1TLZ_dr1tot=400,
-                                              DR1TVC_dr1tot=30,
-                                              DR1TMOIS_dr1tot=1500,
-                                              #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
-                                              BPXSY3_bpx=120,
+                                              #HOD050_hoq=2,
+                                              #PAQ635_paq="2",
+                                              #DR1TLZ_dr1tot=400,
+                                              #DR1TVC_dr1tot=30,
+                                              #DR1TMOIS_dr1tot=1500,
+                                              RIAGENDR_demo="1",
+                                              #BPXSY3_bpx=120,
                                               BMXBMI_bmx=21,
                                               MCQ080_mcq="1",
                                               SLQ050_slq="1",
-                                              BPXDI2_bpx=69,
-                                              INDFMPIR_demo=3,
+                                              #BPXDI2_bpx=69,
+                                              #INDFMPIR_demo=3,
                                               Var_TRAVAIL=input$travail,
                                               BMXHT_bmx=170,
                                               BMXWT_bmx=60,
                                               BPQ020_bpq="1",
                                               DIQ010_diq="1",
-                                              OHAREC_ohxref="4",
+                                              #OHAREC_ohxref="4",
                                               DRQSDIET_dr1tot="2",
                                               DR1TFIBE_dr1tot=20,
-                                              DR1TALCO_dr1tot=8,
-                                              DR1TFF_dr1tot=210
+                                              #DR1TALCO_dr1tot=8,
+                                              #DR1TFF_dr1tot=210
                                               #DR1.320Z_dr1tot=input$waterdrank
+                                              DR1TVB6_dr1tot=30,
+                                              DR1TCHOL_dr1tot=30,
+                                              DR1TB12A_dr1tot=30
       ),type="response")
       }
       else
       {
         tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
-                                                HOD050_hoq=input$piecesmaison,
-                                                PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
-                                                DR1TLZ_dr1tot=input$LuteineZeaxanthine,
-                                                DR1TVC_dr1tot=input$vitamineC,
-                                                DR1TMOIS_dr1tot=input$humidite,
-                                                #RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
-                                                BPXSY3_bpx=input$pression_sys,
+                                                #HOD050_hoq=input$piecesmaison,
+                                                #PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
+                                                #DR1TLZ_dr1tot=input$LuteineZeaxanthine,
+                                                #DR1TVC_dr1tot=input$vitamineC,
+                                                #DR1TMOIS_dr1tot=input$humidite,
+                                                RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
+                                                #BPXSY3_bpx=input$pression_sys,
                                                 BMXBMI_bmx=input$bmi,
                                                 MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
                                                 SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
-                                                BPXDI2_bpx=input$pression_dia,
-                                                INDFMPIR_demo=input$pauvretefamille,
+                                                #BPXDI2_bpx=input$pression_dia,
+                                                #INDFMPIR_demo=input$pauvretefamille,
                                                 Var_TRAVAIL=input$travail,
                                                 BMXHT_bmx=input$hauteur,
                                                 BMXWT_bmx=input$poids,
                                                 BPQ020_bpq=input$risquehypertension,
-                                                DIQ010_diq=input$risquediabetes,
-                                                OHAREC_ohxref=input$dentaire,
+                                                DIQ010_diq=input$risquediabete,
+                                                #OHAREC_ohxref=input$dentaire,
                                                 DRQSDIET_dr1tot=input$diete,
                                                 DR1TFIBE_dr1tot=input$fibre,
-                                                DR1TALCO_dr1tot=input$alcool,
-                                                DR1TFF_dr1tot=input$foodfolate
+                                                #DR1TALCO_dr1tot=input$alcool,
+                                                #DR1TFF_dr1tot=input$foodfolate
                                                 #DR1.320Z_dr1tot=input$waterdrank
+                                                DR1TVB6_dr1tot=input$vitB6,
+                                                DR1TCHOL_dr1tot=input$choles,
+                                                DR1TB12A_dr1tot=input$vitB12
         ),type="response")
       }
-      ifelse(tempoChol>seuil(),"Danger!!", ";-)")
+      ifelse(tempoChol>seuil(),tempoChol, tempoChol)
     })
     
     
     output$resultat_diabetes <- renderText({
-      if (input$typepatient == "proDiab")
+      if (input$typepatient == "Individu avec diabète")
       {
       tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
                                               DR1TSUGR_dr1tot=input$sucre,
@@ -188,7 +334,7 @@ shinyServer(function(input, output) {
                                               BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
                                               DR1TALCO_dr1tot=input$alcool,
                                               DR1TMOIS_dr1tot=input$humidite,
-                                              RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("0")),
+                                              RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
                                               DR1.320Z_dr1tot=input$waterdrank,
                                               DR1TCHOL_dr1tot=input$choles,
                                               DR1TPROT_dr1tot=input$proteines,
@@ -207,7 +353,7 @@ shinyServer(function(input, output) {
                                                 BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
                                                 DR1TALCO_dr1tot=input$alcool,
                                                 DR1TMOIS_dr1tot=input$humidite,
-                                                RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("0")),
+                                                RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
                                                 DR1.320Z_dr1tot=input$waterdrank,
                                                 DR1TCHOL_dr1tot=input$choles,
                                                 DR1TPROT_dr1tot=input$proteines,
@@ -217,7 +363,7 @@ shinyServer(function(input, output) {
                                                 DR1TCAFF_dr1tot=input$cafeine
         ),type="response")
       }
-      ifelse(tempoDiab>seuil(),"Danger!!", ";-)")
+      ifelse(tempoDiab>seuil(),tempoDiab, tempoDiab)
     })
     
     output$im_hyp_g <- renderImage({
@@ -537,92 +683,128 @@ shinyServer(function(input, output) {
   ####
   # Les metriques pour Cholesterol
   ####
-  observeEvent(input$methodechol==3,{
-    output$choixmethode_chol <- renderPlot({
-      plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC")
-      lines(roc(res_chol[,1],res_chol[,input$methodechol[2]]), col="red")
-      lines(roc(res_chol[,1],res_chol[,input$methodechol[3]]), col="green")
-      legend("bottomright",legend = c(input$methodechol[1],input$methodechol[2], input$methodechol[3]), col=c("black","red","green"), lty = 1)
-    })
-    
-    output$valAUC_chol <- renderTable({
-      tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]),
-                           auc(res_chol[,1],res_chol[,input$methodechol[2]]),
-                           auc(res_chol[,1],res_chol[,input$methodechol[3]])
-      )
-      names(tabauc) <- input$methodechol    
-      tabauc
-    })
-    
-    output$matconf_chol <- renderTable({
-      tabconf <- cbind(as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol)),
-                       as.data.frame(monerreur(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol))[,3],
-                       as.data.frame(monerreur(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))[,3]
-      )
-      names(tabconf)[3:length(names(tabconf))] <- input$methodechol
-      names(tabconf)[1] <- "seuil"
-      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-      tabconf$seuil <- as.character(tabconf$seuil)
-      tabconf$seuil[5] <- "Sensibilité"
-      tabconf$seuil[6] <- "Spécificité"
-      tabconf
-    })
-    
-    output$matprecision_chol <- renderTable({
-      tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1],seuil=input$seuilmodchol),
-                                 precision(res_chol[,input$methodechol[2]],res_chol[,1],seuil=input$seuilmodchol),
-                                 precision(res_chol[,input$methodechol[3]],res_chol[,1],seuil=input$seuilmodchol))
-      names(tabprecision) <- input$methodechol
-      tabprecision
-    })
+  
+  output$choixmethode_chol <- renderPlot({
+    plot(roc(res_chol[,1],res_chol[,input$methodechol[1]]),col="black",main="Courbes ROC",
+         print.thres = "best", print.thres.best.method = "closest.topleft")
+    i=1
+    traitchol <- c(input$methodechol[1])
+    seuil <- c(round(coords(roc(res_chol[,1],res_chol[,input$methodechol[1]]), "best", best.method = "closest.topleft")[1],3))
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      lines(roc(res_chol[,1],res_chol[,input$methodechol[i]]), col= i,
+            print.thres = "best", print.thres.best.method = "closest.topleft")
+      traitchol <- c(traitchol,input$methodechol[i])
+      seuil <- c(seuil,round(coords(roc(res_chol[,1],res_chol[,input$methodechol[i]]), "best", best.method = "closest.topleft")[1],3))
+      legend("bottomright",legend = paste(traitchol,seuil,sep = "_"), col=1:i, lty = 1)
+    }
   })
   
+  output$valAUC_chol <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_chol[,1],res_chol[,input$methodechol[1]]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      tabauc <- cbind(tabauc,auc(res_chol[,1],res_chol[,input$methodechol[i]]))
+    }
+    names(tabauc) <- input$methodechol
+    tabauc
+  })
+  
+  output$matconf_chol <- renderTable({
+    tabconf <- as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_chol[,input$methodechol[i]],res_chol[,1]))[,3])
+    }
+    names(tabconf)[3:length(names(tabconf))] <- input$methodechol
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:length(names(tabconf))] <- tabconf[4,3:length(names(tabconf))]/(tabconf[4,3:length(names(tabconf))]+tabconf[3,3:length(names(tabconf))])
+    tabconf[6,3:length(names(tabconf))] <- tabconf[1,3:length(names(tabconf))]/(tabconf[1,3:length(names(tabconf))]+tabconf[2,3:length(names(tabconf))])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilité"
+    tabconf$seuil[6] <- "Spécificité"
+    tabconf
+  })
+  
+  output$matprecision_chol <- renderTable({
+    tabprecision <- data.frame(precision(res_chol[,input$methodechol[1]],res_chol[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodechol)) break
+      tabprecision <- cbind(tabprecision,precision(res_chol[,input$methodechol[i]],res_chol[,1]))
+    }
+    names(tabprecision) <- input$methodechol
+    tabprecision
+  })
   
   ####
   # Les metriques pour le diabete
   ####
-  observeEvent(input$methodedia==3,{
-    output$choixmethode_dia <- renderPlot({
-      plot(roc(res_dia[,1],res_dia[,input$methodedia[1]]),col="black",main="Courbes ROC")
-      lines(roc(res_dia[,1],res_dia[,input$methodedia[2]]), col="red")
-      lines(roc(res_dia[,1],res_dia[,input$methodedia[3]]), col="green")
-      legend("bottomright",legend = c(input$methodedia[1],input$methodedia[2], input$methodedia[3]), col=c("black","red","green"), lty = 1)
-    })
-    
-    output$valAUC_dia <- renderTable({
-      tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methodedia[1]]),
-                           auc(res_dia[,1],res_dia[,input$methodedia[2]]),
-                           auc(res_dia[,1],res_dia[,input$methodedia[3]])
-      )
-      names(tabauc) <- input$methodedia    
-      tabauc
-    })
-    
-    output$matconf_dia <- renderTable({
-      tabconf <- cbind(as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia)),
-                       as.data.frame(monerreur(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia))[,3],
-                       as.data.frame(monerreur(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))[,3]
-      )
-      
-      names(tabconf)[3:length(names(tabconf))] <- input$methodedia
-      names(tabconf)[1] <- "seuil"
-      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-      tabconf$seuil <- as.character(tabconf$seuil)
-      tabconf$seuil[5] <- "Sensibilité"
-      tabconf$seuil[6] <- "Spécificité"
-      tabconf
-    })
-    
-    output$matprecision_dia <- renderTable({
-      tabprecision <- data.frame(precision(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia),
-                                 precision(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia),
-                                 precision(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))
-      names(tabprecision) <- input$methodedia
-      tabprecision
-    })
+  output$choixmethode_dia <- renderPlot({
+    plot(roc(res_dia[,1],res_dia[,input$methodedia[1]]),col="black",main="Courbes ROC",
+         print.thres = "best", print.thres.best.method = "closest.topleft")
+    i=1
+    traitdia <- c(input$methodedia[1])
+    seuil <- c(round(coords(roc(res_dia[,1],res_dia[,input$methodedia[1]]), "best", best.method = "closest.topleft")[1],3))
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      lines(roc(res_dia[,1],res_dia[,input$methodedia[i]]), col= i,
+            print.thres = "best", print.thres.best.method = "closest.topleft")
+      traitdia <- c(traitdia,input$methodedia[i])
+      seuil <- c(seuil,round(coords(roc(res_dia[,1],res_dia[,input$methodedia[i]]), "best", best.method = "closest.topleft")[1],3))
+      legend("bottomright",legend = paste(traitdia,seuil,sep = "_"), col=1:i, lty = 1)
+    }
   })
+  
+  output$valAUC_dia <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methodedia[1]]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      tabauc <- cbind(tabauc,auc(res_dia[,1],res_dia[,input$methodedia[i]]))
+    }
+    names(tabauc) <- input$methodedia
+    tabauc
+  })
+  
+  output$matconf_dia <- renderTable({
+    tabconf <- as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_dia[,input$methodedia[i]],res_dia[,1]))[,3])
+    }
+    names(tabconf)[3:length(names(tabconf))] <- input$methodedia
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:length(names(tabconf))] <- tabconf[4,3:length(names(tabconf))]/(tabconf[4,3:length(names(tabconf))]+tabconf[3,3:length(names(tabconf))])
+    tabconf[6,3:length(names(tabconf))] <- tabconf[1,3:length(names(tabconf))]/(tabconf[1,3:length(names(tabconf))]+tabconf[2,3:length(names(tabconf))])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilité"
+    tabconf$seuil[6] <- "Spécificité"
+    tabconf
+  })
+  
+  output$matprecision_dia <- renderTable({
+    tabprecision <- data.frame(precision(res_dia[,input$methodedia[1]],res_dia[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      tabprecision <- cbind(tabprecision,precision(res_dia[,input$methodedia[i]],res_dia[,1]))
+    }
+    names(tabprecision) <- input$methodedia
+    tabprecision
+  })
+
   
   
   
@@ -633,7 +815,7 @@ shinyServer(function(input, output) {
   #DIABETE
   #-------
   output$tabstatdia<-renderTable({
-    xdia<-donDia[,input$vardiax]
+    xdia<-donDia_transco[,input$vardiax]
     if (class(xdia) %in% c("numeric","integer")) {
       tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
       colnames(tabstat)<-c("Type","Valeur")
@@ -652,39 +834,39 @@ shinyServer(function(input, output) {
   })
   
   output$graph1dia<-renderPlotly({
-    x1dia<-donDia[,input$vardiax]
-    x2dia<-donDia[donDia$DIQ010_diq=="1",input$vardiax]
+    x1dia<-donDia_transco[,input$vardiax]
+    x2dia<-donDia_transco[donDia_transco[,12]=="1",input$vardiax]
     
     if (class(x1dia) %in% c("numeric","integer")) {
       
-      ggplot(donDia, aes(x=x1dia, color=donDia$DIQ010_diq)) +
+      ggplot(donDia_transco, aes(x=x1dia, color=donDia_transco[,12])) +
         geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
         xlab(input$vardiax)
     } else {
       
-      g<-ggplot(data=donDia, aes(x=x1dia,fill=donDia$DIQ010_diq))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+      g<-ggplot(data=donDia_transco, aes(x=x1dia,fill=donDia_transco[,12]))+geom_bar()+scale_fill_manual(values = c("green","red"))+
         xlab(input$vardiax)
       ggplotly(g) }
     
   })
   
   output$graph2dia<-renderPlotly({
-    x1dia<-donDia[,input$vardiaxy[1]]
-    x2dia<-donDia[,input$vardiaxy[2]]
+    x1dia<-donDia_transco[,input$vardiaxy[1]]
+    x2dia<-donDia_transco[,input$vardiaxy[2]]
     
     if (input$idgraphtype==1) {
-      g<-qplot(x=x1dia,y=x2dia,data=donDia,color=donDia$DIQ010_diq,geom="point")+scale_color_manual(values=c("green","red"))+
+      g<-qplot(x=x1dia,y=x2dia,data=donDia_transco,color=donDia_transco[,12],geom="point")+scale_color_manual(values=c("green","red"))+
         xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
       ggplotly(g)
     } else {
       if (input$idgraphtype==2) {
         
-        g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_boxplot()+
+        g<-ggplot(data=donDia_transco,aes(x=x1dia,y=x2dia))+geom_boxplot()+
           xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
         ggplotly(g) } else {
           
           if (input$idgraphtype==3) {
-            g<-ggplot(data=donDia,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+            g<-ggplot(data=donDia_transco,aes(x=x1dia,y=x2dia))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
               xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
             ggplotly(g)}}}
     

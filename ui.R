@@ -11,6 +11,36 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(
+  fluidPage(
+    # Some custom CSS
+    tags$head(
+      tags$style(HTML("
+        /* Smaller font for preformatted text */
+        pre, table.table {
+          font-size: smaller;
+        }
+
+        body {
+          min-height: 2000px;
+        }
+
+        .option-group {
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          padding: 0px 5px;
+          margin: 5px-10px;
+          #background-color: #98f5ff;
+          background-color: #b2dfee;
+        }
+
+        .option-header {
+          #color: #80d;
+          color: #8b3a3a;
+          text-transform: uppercase;
+          margin-bottom: 5px;
+        }
+      "))
+    ),
   navbarPage(
     theme = shinytheme("cerulean"),
     title = "Etude Nhanes",
@@ -106,12 +136,12 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Hypertension", style = "color:blue"))),
                        
-               selectInput(inputId = "varhypx", label = "1 variable",
+               selectInput(inputId = "varhypx", label = "Table et Graphique 1",
                            choices=colnames(donHyp[,-1]),selected=colnames(donHyp[,-1])[2]),br(),
                
                pickerInput(
                  "varhypxy",
-                 label = "2 variables",
+                 label = "Graphique 2",
                  choices = colnames(donHyp[,-1]),
                  multiple = TRUE,
                  selected = colnames(donHyp[, c(3,28)]),
@@ -120,13 +150,13 @@ tabPanel(
                    `max-options` = 2
                  )
                ),
-                             radioButtons(inputId = "idgraphtypehyp", label = "Type graphe 2", selected = 3,
+                             radioButtons(inputId = "idgraphtypehyp", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
                )),
                        
       column(width = 2,
-             tableOutput(outputId="tabstathyp")),
+             wellPanel(tableOutput(outputId="tabstathyp"))),
       column(width = 4,
              plotlyOutput(outputId="graph1hyp")),
       column(width = 4,
@@ -137,12 +167,12 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Cholestérol", style = "color:blue"))),
                        
-                       selectInput(inputId = "varchox", label = "1 variable",
+                       selectInput(inputId = "varchox", label = "Table et Graphique 1",
                                    choices=colnames(donChol[,-1]),selected=colnames(donChol[,-1])[2]),br(),
                        
                        pickerInput(
                          "varchoxy",
-                         label = "2 variables",
+                         label = "Graphique 2",
                          choices = colnames(donChol[,-1]),
                          multiple = TRUE,
                          selected = colnames(donChol[, c(3,28)]),
@@ -151,13 +181,13 @@ tabPanel(
                            `max-options` = 2
                          )
                        ),
-                       radioButtons(inputId = "idgraphtypecho", label = "Type graphe 2", selected = 3,
+                       radioButtons(inputId = "idgraphtypecho", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
              )),
       
       column(width = 2,
-             tableOutput(outputId="tabstatcho")),
+             wellPanel(tableOutput(outputId="tabstatcho"))),
       column(width = 4,
              plotlyOutput(outputId="graph1cho")),
       column(width = 4,
@@ -171,27 +201,27 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Diabète", style = "color:blue"))),
                        
-                       selectInput(inputId = "vardiax", label = "1 variable",
-                                   choices=colnames(donDia[,-1]),selected=colnames(donDia[,-1])[2]),br(),
+                       selectInput(inputId = "vardiax", label = "Table et Graphique 1",
+                                   choices=colnames(donDia_transco[,-1]),selected=colnames(donDia_transco[,-1])[2]),br(),
                        
                        pickerInput(
                          "vardiaxy",
-                         label = "2 variables",
-                         choices = colnames(donDia[,-1]),
+                         label = "Graphique 2",
+                         choices = colnames(donDia_transco[,-1]),
                          multiple = TRUE,
-                         selected = colnames(donDia[, c(3,28)]),
+                         selected = colnames(donDia_transco[, c(3,28)]),
                          options = list(
                            `actions-box` = FALSE,
                            `max-options` = 2
                          )
                        ),
-                       radioButtons(inputId = "idgraphtype", label = "Type graphe 2", selected = 1,
+                       radioButtons(inputId = "idgraphtype", label = "Type Graphique 2", selected = 1,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
              )),
       
       column(width = 2,
-             tableOutput(outputId="tabstatdia")),
+             wellPanel(tableOutput(outputId="tabstatdia"))),
       column(width = 4,
              plotlyOutput(outputId="graph1dia")),
       column(width = 4,
@@ -265,7 +295,7 @@ tabPanel(
   #----------------------------------------------------------------  
   #navbarMenu : CHOIX MODELE
   #----------------------------------------------------------------    
-  
+
   navbarMenu(
     title = "Choix modèle",
     
@@ -285,7 +315,7 @@ tabPanel(
                                        )),column(width = 11,
                                                  dataTableOutput(outputId = "tabselvardia")))),
                           
-                          tabPanel(title = "modele prediction",
+                          tabPanel(title = "modèle prédiction",
                                    fluidRow(
                                      column(
                                        width=4,
@@ -297,8 +327,7 @@ tabPanel(
                                          selected = colnames(res_dia[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner 3!",
-                                           `max-options` = 3
+                                           `none-selected-text` = "Sélectionner"
                                          )
                                        )
                                      ),
@@ -306,21 +335,20 @@ tabPanel(
                                             sliderInput("seuilmoddia", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
                                      )
                                    ),
-                                   conditionalPanel(
-                                     condition="input.methodedia.length==3",
+                                   
+                                     
                                      fluidRow(
                                        plotOutput("choixmethode_dia")),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Les valeurs d'AUC</h4>"),
                                             tableOutput("valAUC_dia"),
                                             HTML("<h4>Les valeurs de precision</h4>"),
                                             tableOutput("matprecision_dia")
                                      ),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Matrice de confusion</h4>"),     
                                             tableOutput("matconf_dia")
-                                     )
-                                   )))),
+                                     )))),
     
     
     
@@ -343,7 +371,7 @@ tabPanel(
                                      column(width = 11,
                                             dataTableOutput(outputId = "tabselvarchol"))
                                    )),
-                          tabPanel(title = "modele prediction",
+                          tabPanel(title = "modèle prédiction",
                                    fluidRow(
                                      column(
                                        width=4,
@@ -355,8 +383,7 @@ tabPanel(
                                          selected = colnames(res_chol[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner 3!",
-                                           `max-options` = 3
+                                           `none-selected-text` = "Sélectionner"
                                          )
                                        )
                                      ),
@@ -364,21 +391,19 @@ tabPanel(
                                             sliderInput("seuilmodchol", "Choisir le seuil de discrimination", 0.01,0.99,0.5,0.1)
                                      )
                                    ),
-                                   conditionalPanel(
-                                     condition="input.methodechol.length==3",
                                      fluidRow(
                                        plotOutput("choixmethode_chol")),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Les valeurs d'AUC</h4>"),
                                             tableOutput("valAUC_chol"),
                                             HTML("<h4>Les valeurs de precision</h4>"),
                                             tableOutput("matprecision_chol")
                                      ),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Matrice de confusion</h4>"),     
                                             tableOutput("matconf_chol")
                                      )
-                                   ))
+                                   )
              )
     ),
     
@@ -400,7 +425,7 @@ tabPanel(
                                      column(width = 11,
                                             dataTableOutput(outputId = "tabselvarhyp"))
                                    )),
-                          tabPanel(title = "modele prediction",
+                          tabPanel(title = "modèle prédiction",
                                    fluidRow(
                                      column(
                                        width=4,
@@ -412,7 +437,7 @@ tabPanel(
                                          selected = colnames(res_hyp[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner"
+                                           `none-selected-text` = "Sélectionner"
                                          )
                                        )
                                      ),
@@ -439,99 +464,135 @@ tabPanel(
   #----------------------------------------------------------------  
   #tabPanel : PREDICTION
   #----------------------------------------------------------------  
+  
   tabPanel(title = "Prédiction",
+           
            sidebarLayout(
-             sidebarPanel("Les données sur l'individu :",
-                          
+             sidebarPanel("Les données sur l'individu :",align = "center",
+                          br(),
+                          br(),
+           
                           #Premiere colonne du questionnaire
                           #Hypothèses : value = mean, faible = 1q, moyen = median, fort = 3q, min=min, max=max
-                          fluidRow(column(6,
+                          fluidRow(
+                            
+                            column(width=4,
+                                          
+                                    div(class = "option-group",
+                                      div(class = "option-header", "Habitudes"),
                                           selectInput(
                                             inputId = "sexe",
-                                            label = "Selectionner votre sexe",
-                                            selected = "M",
+                                            label = "Votre sexe",
+                                            selected = "Female",
                                             choices = c("M" = "Male", "F" = "Female")
                                           ),
                                           numericInput(
                                             inputId = "age",
-                                            label = "Selectionner votre age",
+                                            label = "Votre age",
                                             value = 30,
                                             min = 16,
                                             max = 150
                                           ),
-                                          checkboxGroupInput(
-                                            inputId = "marchevelodixmin",
-                                            label = "Faites-vous de la marche ou du vélo?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ), 
-                                          checkboxGroupInput(
-                                            inputId = "travail",
-                                            label = "Avez-vous travaillez la semaine dernière?",
-                                            choices = c("Oui" = "oui", "Non" =
-                                                          "non"),
-                                            selected = "non"
-                                          ), 
+                                      #finalement pas besoin
+                                      radioButtons(inputId = "marchevelodixmin", label = "Faites-vous de la marche ou du vélo?", selected = "Yes",
+                                                   choices = c("Oui" = "Yes", "Non" = "No")),    
+                                      # checkboxGroupInput(
+                                      #       inputId = "marchevelodixmin",
+                                      #       label = "Faites-vous de la marche ou du vélo?",
+                                      #       choices = c("Oui" = "Yes", "Non" =
+                                      #                     "No"),
+                                      #       selected = "No"
+                                      #     ), 
+                                      radioButtons(inputId = "travail", label = "Avez-vous travaillez la semaine dernière?", selected = "oui",
+                                                   choices = c("Oui" = "oui", "Non" = "non")),   
+                                          # checkboxGroupInput(
+                                          #   inputId = "travail",
+                                          #   label = "Avez-vous travaillez la semaine dernière?",
+                                          #   choices = c("Oui" = "oui", "Non" =
+                                          #                 "non"),
+                                          #   selected = "non"
+                                          # ), 
+                                      #finalement pas besoin
                                           numericInput(
                                             inputId = "piecesmaison",
-                                            label = "Entrez le nbr de pièces chez vous",
+                                            label = "Le nbr de pièces chez vous",
                                             value = 2,
                                             min = 0,
                                             max = 10
                                           ),
                                           numericInput(
                                             inputId = "pauvretefamille",
-                                            label = "Entrez le taux de pauvreté de votre famille",
+                                            label = "Le taux de pauvreté de votre famille",
                                             value = 2,
                                             min = 0,
                                             max = 5
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "trouble_sommeil",
-                                            label = "Trouble de sommeil?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "cholesterol",
-                                            label = "Taux élevé de cholestérol?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "risquehypertension",
-                                            label = "Taux élevé d'hypertension?",
-                                            choices = c("Oui" = 1, "Non" =
-                                                          2),
-                                            selected = 2
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "risquediabetes",
-                                            label = "Diabète?",
-                                            choices = c("Oui" = 1, "Non" =
-                                                          2),
-                                            selected = 2
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "surpoids",
-                                            label = "Obèse?",
-                                            choices = c("Oui" = "Yes", "Non" =
-                                                          "No"),
-                                            selected = "No"
-                                          ),
+                                          )
+                                    )),
+                                    
+                              
+                            column(width=4,
+                                   
+                                    div(class = "option-group",
+                                        div(class = "option-header", "Santé"),
+                                        radioButtons(inputId = "trouble_sommeil", label = "Trouble de sommeil?", selected = "Yes",
+                                                     choices = c("Oui" = "Yes", "Non" = "No")),     
+                                        # checkboxGroupInput(
+                                        #     inputId = "trouble_sommeil",
+                                        #     label = "Trouble de sommeil?",
+                                        #     choices = c("Oui" = "Yes", "Non" =
+                                        #                   "No"),
+                                        #     selected = "No"
+                                        #   ),
+                                        radioButtons(inputId = "cholesterol", label = "Taux élevé de cholestérol?", selected = "Yes",
+                                                     choices = c("Oui" = "Yes", "Non" ="No")),    
+                                          # checkboxGroupInput(
+                                          #   inputId = "cholesterol",
+                                          #   label = "Taux élevé de cholestérol?",
+                                          #   choices = c("Oui" = "Yes", "Non" =
+                                          #                 "No"),
+                                          #   selected = "No"
+                                          # ),
+                                        radioButtons(inputId = "risquehypertension", label = "Taux élevé d'hypertension?", 
+                                                     choices = c("Oui" = 1, "Non" = 2),
+                                                     selected = 1),
+                                          # checkboxGroupInput(
+                                          #   inputId = "risquehypertension",
+                                          #   label = "Taux élevé d'hypertension?",
+                                          #   choices = c("Oui" = 1, "Non" =
+                                          #                 2),
+                                          #   selected = 2
+                                          # ),
+                                        radioButtons(inputId = "risquediabete", label = "Diabète?", 
+                                                     choices = c("Oui" = 1, "Non" =
+                                                                   2),
+                                                     selected = 1),  
+                                        # checkboxGroupInput(
+                                        #     inputId = "risquediabetes",
+                                        #     label = "Diabète?",
+                                        #     choices = c("Oui" = 1, "Non" =
+                                        #                   2),
+                                        #     selected = 2
+                                        #   ),
+                                        radioButtons(inputId = "surpoids",label = "Obèse?", 
+                                                     choices = c("Oui" = "Yes", "Non" = "No"), 
+                                                     selected = "Yes"),    
+                                        # checkboxGroupInput(
+                                        #     inputId = "surpoids",
+                                        #     label = "Obèse?",
+                                        #     choices = c("Oui" = "Yes", "Non" =
+                                        #                   "No"),
+                                        #     selected = "No"
+                                        #   ),
                                           numericInput(
                                             inputId = "hauteur",
-                                            label = "Entrez votre hauteur(cm)",
+                                            label = "Votre hauteur(cm)",
                                             value = 160,
                                             min = 80,
                                             max = 200
                                           ),
                                           numericInput(
                                             inputId = "poids",
-                                            label = "Entrez votre poids(kg)",
+                                            label = "Votre poids(kg)",
                                             value = 65,#mean=80
                                             min = 30,
                                             max = 200,
@@ -540,7 +601,7 @@ tabPanel(
                                           helpText ("faible~24?, moyen~28?, élevé~33?"),
                                           numericInput(
                                             inputId = "bmi",
-                                            label = "Entrez votre indice masse corporel (kg/m^2)",
+                                            label = "Votre indice masse corporel (kg/m^2)",
                                             value = 34,#mean=30
                                             min = 11,
                                             max = 70,
@@ -549,7 +610,7 @@ tabPanel(
                                           helpText ("faible~112, moyen~122, élevé~134"),
                                           numericInput(
                                             inputId = "pression_sys",
-                                            label = "Entrez votre pression systolique (mm Hg)",
+                                            label = "Votre pression systolique (mm Hg)",
                                             value = 120,
                                             min = 70,
                                             max = 300,
@@ -558,42 +619,52 @@ tabPanel(
                                           helpText ("faible~62, moyen~68, élevé~76"),
                                           numericInput(
                                             inputId = "pression_dia",
-                                            label = "Entrez votre pression diastolique (mm Hg)",
+                                            label = "Votre pression diastolique (mm Hg)",
                                             value = 69,
                                             min = 0,
                                             max = 200,
                                             step = 10
                                           )
-                          ),
-                          
-                          #Deuxieme colonne du questionnaire 
-                          fluidRow(column(6,
-                                          checkboxGroupInput(
-                                            inputId = "dentaire",
-                                            label = "Quelle recommendation pour votre santé dentaire ?",
-                                            choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
-                                                        "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
-                                            selected = 4
-                                          ),
-                                          checkboxGroupInput(
-                                            inputId = "diete",
-                                            label = "Prenez-vous un type de diète?",
-                                            choices = c("Oui" = 1, "Non" =
-                                                          2),
-                                            selected = 2
-                                          ),
+                                    )),
+                           
+                        
+                            column(width=4,         
+                                        div(class = "option-group",
+                                              div(class = "option-header", "Alimentation"),
+                                            radioButtons(inputId = "dentaire",label = "Quelle recommendation pour votre santé dentaire ?", 
+                                                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1), 
+                                                         selected = 1), 
+                                          #   checkboxGroupInput(
+                                          #   inputId = "dentaire",
+                                          #   label = "Quelle recommendation pour votre santé dentaire ?",
+                                          #   choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                          #               "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
+                                          #   selected = 4
+                                          # ),
+                                          radioButtons(inputId = "diete",label = "Faites-vous un régime?", 
+                                                       choices = c("Oui" = 1, "Non" = 2),
+                                                       selected = 1), 
+                                          # checkboxGroupInput(
+                                          #   inputId = "diete",
+                                          #   label = "Prenez-vous un type de diète?",
+                                          #   choices = c("Oui" = 1, "Non" =
+                                          #                 2),
+                                          #   selected = 2
+                                          # ),
                                           helpText ("faible~10, moyen~15, élevé~22"),
                                           numericInput(
                                             inputId = "fibre",
-                                            label = "Entrez votre niveau de fibre alimentaire(g)",
+                                            label = "Consommation en fibre alimentaire(g)",
                                             value = 20,
                                             min = 0,
                                             max = 100
                                           ),
+                                          #finalement pas besoin
                                           helpText ("faible~126, moyen~185, élevé~266"),
                                           numericInput(
                                             inputId = "foodfolate",
-                                            label = "Entrez votre niveau de folate alimentaire(g)",
+                                            label = "Consommation en folate alimentaire(g)",
                                             value = 210,
                                             min = 3,
                                             max = 2000,
@@ -602,16 +673,25 @@ tabPanel(
                                           helpText ("faible~390, moyen~900, élevé~1600"),
                                           numericInput(
                                             inputId = "waterdrank",
-                                            label = "Entrez l'eau plate consommée hier(g)",
+                                            label = "Consommation en eau plate hier (g)",
                                             value = 1100,
                                             min = 0,
                                             max = 15000,
                                             step = 200
                                           ),
+                                          helpText ("faible~1800, moyen~2500, élevé~3400"),
+                                          numericInput(
+                                            inputId = "humidite",
+                                            label = "Consommation en eau contenue dans les aliments (mg)",
+                                            value = 2700,
+                                            min = 70,
+                                            max = 20000,
+                                            step = 10
+                                          ),
                                           helpText ("faible~?, moyen~?, élevé~?"),
                                           numericInput(
                                             inputId = "alcool",
-                                            label = "Entrez votre niveau d'alcool(g)",
+                                            label = "Consommation d'alcool(g)",
                                             value = 8,
                                             min = 0,
                                             max = 500,
@@ -620,7 +700,7 @@ tabPanel(
                                           helpText ("faible~900, moyen~1200, élevé~1600"),
                                           numericInput(
                                             inputId = "phosphorus",
-                                            label = "Entrez votre consommation en phosphorus(mg)",
+                                            label = "Consommation en phosphore (mg)",
                                             value = 1300,
                                             min = 50,
                                             max = 8000,
@@ -629,7 +709,7 @@ tabPanel(
                                           helpText ("faible~2300, moyen~3150, élevé~4150"),
                                           numericInput(
                                             inputId = "sodium",
-                                            label = "Entrez votre consommation en sodium (mg)",
+                                            label = "Consommation en sodium (mg)",
                                             value = 3350,
                                             min = 80,
                                             max = 20000,
@@ -644,15 +724,7 @@ tabPanel(
                                             max = 1000,
                                             step = 10
                                           ),
-                                          helpText ("faible~1800, moyen~2500, élevé~3400"),
-                                          numericInput(
-                                            inputId = "humidite",
-                                            label = "Consommation en humidité (mg)",
-                                            value = 2700,
-                                            min = 70,
-                                            max = 20000,
-                                            step = 10
-                                          ),
+                                          
                                           helpText ("faible~155, moyen~250, élevé~390"),
                                           numericInput(
                                             inputId = "choles",
@@ -689,6 +761,7 @@ tabPanel(
                                             max = 5000,
                                             step = 10
                                           ),
+                                          #finalement pas besoin
                                           helpText ("faible~26, moyen~57, élevé~108"),
                                           numericInput(
                                             inputId = "vitamineC",
@@ -698,6 +771,7 @@ tabPanel(
                                             max = 1000,
                                             step = 10
                                           ),
+                                          #finalement pas besoin
                                           helpText ("faible~418, moyen~778, élevé~1462"),
                                           numericInput(
                                             inputId = "LuteineZeaxanthine",
@@ -706,12 +780,41 @@ tabPanel(
                                             min = 0,
                                             max = 80000,
                                             step = 10
-                                          )
-                          )))),
+                                          ),
+                                          helpText ("faible~26, moyen~57, élevé~108"),
+                                          numericInput(
+                                            inputId = "vitB6",
+                                            label = "Consommation en vitamine B6 (mg)",
+                                            value = 79,
+                                            min = 0,
+                                            max = 1000,
+                                            step = 10
+                                          ),
+                                          helpText ("faible~26, moyen~57, élevé~108"),
+                                          numericInput(
+                                            inputId = "vitB12",
+                                            label = "Consommation en vitamine B12 (mg)",
+                                            value = 79,
+                                            min = 0,
+                                            max = 1000,
+                                            step = 10
+                                          )))
+                          )),
              mainPanel(
                div(HTML("<b>Les résultats de la prédiction</b>"), align = "center"),
                br(),
-               fluidRow(column(4,
+               fluidRow(
+                 column(4,
+                               div(class = "option-group",
+                                   div(class = "option-header"),
+                               wellPanel(
+                              radioButtons("typepatient", "Choisir votre type de patient",
+                                           c("Nouvel individu","Individu avec hypertension","Individu avec cholestérol","Individu avec diabète")))
+                              )
+               ),
+                 column(4,
+                               div(class = "option-group",
+                                   div(class = "option-header"),
                                wellPanel(
                                  switchInput(inputId = "predict", value = FALSE)
                                ),
@@ -723,53 +826,87 @@ tabPanel(
                                    force_edges = TRUE,
                                    choices = c("Fragile","Normale","Fort")
                                  ) 
-                               ),
-                               wellPanel(
-                                 sliderTextInput(
-                                   inputId = "typepatient", 
-                                   label = "Selectionnez votre type de patient", 
-                                   grid = TRUE, 
-                                   force_edges = TRUE,
-                                   choices = c("nouveauPatient", "proHyp","proChol","proDiab")
-                                 ),
-                                 h4("nouveauPatient : veuillez renseigner les données sur l'individu", align = "center"),
-                                 h4("proHyp : c'est un individu avec...", align = "center"),
-                                 h4("proChol : c'est un individu avec...", align = "center"),
-                                 h4("proDiab : c'est un individu avec...", align = "center") 
-                               )
-               )),
+                               ))
+               
+                 )),
+               
                conditionalPanel(condition="input.predict==true",
                                 fluidRow(
                                   column(width=4,
-                                         div(h4(
-                                           textOutput(outputId = "resultat_hypertension"), align = "center"
-                                         )),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         
                                          imageOutput("im_hyp_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_hypertension=='Danger!!'",
+                                         conditionalPanel(condition="output.resultat_hypertension=='Danger!!'", # <seuilhyp
                                                           imageOutput("im_hyp_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
-                                         h4("Précision :...", align = "center") #outputId ="precision_hyp"
-                                         ),
-                                  column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         h4("La probabilité d'avoir de l'hypertension est de ",align="center"),
                                          div(h4(
-                                           textOutput(outputId = "resultat_cholesterol"), align = "center"
-                                         )),
+                                           textOutput(outputId = "resultat_hypertension"), align = "center"
+                                         ))),
+                                  
+                                  column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                        
                                          imageOutput("im_cho_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'",
+                                         conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'", # <seuilchol
                                                           imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
-                                         h4("Précision :...", align = "center") #outputId ="precision_chol"
-                                         ),
-                                  column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         h4("La probabilité d'avoir du cholestérol est de ",align="center"),
                                          div(h4(
-                                           textOutput(outputId = "resultat_diabetes"), align = "center"
-                                         )),
+                                           textOutput(outputId = "resultat_cholesterol"), align = "center"
+                                         ))),
+                                         
+                                  column(width=4,
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                        
                                          imageOutput("im_dia_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_diabetes=='Danger!!'",
+                                         conditionalPanel(condition="output.resultat_diabetes=='Danger!!'", # <seuildiab
                                                           imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
                                          ),
-                                         h4("Précision :...", align = "center") #outputId ="precision_dia"
-                                         )
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         h4("La probabilité d'avoir du diabète est de ",align="center"),
+                                         div(h4(
+                                           textOutput(outputId = "resultat_diabetes"), align = "center"
+                                         ))
+                                  )
                                 )
                )
              )
@@ -794,7 +931,7 @@ tabPanel(
     sidebarLayout(
       sidebarPanel(
         radioButtons(inputId = "idRadioC", label = "Plan", selected = 3,
-                     choices = c("Contexte des données" = 1,"Choix des meilleures variables" = 2, "Choix des meilleurs modèles" = 3, "Prédiction trimaladie" = 4, "Classification" = 5, "Nouvelles perspectives" = 6))
+                     choices = c("Contexte des données" = 1,"Classification" = 2,"Choix des meilleures variables" = 3, "Choix des meilleurs modèles" = 4, "Prédiction trimaladie" = 5,  "Nouvelles perspectives" = 6))
         
       ),
       
@@ -814,6 +951,18 @@ tabPanel(
         conditionalPanel(condition="input.idRadioC == 2",
                          br(),
                          br(),
+                         h2("Kmeans : ",align="center"),
+                         br(),
+                         br(),
+                         h2("CAH : ",align="center"),
+                         br(),
+                         br(),
+                         h2("Croisement : ",align="center"),
+                         br(),
+                         br()),
+        conditionalPanel(condition="input.idRadioC == 3",
+                         br(),
+                         br(),
                          h2("Meilleures variables pour Diabète : ...",align="center"),
                          br(),
                          h2("Meilleures variables pour Cholestérol : ...",align="center"),
@@ -822,7 +971,7 @@ tabPanel(
                          h2("Meilleures variables pour Hypertension : ...",align="center"),
                          br(),
                          br()),
-        conditionalPanel(condition="input.idRadioC == 3",
+        conditionalPanel(condition="input.idRadioC == 4",
                          br(),
                          br(),
                          h2("Meilleur modèle pour Diabète : forêt avec ...",align="center"),
@@ -834,25 +983,13 @@ tabPanel(
                          br(),
                          br()),
         
-        conditionalPanel(condition="input.idRadioC == 4",
+        conditionalPanel(condition="input.idRadioC == 5",
                          br(),
                          br(),
                          h2("Modèle trimaladie : logistique avec step...",align="center"),
                          br(),
                          br(),
                          h2("Meilleures variables répresentatives : age, ...",align="center"),
-                         br(),
-                         br()),
-        conditionalPanel(condition="input.idRadioC == 5",
-                         br(),
-                         br(),
-                         h2("Kmeans : ",align="center"),
-                         br(),
-                         br(),
-                         h2("CAH : ",align="center"),
-                         br(),
-                         br(),
-                         h2("Croisement : ",align="center"),
                          br(),
                          br()),
         conditionalPanel(condition="input.idRadioC == 6",
@@ -872,4 +1009,4 @@ tabPanel(
                          br(),
                          br())
       )))
-))
+)))
