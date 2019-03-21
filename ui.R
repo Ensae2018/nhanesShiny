@@ -296,7 +296,7 @@ tabPanel(
   #----------------------------------------------------------------  
   #navbarMenu : CHOIX MODELE
   #----------------------------------------------------------------    
-  
+
   navbarMenu(
     title = "Choix modèle",
     
@@ -316,7 +316,7 @@ tabPanel(
                                        )),column(width = 11,
                                                  dataTableOutput(outputId = "tabselvardia")))),
                           
-                          tabPanel(title = "modele prediction",
+                          tabPanel(title = "modèle prédiction",
                                    fluidRow(
                                      column(
                                        width=4,
@@ -328,8 +328,7 @@ tabPanel(
                                          selected = colnames(res_dia[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner 3!",
-                                           `max-options` = 3
+                                           `none-selected-text` = "Sélectionner"
                                          )
                                        )
                                      ),
@@ -337,21 +336,20 @@ tabPanel(
                                             sliderInput("seuilmoddia", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
                                      )
                                    ),
-                                   conditionalPanel(
-                                     condition="input.methodedia.length==3",
+                                   
+                                     
                                      fluidRow(
                                        plotOutput("choixmethode_dia")),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Les valeurs d'AUC</h4>"),
                                             tableOutput("valAUC_dia"),
                                             HTML("<h4>Les valeurs de precision</h4>"),
                                             tableOutput("matprecision_dia")
                                      ),
-                                     column(width=4,
+                                     column(width=6,
                                             HTML("<h4>Matrice de confusion</h4>"),     
                                             tableOutput("matconf_dia")
-                                     )
-                                   )))),
+                                     )))),
     
     
     
@@ -374,7 +372,7 @@ tabPanel(
                                      column(width = 11,
                                             dataTableOutput(outputId = "tabselvarchol"))
                                    )),
-                          tabPanel(title = "modele prediction",
+                          tabPanel(title = "modèle prédiction",
                                    fluidRow(
                                      column(
                                        width=4,
@@ -386,7 +384,7 @@ tabPanel(
                                          selected = colnames(res_chol[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner"
+                                           `none-selected-text` = "Sélectionner"
                                          )
                                        )
                                      ),
@@ -428,7 +426,7 @@ tabPanel(
                                      column(width = 11,
                                             dataTableOutput(outputId = "tabselvarhyp"))
                                    )),
-                          tabPanel(title = "modele prediction",
+                          tabPanel(title = "modèle prédiction",
                                    fluidRow(
                                      column(
                                        width=4,
@@ -440,7 +438,7 @@ tabPanel(
                                          selected = colnames(res_hyp[, c(2,6,10)]),
                                          options = list(
                                            `actions-box` = FALSE,
-                                           `none-selected-text` = "Selectionner"
+                                           `none-selected-text` = "Sélectionner"
                                          )
                                        )
                                      ),

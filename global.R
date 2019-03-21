@@ -27,7 +27,7 @@ donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee c
 str(donChol)
 
 # on importe les donnees necessaire pour le projet: partie diabete
-donDia <- read.csv2("data/nhanes_diab_mice_avant_transco.csv", sep=",",dec=".",row.names = 1)# donnee diabete transcodifie et avec imputation mice
+donDia <- read.csv2("data/nhanes_dia_avant_transco.csv", sep=",",dec=".",row.names = 1)# donnee diabete transcodifie et avec imputation mice
 
 # Transformer toutes les variables avec dif levels en FACTOR
 #RIDSTATR_demo  : Factor w/ 1 level "2": 1

@@ -746,47 +746,65 @@ shinyServer(function(input, output, session) {
   ####
   # Les metriques pour le diabete
   ####
-  observeEvent(input$methodedia==3,{
-    output$choixmethode_dia <- renderPlot({
-      plot(roc(res_dia[,1],res_dia[,input$methodedia[1]]),col="black",main="Courbes ROC")
-      lines(roc(res_dia[,1],res_dia[,input$methodedia[2]]), col="red")
-      lines(roc(res_dia[,1],res_dia[,input$methodedia[3]]), col="green")
-      legend("bottomright",legend = c(input$methodedia[1],input$methodedia[2], input$methodedia[3]), col=c("black","red","green"), lty = 1)
-    })
-    
-    output$valAUC_dia <- renderTable({
-      tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methodedia[1]]),
-                           auc(res_dia[,1],res_dia[,input$methodedia[2]]),
-                           auc(res_dia[,1],res_dia[,input$methodedia[3]])
-      )
-      names(tabauc) <- input$methodedia    
-      tabauc
-    })
-    
-    output$matconf_dia <- renderTable({
-      tabconf <- cbind(as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia)),
-                       as.data.frame(monerreur(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia))[,3],
-                       as.data.frame(monerreur(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))[,3]
-      )
-      
-      names(tabconf)[3:length(names(tabconf))] <- input$methodedia
-      names(tabconf)[1] <- "seuil"
-      tabconf[5,3:5] <- tabconf[4,3:5]/(tabconf[4,3:5]+tabconf[3,3:5])
-      tabconf[6,3:5] <- tabconf[1,3:5]/(tabconf[1,3:5]+tabconf[2,3:5])
-      tabconf$seuil <- as.character(tabconf$seuil)
-      tabconf$seuil[5] <- "Sensibilité"
-      tabconf$seuil[6] <- "Spécificité"
-      tabconf
-    })
-    
-    output$matprecision_dia <- renderTable({
-      tabprecision <- data.frame(precision(res_dia[,input$methodedia[1]],res_dia[,1],seuil=input$seuilmoddia),
-                                 precision(res_dia[,input$methodedia[2]],res_dia[,1],seuil=input$seuilmoddia),
-                                 precision(res_dia[,input$methodedia[3]],res_dia[,1],seuil=input$seuilmoddia))
-      names(tabprecision) <- input$methodedia
-      tabprecision
-    })
+  output$choixmethode_dia <- renderPlot({
+    plot(roc(res_dia[,1],res_dia[,input$methodedia[1]]),col="black",main="Courbes ROC",
+         print.thres = "best", print.thres.best.method = "closest.topleft")
+    i=1
+    traitdia <- c(input$methodedia[1])
+    seuil <- c(round(coords(roc(res_dia[,1],res_dia[,input$methodedia[1]]), "best", best.method = "closest.topleft")[1],3))
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      lines(roc(res_dia[,1],res_dia[,input$methodedia[i]]), col= i,
+            print.thres = "best", print.thres.best.method = "closest.topleft")
+      traitdia <- c(traitdia,input$methodedia[i])
+      seuil <- c(seuil,round(coords(roc(res_dia[,1],res_dia[,input$methodedia[i]]), "best", best.method = "closest.topleft")[1],3))
+      legend("bottomright",legend = paste(traitdia,seuil,sep = "_"), col=1:i, lty = 1)
+    }
   })
+  
+  output$valAUC_dia <- renderTable({
+    tabauc <- data.frame(nom1=auc(res_dia[,1],res_dia[,input$methodedia[1]]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      tabauc <- cbind(tabauc,auc(res_dia[,1],res_dia[,input$methodedia[i]]))
+    }
+    names(tabauc) <- input$methodedia
+    tabauc
+  })
+  
+  output$matconf_dia <- renderTable({
+    tabconf <- as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_dia[,input$methodedia[i]],res_dia[,1]))[,3])
+    }
+    names(tabconf)[3:length(names(tabconf))] <- input$methodedia
+    names(tabconf)[1] <- "seuil"
+    tabconf[5,3:length(names(tabconf))] <- tabconf[4,3:length(names(tabconf))]/(tabconf[4,3:length(names(tabconf))]+tabconf[3,3:length(names(tabconf))])
+    tabconf[6,3:length(names(tabconf))] <- tabconf[1,3:length(names(tabconf))]/(tabconf[1,3:length(names(tabconf))]+tabconf[2,3:length(names(tabconf))])
+    tabconf$seuil <- as.character(tabconf$seuil)
+    tabconf$seuil[5] <- "Sensibilité"
+    tabconf$seuil[6] <- "Spécificité"
+    tabconf
+  })
+  
+  output$matprecision_dia <- renderTable({
+    tabprecision <- data.frame(precision(res_dia[,input$methodedia[1]],res_dia[,1]))
+    i=1
+    repeat{
+      i=i+1
+      if(i>length(input$methodedia)) break
+      tabprecision <- cbind(tabprecision,precision(res_dia[,input$methodedia[i]],res_dia[,1]))
+    }
+    names(tabprecision) <- input$methodedia
+    tabprecision
+  })
+
   
   
   
