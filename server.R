@@ -13,13 +13,6 @@ library(shiny)
 shinyServer(function(input, output, session) {
   
   #A MODIFIER AVEC LE MEILLEUR SEUIL DE CHAQUE MODELE
-  seuil <- reactive({
-    switch (input$sensibilite,
-            Fragile = 0.4,
-            Normal = 0.5,
-            fort=0.6
-    )
-  })
   
   km <- reactive({
     km <- kmeans(var$coord, center=input$nb_classe, nstart = 25)
@@ -227,22 +220,7 @@ shinyServer(function(input, output, session) {
   observeEvent(input$predict==TRUE, {
     
     output$resultat_hypertension <- renderText({
-      if (input$typepatient == "Individu avec hypertension")
-      {
-        tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
-                                            Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
-                                            high_cholesterol_level=input$cholesterol,
-                                            Body_Mass_Index_kg_m_2=input$bmi,
-                                            Doctor_ever_said_you_were_overweight=input$surpoids,
-                                            Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
-                                            Phosphorus_mg=input$phosphorus,
-                                            Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
-                                            Sodium_mg=input$sodium
-      ),type="response")
-      }
-      else
-      {
-        tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
+      tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
                                               Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
                                               high_cholesterol_level=input$cholesterol,
                                               Body_Mass_Index_kg_m_2=input$bmi,
@@ -252,46 +230,12 @@ shinyServer(function(input, output, session) {
                                               Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                               Sodium_mg=input$sodium
         ),type="response")
-      }
-      ifelse(tempoHyp>seuil(),tempoHyp, tempoHyp)
+      ifelse(tempoHyp>seuil_hyp,tempoHyp, tempoHyp)
     })
     
     
     output$resultat_cholesterol <- renderText({
-      if (input$typepatient == "Individu avec cholestérol")
-      {
-      tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=48,
-                                              #HOD050_hoq=2,
-                                              #PAQ635_paq="2",
-                                              #DR1TLZ_dr1tot=400,
-                                              #DR1TVC_dr1tot=30,
-                                              #DR1TMOIS_dr1tot=1500,
-                                              RIAGENDR_demo="1",
-                                              #BPXSY3_bpx=120,
-                                              BMXBMI_bmx=21,
-                                              MCQ080_mcq="1",
-                                              SLQ050_slq="1",
-                                              #BPXDI2_bpx=69,
-                                              #INDFMPIR_demo=3,
-                                              Var_TRAVAIL=input$travail,
-                                              BMXHT_bmx=170,
-                                              BMXWT_bmx=60,
-                                              BPQ020_bpq="1",
-                                              DIQ010_diq="1",
-                                              #OHAREC_ohxref="4",
-                                              DRQSDIET_dr1tot="2",
-                                              DR1TFIBE_dr1tot=20,
-                                              #DR1TALCO_dr1tot=8,
-                                              #DR1TFF_dr1tot=210
-                                              #DR1.320Z_dr1tot=input$waterdrank
-                                              DR1TVB6_dr1tot=30,
-                                              DR1TCHOL_dr1tot=30,
-                                              DR1TB12A_dr1tot=30
-      ),type="response")
-      }
-      else
-      {
-        tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
+      tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
                                                 #HOD050_hoq=input$piecesmaison,
                                                 #PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
                                                 #DR1TLZ_dr1tot=input$LuteineZeaxanthine,
@@ -319,34 +263,12 @@ shinyServer(function(input, output, session) {
                                                 DR1TCHOL_dr1tot=input$choles,
                                                 DR1TB12A_dr1tot=input$vitB12
         ),type="response")
-      }
-      ifelse(tempoChol>seuil(),tempoChol, tempoChol)
+      ifelse(tempoChol>seuil_chol, tempoChol, tempoChol)
     })
     
     
     output$resultat_diabetes <- renderText({
-      if (input$typepatient == "Individu avec diabète")
-      {
       tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
-                                              DR1TSUGR_dr1tot=input$sucre,
-                                              BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
-                                              MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
-                                              BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
-                                              DR1TALCO_dr1tot=input$alcool,
-                                              DR1TMOIS_dr1tot=input$humidite,
-                                              RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
-                                              DR1.320Z_dr1tot=input$waterdrank,
-                                              DR1TCHOL_dr1tot=input$choles,
-                                              DR1TPROT_dr1tot=input$proteines,
-                                              INDFMPIR_demo=input$pauvretefamille,
-                                              DR1TIRON_dr1tot=input$fer,
-                                              Var_TENSIONDI=input$pression_dia,
-                                              DR1TCAFF_dr1tot=input$cafeine
-      ),type="response")
-      }
-      else
-      {
-        tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
                                                 DR1TSUGR_dr1tot=input$sucre,
                                                 BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
                                                 MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
@@ -362,8 +284,7 @@ shinyServer(function(input, output, session) {
                                                 Var_TENSIONDI=input$pression_dia,
                                                 DR1TCAFF_dr1tot=input$cafeine
         ),type="response")
-      }
-      ifelse(tempoDiab>seuil(),tempoDiab, tempoDiab)
+      ifelse(tempoDiab>seuil_dia,tempoDiab, tempoDiab)
     })
     
     output$im_hyp_g <- renderImage({

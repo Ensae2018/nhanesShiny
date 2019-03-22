@@ -227,8 +227,11 @@ tabselvar_dia <- read.table("data/choix_var_dia.csv", header=T, sep=";",dec=",",
 max_val_dia <- apply(tabselvar_dia[,-1],2,function(x) rank(-x,na.last = T,ties.method = "first"))
 tabselvar_dia[,-1]<-round(tabselvar_dia[,-1],3)
 
-
 # chargement des scripts
 source("script/Classif nutriment.R") #utile pour la classification des nutriments
+
+seuil_hyp <- round(coords(roc(res_hyp[,1],res_hyp[,2]), "best", best.method = "closest.topleft")[1],3)
+seuil_dia <- round(coords(roc(res_dia[,1],res_dia[,2]), "best", best.method = "closest.topleft")[1],3)
+seuil_chol <-round(coords(roc(res_chol[,1],res_chol[,2]), "best", best.method = "closest.topleft")[1],3)
 
 options(shiny.trace=FALSE)

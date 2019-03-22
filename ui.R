@@ -817,15 +817,6 @@ tabPanel(
                                    div(class = "option-header"),
                                wellPanel(
                                  switchInput(inputId = "predict", value = FALSE)
-                               ),
-                               wellPanel(
-                                 sliderTextInput(
-                                   inputId = "sensibilite", 
-                                   label = "Comment jugez vous mentalement?", 
-                                   grid = TRUE, 
-                                   force_edges = TRUE,
-                                   choices = c("Fragile","Normale","Fort")
-                                 ) 
                                ))
                
                  )),
@@ -855,7 +846,9 @@ tabPanel(
                                          h4("La probabilité d'avoir de l'hypertension est de ",align="center"),
                                          div(h4(
                                            textOutput(outputId = "resultat_hypertension"), align = "center"
-                                         ))),
+                                         )),
+                                         h4(paste0("Le seuil de discrimination est de: ", seuil_hyp), align="centerr")
+                                         ),
                                   
                                   column(width=4,
                                          br(),
@@ -880,7 +873,9 @@ tabPanel(
                                          h4("La probabilité d'avoir du cholestérol est de ",align="center"),
                                          div(h4(
                                            textOutput(outputId = "resultat_cholesterol"), align = "center"
-                                         ))),
+                                         )),
+                                         h4(paste0("Le seuil de discrimination est de: ", seuil_chol), align="centerr")
+                                         ),
                                          
                                   column(width=4,
                                          br(),
@@ -905,7 +900,8 @@ tabPanel(
                                          h4("La probabilité d'avoir du diabète est de ",align="center"),
                                          div(h4(
                                            textOutput(outputId = "resultat_diabetes"), align = "center"
-                                         ))
+                                         )),
+                                         h4(paste0("Le seuil de discrimination est de: ", seuil_dia), align="centerr")
                                   )
                                 )
                )
