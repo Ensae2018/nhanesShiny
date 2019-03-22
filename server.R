@@ -218,98 +218,93 @@ shinyServer(function(input, output, session) {
 #-------------------------------------------------------------  
   # j'ajoute une observation  sur la button pour lancer la prédiction
   observeEvent(input$predict==TRUE, {
+    tempoHyp <- reactive({predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
+                                          Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
+                                          high_cholesterol_level=input$cholesterol,
+                                          Body_Mass_Index_kg_m_2=input$bmi,
+                                          Doctor_ever_said_you_were_overweight=input$surpoids,
+                                          Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
+                                          Phosphorus_mg=input$phosphorus,
+                                          Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
+                                          Sodium_mg=input$sodium
+    ),type="response")})
     
     output$resultat_hypertension <- renderText({
-      tempoHyp <- predict(modHyp,data.frame(Age_in_years_at_screening=input$age,
-                                              Systolic_Blood_pres_2nd_rdg_mm_Hg=input$pression_sys,
-                                              high_cholesterol_level=input$cholesterol,
-                                              Body_Mass_Index_kg_m_2=input$bmi,
-                                              Doctor_ever_said_you_were_overweight=input$surpoids,
-                                              Ever_told_doctor_had_trouble_sleeping=input$trouble_sommeil,
-                                              Phosphorus_mg=input$phosphorus,
-                                              Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
-                                              Sodium_mg=input$sodium
-        ),type="response")
-      ifelse(tempoHyp>seuil_hyp,tempoHyp, tempoHyp)
+    round(tempoHyp(),3)
     })
     
-    
+    tempoChol <- reactive({predict(modChol,data.frame(RIDAGEYR_demo=input$age,
+                                            #HOD050_hoq=input$piecesmaison,
+                                            #PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
+                                            #DR1TLZ_dr1tot=input$LuteineZeaxanthine,
+                                            #DR1TVC_dr1tot=input$vitamineC,
+                                            #DR1TMOIS_dr1tot=input$humidite,
+                                            RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
+                                            #BPXSY3_bpx=input$pression_sys,
+                                            BMXBMI_bmx=input$bmi,
+                                            MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
+                                            SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
+                                            #BPXDI2_bpx=input$pression_dia,
+                                            #INDFMPIR_demo=input$pauvretefamille,
+                                            Var_TRAVAIL=input$travail,
+                                            BMXHT_bmx=input$hauteur,
+                                            BMXWT_bmx=input$poids,
+                                            BPQ020_bpq=input$risquehypertension,
+                                            DIQ010_diq=input$risquediabete,
+                                            #OHAREC_ohxref=input$dentaire,
+                                            DRQSDIET_dr1tot=input$diete,
+                                            DR1TFIBE_dr1tot=input$fibre,
+                                            #DR1TALCO_dr1tot=input$alcool,
+                                            #DR1TFF_dr1tot=input$foodfolate
+                                            #DR1.320Z_dr1tot=input$waterdrank
+                                            DR1TVB6_dr1tot=input$vitB6,
+                                            DR1TCHOL_dr1tot=input$choles,
+                                            DR1TB12A_dr1tot=input$vitB12
+    ),type="response")})
+  
     output$resultat_cholesterol <- renderText({
-      tempoChol <- predict(modChol,data.frame(RIDAGEYR_demo=input$age,
-                                                #HOD050_hoq=input$piecesmaison,
-                                                #PAQ635_paq=ifelse(input$marchevelodixmin=="Yes","1", "2"),
-                                                #DR1TLZ_dr1tot=input$LuteineZeaxanthine,
-                                                #DR1TVC_dr1tot=input$vitamineC,
-                                                #DR1TMOIS_dr1tot=input$humidite,
-                                                RIAGENDR_demo=ifelse(input$sexe=="Male", "1", "2"),
-                                                #BPXSY3_bpx=input$pression_sys,
-                                                BMXBMI_bmx=input$bmi,
-                                                MCQ080_mcq=ifelse(input$surpoids=="Yes","1","2"),
-                                                SLQ050_slq=ifelse(input$trouble_sommeil=="Yes","1","2"),
-                                                #BPXDI2_bpx=input$pression_dia,
-                                                #INDFMPIR_demo=input$pauvretefamille,
-                                                Var_TRAVAIL=input$travail,
-                                                BMXHT_bmx=input$hauteur,
-                                                BMXWT_bmx=input$poids,
-                                                BPQ020_bpq=input$risquehypertension,
-                                                DIQ010_diq=input$risquediabete,
-                                                #OHAREC_ohxref=input$dentaire,
-                                                DRQSDIET_dr1tot=input$diete,
-                                                DR1TFIBE_dr1tot=input$fibre,
-                                                #DR1TALCO_dr1tot=input$alcool,
-                                                #DR1TFF_dr1tot=input$foodfolate
-                                                #DR1.320Z_dr1tot=input$waterdrank
-                                                DR1TVB6_dr1tot=input$vitB6,
-                                                DR1TCHOL_dr1tot=input$choles,
-                                                DR1TB12A_dr1tot=input$vitB12
-        ),type="response")
-      ifelse(tempoChol>seuil_chol, tempoChol, tempoChol)
+    round(tempoChol(),3)
     })
     
+    tempoDiab <- reactive({predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
+                                            DR1TSUGR_dr1tot=input$sucre,
+                                            BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
+                                            MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
+                                            BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
+                                            DR1TALCO_dr1tot=input$alcool,
+                                            DR1TMOIS_dr1tot=input$humidite,
+                                            RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
+                                            DR1.320Z_dr1tot=input$waterdrank,
+                                            DR1TCHOL_dr1tot=input$choles,
+                                            DR1TPROT_dr1tot=input$proteines,
+                                            INDFMPIR_demo=input$pauvretefamille,
+                                            DR1TIRON_dr1tot=input$fer,
+                                            Var_TENSIONDI=input$pression_dia,
+                                            DR1TCAFF_dr1tot=input$cafeine
+    ),type="response")})
     
     output$resultat_diabetes <- renderText({
-      tempoDiab <- predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
-                                                DR1TSUGR_dr1tot=input$sucre,
-                                                BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
-                                                MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
-                                                BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
-                                                DR1TALCO_dr1tot=input$alcool,
-                                                DR1TMOIS_dr1tot=input$humidite,
-                                                RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
-                                                DR1.320Z_dr1tot=input$waterdrank,
-                                                DR1TCHOL_dr1tot=input$choles,
-                                                DR1TPROT_dr1tot=input$proteines,
-                                                INDFMPIR_demo=input$pauvretefamille,
-                                                DR1TIRON_dr1tot=input$fer,
-                                                Var_TENSIONDI=input$pression_dia,
-                                                DR1TCAFF_dr1tot=input$cafeine
-        ),type="response")
-      ifelse(tempoDiab>seuil_dia,tempoDiab, tempoDiab)
+    round(tempoDiab(),3)
     })
     
     output$im_hyp_g <- renderImage({
-      filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg'))
-      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-    
-    output$im_hyp_b <- renderImage({
-      filename <- normalizePath(file.path('./www/img/hypertensionbad.jpg'))
+      ifelse(tempoHyp()<seuil_hyp,
+      filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg')),
+      filename <- normalizePath(file.path('./www/img/hypertensionbad.jpg')))
       list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
     
     output$im_cho_g <- renderImage({
-      filename <- normalizePath(file.path('./www/img/Cholesterolgood.jpg'))
-      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
-    
-    output$im_cho_b <- renderImage({
-      filename <- normalizePath(file.path('./www/img/Cholesterolbad.png'))
+      ifelse(tempoChol()<seuil_chol,
+      filename <- normalizePath(file.path('./www/img/Cholesterolgood.jpg')),
+      filename <- normalizePath(file.path('./www/img/Cholesterolbad.png')))
       list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
     
     output$im_dia_g <- renderImage({
-      filename <- normalizePath(file.path('./www/img/diabetegood.jpg'))
+      ifelse(tempoDiab()<seuil_dia,
+      filename <- normalizePath(file.path('./www/img/diabetegood.jpg')),
+      filename <- normalizePath(file.path('./www/img/diabetebad.png')))
       list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
     
-    output$im_dia_b <- renderImage({
-      filename <- normalizePath(file.path('./www/img/diabetebad.png'))
-      list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
   })
   
   output$tableHypertension <- renderTable({

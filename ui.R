@@ -828,26 +828,22 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         
                                          imageOutput("im_hyp_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_hypertension=='Danger!!'", # <seuilhyp
-                                                          imageOutput("im_hyp_b",width="10px", height="10px","auto", inline = FALSE)
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         br(),
+                                         h4("Proba d'avoir de l'hypertension:",align="left"),
+                                         h4(
+                                          textOutput(outputId = "resultat_hypertension"), align = "center"
                                          ),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         br(),
-                                         h4("La probabilité d'avoir de l'hypertension est de ",align="center"),
-                                         div(h4(
-                                           textOutput(outputId = "resultat_hypertension"), align = "center"
-                                         )),
-                                         h4(paste0("Le seuil de discrimination est de: ", seuil_hyp), align="centerr")
+                                         h4(paste0("Seuil de discrimination: ", seuil_hyp), align="left")
                                          ),
                                   
                                   column(width=4,
@@ -855,11 +851,7 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                        
                                          imageOutput("im_cho_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_cholesterol=='Danger!!'", # <seuilchol
-                                                          imageOutput("im_cho_b",width="10px", height="10px","auto", inline = FALSE)
-                                         ),
                                          br(),
                                          br(),
                                          br(),
@@ -870,11 +862,11 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("La probabilité d'avoir du cholestérol est de ",align="center"),
-                                         div(h4(
+                                         h4("Proba d'avoir du cholestérol:",align="left"),
+                                         h4(
                                            textOutput(outputId = "resultat_cholesterol"), align = "center"
-                                         )),
-                                         h4(paste0("Le seuil de discrimination est de: ", seuil_chol), align="centerr")
+                                         ),
+                                         h4(paste0("Seuil de discrimination: ", seuil_chol), align="left")
                                          ),
                                          
                                   column(width=4,
@@ -882,11 +874,7 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                        
                                          imageOutput("im_dia_g",width="10px", height="10px","auto", inline = FALSE),
-                                         conditionalPanel(condition="output.resultat_diabetes=='Danger!!'", # <seuildiab
-                                                          imageOutput("im_dia_b",width="10px", height="10px","auto", inline = FALSE)
-                                         ),
                                          br(),
                                          br(),
                                          br(),
@@ -897,11 +885,11 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("La probabilité d'avoir du diabète est de ",align="center"),
+                                         h4("Proba d'avoir du diabète:",align="left"),
                                          div(h4(
                                            textOutput(outputId = "resultat_diabetes"), align = "center"
                                          )),
-                                         h4(paste0("Le seuil de discrimination est de: ", seuil_dia), align="centerr")
+                                         h4(paste0("Seuil de discrimination: ", seuil_dia), align="left")
                                   )
                                 )
                )
