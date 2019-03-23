@@ -233,7 +233,7 @@ tabPanel(
 #tabPanel : CLASSIFICATION
 #----------------------------------------------------------------  
 tabPanel(
-  title = "Classification",
+  title = "Classification nutriment",
   column(
     width=2,
     div(sliderInput("nb_classe", "Nombre de classe Kmeans", 3, 8, value=5), align="center"),
@@ -262,16 +262,18 @@ tabPanel(
   column(
     width=10,
     tabsetPanel(
-      tabPanel("Kmeans",
-               plotOutput("partitionkm"),
-               plotOutput("inertienutrimentplot")),
-      tabPanel("Kmeans_ind",
-               plotOutput("partitionkmbis"),
-               plotOutput("inertienutrimentplotbis")),
-      tabPanel("CAH",
+      tabPanel("Nuage individus",
+               fluidRow(
+                 plotOutput("acpplotind"),
+                 plotOutput("acpplotdual")
+               )),
+      tabPanel("CAH nutriment",
                plotOutput("dendrogramme"),
                plotOutput("indicehierarchieplot")),
-      tabPanel("Comparaison",
+      tabPanel("Kmeans nutriment",
+               plotOutput("partitionkm"),
+               plotOutput("inertienutrimentplot")),
+      tabPanel("CAH VS Kmeans",
                column(width=6,
                       "Kmeans",
                       plotOutput("acpnutrimentplotkm"),
@@ -280,16 +282,15 @@ tabPanel(
                       "CAH",
                       plotOutput("acpnutrimentplotcah"),
                       plotOutput("contri2"))),
+      tabPanel("Kmeans ind",
+               plotOutput("partitionkmbis"),
+               plotOutput("inertienutrimentplotbis")),
       tabPanel("Tableau",
                column(width=6,
                       dataTableOutput("groupecah")),
                column(width=6,
-                      dataTableOutput("groupekm"))),
-      tabPanel("Croisement",
-               fluidRow(
-                 plotOutput("acpplotind"),
-                 plotOutput("acpplotdual")
-               ))))
+                      dataTableOutput("groupekm")))
+))
 ),
 
   #----------------------------------------------------------------  
