@@ -840,9 +840,9 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("Proba d'avoir de l'hypertension:",align="left"),
+                                         h4( textOutput(outputId = "resultat_hypertensionbis"), align = "left"),
                                          h4(
-                                          textOutput(outputId = "resultat_hypertension"), align = "center"
+                                          textOutput(outputId = "resultat_hypertension"), align = "left"
                                          ),
                                          h4(paste0("Seuil de discrimination: ", seuil_hyp), align="left")
                                          ),
@@ -863,9 +863,9 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("Proba d'avoir du cholestérol:",align="left"),
+                                         h4( textOutput(outputId = "resultat_cholesterolbis"), align = "left"),
                                          h4(
-                                           textOutput(outputId = "resultat_cholesterol"), align = "center"
+                                           textOutput(outputId = "resultat_cholesterol"), align = "left"
                                          ),
                                          h4(paste0("Seuil de discrimination: ", seuil_chol), align="left")
                                          ),
@@ -886,9 +886,9 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4("Proba d'avoir du diabète:",align="left"),
+                                         h4(textOutput(outputId = "resultat_diabetesbis"), align = "left"),
                                          div(h4(
-                                           textOutput(outputId = "resultat_diabetes"), align = "center"
+                                           textOutput(outputId = "resultat_diabetes"), align = "left"
                                          )),
                                          h4(paste0("Seuil de discrimination: ", seuil_dia), align="left")
                                   )

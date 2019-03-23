@@ -227,10 +227,14 @@ shinyServer(function(input, output, session) {
                                           Phosphorus_mg=input$phosphorus,
                                           Diastolic_Blood_pres_1st_rdg_mm_Hg=input$pression_dia,
                                           Sodium_mg=input$sodium
-    ),type="response")})
+    ),type="response", se.fit = T)})
     
     output$resultat_hypertension <- renderText({
-    round(tempoHyp(),3)
+    paste0("Proba: ",round(tempoHyp()$fit,3),"  IT: ", round(tempoHyp()$fit-1.96*tempoHyp()$se.fit,3),
+          "-", round(tempoHyp()$fit+1.96*tempoHyp()$se.fit,3))
+    })
+    output$resultat_hypertensionbis <- renderText({
+    ifelse(tempoHyp()$fit>seuil_hyp,"Hypertension: Danger!!","Hypertension: :-D")
     })
     
     tempoChol <- reactive({predict(modChol,data.frame(RIDAGEYR_demo=input$age,
@@ -260,10 +264,14 @@ shinyServer(function(input, output, session) {
                                             DR1TVB6_dr1tot=input$vitB6,
                                             DR1TCHOL_dr1tot=input$choles,
                                             DR1TB12A_dr1tot=input$vitB12
-    ),type="response")})
+    ),type="response", se.fit = T)})
   
     output$resultat_cholesterol <- renderText({
-    round(tempoChol(),3)
+      paste0("Proba: ",round(tempoChol()$fit,3),"  IT: ", round(tempoChol()$fit-1.96*tempoChol()$se.fit,3),
+            "-", round(tempoChol()$fit+1.96*tempoChol()$se.fit,3))
+    })
+    output$resultat_cholesterolbis <- renderText({
+      ifelse(tempoChol()$fit>seuil_chol,"Cholesterol: Danger!!","Cholesterol: :-D")
     })
     
     tempoDiab <- reactive({predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
@@ -281,26 +289,30 @@ shinyServer(function(input, output, session) {
                                             DR1TIRON_dr1tot=input$fer,
                                             Var_TENSIONDI=input$pression_dia,
                                             DR1TCAFF_dr1tot=input$cafeine
-    ),type="response")})
+    ),type="response",se.fit = T)})
     
     output$resultat_diabetes <- renderText({
-    round(tempoDiab(),3)
+      paste0("Proba: ",round(tempoDiab()$fit,3),"  IT: ", round(tempoDiab()$fit-1.96*tempoDiab()$se.fit,3),
+            "-", round(tempoDiab()$fit+1.96*tempoDiab()$se.fit,3))
+    })
+    output$resultat_diabetesbis <- renderText({
+      ifelse(tempoDiab()$fit>seuil_dia,"Diabete: Danger!!","Diabete: :-D")
     })
     
     output$im_hyp_g <- renderImage({
-      ifelse(tempoHyp()<seuil_hyp,
+      ifelse(tempoHyp()$fit<seuil_hyp,
       filename <- normalizePath(file.path('./www/img/hypertensiongood.jpg')),
       filename <- normalizePath(file.path('./www/img/hypertensionbad.jpg')))
       list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
     
     output$im_cho_g <- renderImage({
-      ifelse(tempoChol()<seuil_chol,
+      ifelse(tempoChol()$fit<seuil_chol,
       filename <- normalizePath(file.path('./www/img/Cholesterolgood.jpg')),
       filename <- normalizePath(file.path('./www/img/Cholesterolbad.png')))
       list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
     
     output$im_dia_g <- renderImage({
-      ifelse(tempoDiab()<seuil_dia,
+      ifelse(tempoDiab()$fit<seuil_dia,
       filename <- normalizePath(file.path('./www/img/diabetegood.jpg')),
       filename <- normalizePath(file.path('./www/img/diabetebad.png')))
       list(src = filename,width = 200,height = 200)},deleteFile = FALSE)
