@@ -111,7 +111,7 @@ names(donDia_transco)<-c("SEQN","Gender", "Age.in.years.at.screening.", "Total.n
                          "Doctor.told.you.have.diabetes", "Ever.told.you.have.Hepatitis.B.", 
                          "Ever.told.you.have.Hepatitis.C.", "Number.of.rooms.in.home", 
                          "Doctor.ever.said.you.were.overweight", "Doctor.ever.said.you.had.arthritis", "Doctor.ever.told.you.that.you.had.gout", 
-                         "Ever.told.had.congestive.heart.failure", "Ever.told.you.had.coronary.hart.disease", "Ever.told.you.had.angina.pectoris", "Ever.told.you.had.heart.attack", "Ever.told.you.had.a .stoke", 
+                         "Ever.told.had.congestive.heart.failure", "Ever.told.you.had.coronary.hart.disease", "Ever.told.you.had.angina.pectoris", "Ever.told.you.had.heart.attack", "Ever.told.you.had.a .stroke", 
                          "Ever.told.you.had.emphysema", "Ever.told.you.had.thyroid.problem", "Sleep.hours.", "Ever.told.doctor.had.trouble.sleeping.", 
                          "Energy..kcal.", "Protein..gm.", "Carbohydrate..gm.", "Total.sugars..gm.", 
                          "Dietary.fiber..gm.", "Total.fat..gm.", "Total.saturated.fatty.acids..gm.", 
@@ -127,7 +127,7 @@ names(donDia_transco)<-c("SEQN","Gender", "Age.in.years.at.screening.", "Total.n
                          "Phosphorus..mg.", "Magnesium..mg.", "Iron..mg.", "Zinc..mg.", 
                          "Copper..mg.", "Sodium..mg.", "Potassium..mg.", "Selenium..mcg.", 
                          "Caffeine..mg.", "Theobromine..mg.", "Alcohol..gm.", "Moisture..gm.", 
-                         "DR1.320Z_DR1TOT", "VAR_EDUCATION", "VAR_TRAVAIL", "VAR_DEPRESSION", 
+                         "Total.plain.water.drank.yesterday..gm", "VAR_EDUCATION", "VAR_TRAVAIL", "VAR_DEPRESSION", 
                          "VAR_SITUATION", "VAR_COFUMEUR", "VAR_TENSIONSY", "VAR_TENSIONDI", 
                          "VAR_ARGENTALIM", "VAR_DENTISTE", "VAR_ASSURE", "VAR_ACTIVITE")
 
