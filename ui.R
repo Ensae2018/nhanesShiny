@@ -136,24 +136,26 @@ tabPanel(
       column(width = 2,        
              wellPanel(p(span(strong("Hypertension", style = "color:blue"))),
                        
-               selectInput(inputId = "varhypx", label = "Table et Graphique 1",
-                           choices=colnames(donHyp[,-1]),selected=colnames(donHyp[,-1])[2]),br(),
-               
-               pickerInput(
-                 "varhypxy",
-                 label = "Graphique 2",
-                 choices = colnames(donHyp[,-1]),
-                 multiple = TRUE,
-                 selected = colnames(donHyp[, c(3,28)]),
-                 options = list(
-                   `actions-box` = FALSE,
-                   `max-options` = 2
-                 )
-               ),
-                             radioButtons(inputId = "idgraphtypehyp", label = "Type Graphique 2", selected = 3,
+                       selectInput(inputId = "varhypx", label = "Table et Graphique 1",
+                                   choices=colnames(donHyp[,-1]),selected=colnames(donHyp[,-1])[2]),br(),
+                       
+                       # pickerInput(
+                       #   "varhypxy",
+                       #   label = "Graphique 2",
+                       #   choices = colnames(donHyp[,-1]),
+                       #   multiple = TRUE,
+                       #   selected = colnames(donHyp[, c(3,28)]),
+                       #   options = list(
+                       #     `actions-box` = FALSE,
+                       #     `max-options` = 2
+                       #   )
+                       # ),
+                       selectInput(inputId = "varhypxy", label = "Graphique 2",
+                                   choices=colnames(donHyp[,-1]),selected=colnames(donHyp[, c(3,28)]),multiple=TRUE),
+                       radioButtons(inputId = "idgraphtypehyp", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
-               )),
+             )),
                        
       column(width = 2,
              wellPanel(tableOutput(outputId="tabstathyp"))),
@@ -170,17 +172,19 @@ tabPanel(
                        selectInput(inputId = "varchox", label = "Table et Graphique 1",
                                    choices=colnames(donChol[,-1]),selected=colnames(donChol[,-1])[2]),br(),
                        
-                       pickerInput(
-                         "varchoxy",
-                         label = "Graphique 2",
-                         choices = colnames(donChol[,-1]),
-                         multiple = TRUE,
-                         selected = colnames(donChol[, c(3,28)]),
-                         options = list(
-                           `actions-box` = FALSE,
-                           `max-options` = 2
-                         )
-                       ),
+                       # pickerInput(
+                       #   "varchoxy",
+                       #   label = "Graphique 2",
+                       #   choices = colnames(donChol[,-1]),
+                       #   multiple = TRUE,
+                       #   selected = colnames(donChol[, c(3,28)]),
+                       #   options = list(
+                       #     `actions-box` = FALSE,
+                       #     `max-options` = 2
+                       #   )
+                       # ),
+                       selectInput(inputId = "varchoxy", label = "Graphique 2",
+                                   choices=colnames(donChol[,-1]),selected=colnames(donChol[, c(3,28)]),multiple=TRUE),
                        radioButtons(inputId = "idgraphtypecho", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
@@ -204,17 +208,19 @@ tabPanel(
                        selectInput(inputId = "vardiax", label = "Table et Graphique 1",
                                    choices=colnames(donDia_transco[,-1]),selected=colnames(donDia_transco[,-1])[2]),br(),
                        
-                       pickerInput(
-                         "vardiaxy",
-                         label = "Graphique 2",
-                         choices = colnames(donDia_transco[,-1]),
-                         multiple = TRUE,
-                         selected = colnames(donDia_transco[, c(3,28)]),
-                         options = list(
-                           `actions-box` = FALSE,
-                           `max-options` = 2
-                         )
-                       ),
+                       # pickerInput(
+                       #   "vardiaxy",
+                       #   label = "Graphique 2",
+                       #   choices = colnames(donDia_transco[,-1]),
+                       #   multiple = TRUE,
+                       #   selected = colnames(donDia_transco[, c(3,28)]),
+                       #   options = list(
+                       #     `actions-box` = FALSE,
+                       #     `max-options` = 2
+                       #   )
+                       # ),
+                       selectInput(inputId = "vardiaxy", label = "Graphique 2",
+                                   choices=colnames(donDia_transco[,-1]),selected=colnames(donDia_transco[, c(3,28)]),multiple=TRUE),
                        radioButtons(inputId = "idgraphtype", label = "Type Graphique 2", selected = 1,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
