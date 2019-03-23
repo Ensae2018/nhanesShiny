@@ -62,18 +62,18 @@ shinyServer(function(input, output, session) {
   
   
   observe({
-    if (input$typepatient=="Individu avec cholestérol") {
+    if (input$typepatient=="Profil à l'instar de Sharon Stone") {
 
-      updateSelectInput(session,inputId="sexe",selected = "Male",
+      updateSelectInput(session,inputId="sexe",selected = "Female",
                         choices = c("M" = "Male", "F" = "Female"))
-      updateNumericInput(session,inputId="age",value = 48)
+      updateNumericInput(session,inputId="age",value = 61)
       updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
-      updateRadioButtons(session,inputId="travail",selected = "non",
+      updateRadioButtons(session,inputId="travail",selected = "Oui",
                          choices = c("Oui" = "oui", "Non" = "non"))
-      updateNumericInput(session,inputId="piecesmaison",value = 3)
-      updateNumericInput(session,inputId="pauvretefamille",value = 3)
-      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+      updateNumericInput(session,inputId="piecesmaison",value = 6)
+      updateNumericInput(session,inputId="pauvretefamille",value = 5)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "Yes",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="cholesterol",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
@@ -84,8 +84,8 @@ shinyServer(function(input, output, session) {
       updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
                          selected = "No")
       updateNumericInput(session,inputId="hauteur",value = 174)
-      updateNumericInput(session,inputId="poids",value = 66)
-      updateNumericInput(session,inputId="bmi",value = 20)
+      updateNumericInput(session,inputId="poids",value = 57)
+      updateNumericInput(session,inputId="bmi",value = 18.8)
       updateNumericInput(session,inputId="pression_sys",value = 80)
       updateNumericInput(session,inputId="pression_dia",value = 40)
       updateRadioButtons(session,inputId="dentaire",
@@ -112,46 +112,46 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session,inputId="vitB12",value = 108)
 
     }
-    if (input$typepatient=="Individu avec hypertension") {
+    if (input$typepatient=="Profil à l'instar de David Hasselhoff") {
       
       updateSelectInput(session,inputId="sexe",selected = "Male",
                         choices = c("M" = "Male", "F" = "Female"))
-      updateNumericInput(session,inputId="age",value = 48)
+      updateNumericInput(session,inputId="age",value = 67)
       updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
-      updateRadioButtons(session,inputId="travail",selected = "non",
+      updateRadioButtons(session,inputId="travail",selected = "oui",
                          choices = c("Oui" = "oui", "Non" = "non"))
-      updateNumericInput(session,inputId="piecesmaison",value = 3)
-      updateNumericInput(session,inputId="pauvretefamille",value = 3)
-      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
+      updateNumericInput(session,inputId="piecesmaison",value = 6)
+      updateNumericInput(session,inputId="pauvretefamille",value = 5)
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "Yes",
                          choices = c("Oui" = "Yes", "Non" = "No"))
-      updateRadioButtons(session,inputId="cholesterol",selected = "No",
+      updateRadioButtons(session,inputId="cholesterol",selected = "Yes",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
-                         selected = 2)
+                         selected = 1)
       updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
                          selected = 2)
       updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
                          selected = "No")
-      updateNumericInput(session,inputId="hauteur",value = 174)
-      updateNumericInput(session,inputId="poids",value = 66)
-      updateNumericInput(session,inputId="bmi",value = 20)
-      updateNumericInput(session,inputId="pression_sys",value = 80)
-      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateNumericInput(session,inputId="hauteur",value = 193)
+      updateNumericInput(session,inputId="poids",value = 87)
+      updateNumericInput(session,inputId="bmi",value = 23.4)
+      updateNumericInput(session,inputId="pression_sys",value = 140)
+      updateNumericInput(session,inputId="pression_dia",value = 90)
       updateRadioButtons(session,inputId="dentaire",
                          choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
                                      "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
-                         selected = 4)
-      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
                          selected = 2)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 1)
       updateNumericInput(session,inputId="fibre",value = 22)
-      updateNumericInput(session,inputId="foodfolate",value = 266)
-      updateNumericInput(session,inputId="waterdrank",value = 1600)
+      updateNumericInput(session,inputId="foodfolate",value = 900)
+      updateNumericInput(session,inputId="waterdrank",value = 2500)
       updateNumericInput(session,inputId="humidite",value = 3400)
-      updateNumericInput(session,inputId="alcool",value = 500)
-      updateNumericInput(session,inputId="phosphorus",value = 1600)
-      updateNumericInput(session,inputId="sodium",value = 4000)
-      updateNumericInput(session,inputId="sucre",value = 128)
+      updateNumericInput(session,inputId="alcool",value = 1600)
+      updateNumericInput(session,inputId="phosphorus",value = 1200)
+      updateNumericInput(session,inputId="sodium",value = 3150)
+      updateNumericInput(session,inputId="sucre",value = 250)
       updateNumericInput(session,inputId="choles",value = 390)
       updateNumericInput(session,inputId="proteines",value = 97)
       updateNumericInput(session,inputId="fer",value = 16)
@@ -163,17 +163,17 @@ shinyServer(function(input, output, session) {
       
     }
     
-    if (input$typepatient=="Individu avec diabète") {
+    if (input$typepatient=="Profil à l'instar de Michael Phelps") {
       
       updateSelectInput(session,inputId="sexe",selected = "Male",
                         choices = c("M" = "Male", "F" = "Female"))
-      updateNumericInput(session,inputId="age",value = 48)
-      updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
+      updateNumericInput(session,inputId="age",value = 33)
+      updateRadioButtons(session,inputId="marchevelodixmin",selected = "Yes",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="travail",selected = "non",
                          choices = c("Oui" = "oui", "Non" = "non"))
-      updateNumericInput(session,inputId="piecesmaison",value = 3)
-      updateNumericInput(session,inputId="pauvretefamille",value = 3)
+      updateNumericInput(session,inputId="piecesmaison",value = 6)
+      updateNumericInput(session,inputId="pauvretefamille",value = 5)
       updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="cholesterol",selected = "No",
@@ -184,35 +184,51 @@ shinyServer(function(input, output, session) {
                          selected = 2)
       updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
                          selected = "No")
-      updateNumericInput(session,inputId="hauteur",value = 174)
-      updateNumericInput(session,inputId="poids",value = 66)
-      updateNumericInput(session,inputId="bmi",value = 20)
-      updateNumericInput(session,inputId="pression_sys",value = 80)
-      updateNumericInput(session,inputId="pression_dia",value = 40)
+      updateNumericInput(session,inputId="hauteur",value = 193)
+      updateNumericInput(session,inputId="poids",value = 90)
+      updateNumericInput(session,inputId="bmi",value = 24.2)
+      updateNumericInput(session,inputId="pression_sys",value = 120)
+      updateNumericInput(session,inputId="pression_dia",value = 80)
       updateRadioButtons(session,inputId="dentaire",
                          choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
                                      "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
-                         selected = 4)
-      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
                          selected = 2)
+      updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
+                         selected = 1)
       updateNumericInput(session,inputId="fibre",value = 22)
       updateNumericInput(session,inputId="foodfolate",value = 266)
       updateNumericInput(session,inputId="waterdrank",value = 1600)
       updateNumericInput(session,inputId="humidite",value = 3400)
-      updateNumericInput(session,inputId="alcool",value = 500)
-      updateNumericInput(session,inputId="phosphorus",value = 1600)
-      updateNumericInput(session,inputId="sodium",value = 4000)
-      updateNumericInput(session,inputId="sucre",value = 128)
-      updateNumericInput(session,inputId="choles",value = 390)
+      updateNumericInput(session,inputId="alcool",value = 100)
+      updateNumericInput(session,inputId="phosphorus",value = 1200)
+      updateNumericInput(session,inputId="sodium",value = 3150)
+      updateNumericInput(session,inputId="sucre",value = 120)
+      updateNumericInput(session,inputId="choles",value = 250)
       updateNumericInput(session,inputId="proteines",value = 97)
       updateNumericInput(session,inputId="fer",value = 16)
-      updateNumericInput(session,inputId="cafeine",value = 177)
+      updateNumericInput(session,inputId="cafeine",value = 57)
       updateNumericInput(session,inputId="vitamineC",value = 108)
       updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
       updateNumericInput(session,inputId="vitB6",value = 108)
       updateNumericInput(session,inputId="vitB12",value = 108)
       
     }
+    
+    output$im_profil <- renderImage({
+      if(input$typepatient=="Profil à l'instar de David Hasselhoff"){
+        filename <- normalizePath(file.path('./www/img/DavidHasselhoff.jpg'))
+      }
+      if(input$typepatient=="Profil à l'instar de Michael Phelps"){
+        filename <- normalizePath(file.path('./www/img/MichaelPhelps.jpg'))
+      }
+      if(input$typepatient=="Profil à l'instar de Sharon Stone"){
+        filename <- normalizePath(file.path('./www/img/SharonStone.jpg'))
+      }
+      if(input$typepatient=="Nouveau Profil"){
+        filename <- normalizePath(file.path('./www/img/NouveauProfil.jpg'))
+      }
+      
+      list(src = filename,width = 250,height = 250)},deleteFile = FALSE)
     })
   
 #-------------------------------------------------------------  

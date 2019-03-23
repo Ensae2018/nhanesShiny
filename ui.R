@@ -810,7 +810,7 @@ tabPanel(
                                    div(class = "option-header"),
                                wellPanel(
                               radioButtons("typepatient", "Choisir votre type de patient",
-                                           c("Nouvel individu","Individu avec hypertension","Individu avec cholestérol","Individu avec diabète")))
+                                           c("Nouveau Profil","Profil à l'instar de David Hasselhoff","Profil à l'instar de Michael Phelps","Profil à l'instar de Sharon Stone")))
                               )
                ),
                  column(4,
@@ -820,7 +820,14 @@ tabPanel(
                                  switchInput(inputId = "predict", value = FALSE)
                                ))
                
-                 )),
+                 ),
+               column(4,
+                      div(
+                            imageOutput("im_profil",width="10px", height="10px","auto", inline = FALSE)
+                          )
+                      
+               )
+               ),
                
                conditionalPanel(condition="input.predict==true",
                                 fluidRow(
