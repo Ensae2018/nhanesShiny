@@ -898,7 +898,6 @@ tabPanel(
                                             surpoids,
                                             hauteur,
                                             poids,
-                                            bmi,                                           
                                             diete,
                                             fibre,
                                             choles,

@@ -162,7 +162,7 @@ modChol <- glm(Y~RIDAGEYR_demo+
                  Var_TRAVAIL+
                  BMXHT_bmx+
                  BMXWT_bmx+
-                 BMXBMI_bmx+
+                 #BMXBMI_bmx+#je desactive pq conflit visuel dans les param de linterface prediction
                  BPQ020_bpq+
                  MCQ080_mcq+
                  DIQ010_diq+
