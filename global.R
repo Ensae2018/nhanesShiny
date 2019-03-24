@@ -238,4 +238,5 @@ seuil_hyp <- round(coords(roc(res_hyp[,1],res_hyp[,2]), "best", best.method = "c
 seuil_dia <- round(coords(roc(res_dia[,1],res_dia[,2]), "best", best.method = "closest.topleft")[1],3)
 seuil_chol <-round(coords(roc(res_chol[,1],res_chol[,2]), "best", best.method = "closest.topleft")[1],3)
 
+
 options(shiny.trace=FALSE)

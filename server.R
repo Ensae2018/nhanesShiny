@@ -12,8 +12,22 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
-  #A MODIFIER AVEC LE MEILLEUR SEUIL DE CHAQUE MODELE
+  #variables retenues par modele
   
+  observeEvent(input$idCheckHyp==TRUE, {
+  output$valueHyp <- renderText({ paste0("age,trouble_sommeil,cholesterol,surpoids,bmi,pression_sys,pression_dia,phosphorus,sodium")})
+  })
+  
+  observeEvent(input$idCheckChol==TRUE, {
+    output$valueChol <- renderText({ paste0("sexe,age,travail,trouble_sommeil,risquehypertension,risquediabete,surpoids,hauteur,poids,diete,fibre,choles,vitB6,vitB12")})
+  })
+  
+  observeEvent(input$idCheckDiab==TRUE, {
+    output$valueDiab <- renderText({ paste0("sexe,age,pauvretefamille,cholesterol,risquehypertension,surpoids,pression_dia,waterdrank,humidite,alcool,sucre,choles,proteines,fer,cafeine")})
+  })
+  
+  
+  ####
   km <- reactive({
     km <- kmeans(var$coord, center=input$nb_classe, nstart = 25)
   })
