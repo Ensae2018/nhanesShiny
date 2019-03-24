@@ -1,21 +1,24 @@
-"variable";"imp_log";"imp_ridge";"imp_lasso";"imp_elastic";"imp_foret";"imp_adaboost";"imp_logiboost"
-"Age_in_years_at_screening";"2.012";NA;"-0.538";"-0.872";"2.241";"2.705";"2.69"
-"high_cholesterol_level";"1.638";"2.463";"2.364";"2.379";"0.395";"0.337";"0.274"
-"Doctor_ever_said_you_were_overweight";"0.002";"0.547";"0.887";"0.769";NA;"-0.362";"-0.341"
-"Ever_told_doctor_had_trouble_sleeping";"-0.052";"0.273";"0.607";"0.487";NA;"-0.609";"-0.632"
-"On_special_diet";"-0.305";"0.116";"-0.233";"0.126";NA;NA;NA
-"Doctor_told_you_have_diabetes";"-0.64";"-0.346";"-0.573";"-0.621";"-0.581";"-0.339";"-0.263"
-"Vitamin_D_D2_D3_mcg";"-0.648";NA;NA;NA;NA;NA;NA
-"Sodium_mg";"-0.648";NA;NA;NA;NA;NA;NA
-"Overall_recommendation_for_careSee a dentist at your earliest convenience";"-0.678";"-0.626";NA;"-0.571";NA;NA;NA
-"Systolic_Blood_pres_2nd_rdg_mm_Hg";"-0.681";NA;"-0.6";NA;"0.506";"-0.117";"0.077"
-"Ever_told_you_have_Hepatitis_C";NA;"-0.006";NA;"-0.538";NA;NA;NA
-"Ever_been_told_you_have_asthma";NA;"-0.578";NA;"-0.4";NA;NA;NA
-"Overall_recommendation_for_careSee a dentist within the next 2 weeks";NA;"-0.868";NA;NA;NA;NA;NA
-"X_of_people_who_live_here_smoke_tobacco2 household members are smokers";NA;"-0.974";NA;"-0.758";NA;NA;NA
-"Body_Mass_Index_kg_m_2";NA;NA;"-0.58";NA;"-0.577";"-0.51";"-0.607"
-"Systolic_Blood_pres_3rd_rdg_mm_Hg";NA;NA;"-0.664";NA;"0.512";"0.054";"-0.012"
-"Systolic_Blood_pres_1st_rdg_mm_Hg";NA;NA;"-0.67";NA;"0.259";"-0.53";"-0.482"
-"Weight_kg";NA;NA;NA;NA;"-0.809";"-0.63";"-0.705"
-"Total_number_of_people_in_the_Household";NA;NA;NA;NA;"-0.88";NA;NA
-"Total_number_of_people_in_the_Family";NA;NA;NA;NA;"-1.066";NA;NA
+variable;imp_log;imp_ridge;imp_lasso;imp_elastic;imp_foret;imp_adaboost;imp_logiboost
+Age_in_years_at_screening;6.174;NA;0.149;NA;6.053;8.224;7.832
+high_cholesterol_level;5.485;5.947;7.217;6.644;2.775;2.445;3.163
+Doctor_told_you_have_diabetes;2.485;4.156;4.969;4.5;1.006;1.036;1.129
+Doctor_ever_said_you_were_overweight;2.112;2.894;3.722;3.494;NA;0.896;0.865
+Ever_told_doctor_had_trouble_sleeping;1.92;2.357;2.716;2.784;NA;0.199;0.277
+On_special_diet;1.336;2.096;0.311;2.037;NA;NA;NA
+Systolic_Blood_pres_2nd_rdg_mm_Hg;0.716;NA;0.019;NA;2.991;1.94;2.279
+Vitamin_D_D2_D3_mcg;0.633;NA;NA;NA;NA;NA;NA
+Ever_been_told_you_have_asthma;0.56;NA;NA;1.015;NA;NA;NA
+Phosphorus_mg;0.496;NA;NA;NA;NA;NA;NA
+Ever_told_you_have_Hepatitis_C;NA;2.289;NA;1.146;NA;NA;NA
+Total_number_of_people_in_the_Household6;NA;1.633;NA;NA;NA;NA;NA
+Ever_told_you_have_Hepatitis_B;NA;1.474;NA;NA;NA;NA;NA
+Vigorous_recreational_activities;NA;1.239;NA;0.999;NA;NA;NA
+VAR_TRAVAIL;NA;1.128;NA;0.786;NA;NA;NA
+Body_Mass_Index_kg_m_2;NA;NA;0.049;NA;1.047;0.501;0.462
+Systolic_Blood_pres_3rd_rdg_mm_Hg;NA;NA;-0.159;NA;2.705;1.762;1.648
+Weight_kg;NA;NA;-0.189;NA;0.689;NA;-0.026
+X_of_people_who_live_here_smoke_tobaccoNo one in houseold is a smoker;NA;NA;NA;0.773;NA;NA;NA
+Systolic_Blood_pres_1st_rdg_mm_Hg;NA;NA;NA;NA;3.124;0.445;0.952
+Total_number_of_people_in_the_Household;NA;NA;NA;NA;0.383;NA;NA
+Total_number_of_people_in_the_Family;NA;NA;NA;NA;0.224;NA;NA
+Diastolic_Blood_pres_1st_rdg_mm_Hg;NA;NA;NA;NA;NA;0.126;NA
