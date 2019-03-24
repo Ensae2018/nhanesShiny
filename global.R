@@ -186,6 +186,10 @@ modChol <- glm(Y~RIDAGEYR_demo+
 
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique step réduit aux 15 variables d'importance
+
+donDiapred<-donDia
+donDiapred<-donDia[,-1]
+donDiapred$DIQ010_diq<-as.numeric(donDiapred$DIQ010_diq)-1
 modDiab <- glm(DIQ010_diq~RIDAGEYR_demo+
                  DR1TSUGR_dr1tot+
                  BPQ080_bpq+
@@ -200,7 +204,7 @@ modDiab <- glm(DIQ010_diq~RIDAGEYR_demo+
                  INDFMPIR_demo+
                  DR1TIRON_dr1tot+
                  Var_TENSIONDI+
-                 DR1TCAFF_dr1tot,data=donDia,family="binomial")
+                 DR1TCAFF_dr1tot,data=donDiapred,family="binomial")
 
 # Le résulatat de comparaison des méthodes de prédiction Hypertension
 res_hyp <- read.csv2("data/res_hyp.csv")

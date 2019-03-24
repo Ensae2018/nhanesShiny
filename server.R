@@ -32,6 +32,13 @@ shinyServer(function(input, output, session) {
     table(cut(X, breaks = c(0,seuil,1)), Y)
   }
   
+  monerreurcho <- function(X, Y, seuil=input$seuilmodchol){
+    table(cut(X, breaks = c(0,seuil,1)), Y)
+  }
+  
+  monerreurdia <- function(X, Y, seuil=input$seuilmoddia){
+    table(cut(X, breaks = c(0,seuil,1)), Y)
+  }
   # fonction utilisée pour le calcul de la précision
   precision <- function(X,Y,seuil=input$seuilmod){
     Xc <- cut(X,breaks=c(0,seuil,1),labels=c(0,1),include.lowest=TRUE)
@@ -344,7 +351,7 @@ shinyServer(function(input, output, session) {
                                             DR1TSUGR_dr1tot=input$sucre,
                                             BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
                                             MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
-                                            BPQ020_bpq=ifelse(input$risquehypertension=="Yes",c("1"),c("2")), 
+                                            BPQ020_bpq=ifelse(input$risquehypertension==1,c("1"),c("2")), 
                                             DR1TALCO_dr1tot=input$alcool,
                                             DR1TMOIS_dr1tot=input$humidite,
                                             RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
@@ -708,12 +715,12 @@ shinyServer(function(input, output, session) {
   })
   
   output$matconf_chol <- renderTable({
-    tabconf <- as.data.frame(monerreur(res_chol[,input$methodechol[1]],res_chol[,1]))
+    tabconf <- as.data.frame(monerreurcho(res_chol[,input$methodechol[1]],res_chol[,1]))
     i=1
     repeat{
       i=i+1
       if(i>length(input$methodechol)) break
-      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_chol[,input$methodechol[i]],res_chol[,1]))[,3])
+      tabconf <- cbind(tabconf,as.data.frame(monerreurcho(res_chol[,input$methodechol[i]],res_chol[,1]))[,3])
     }
     names(tabconf)[3:length(names(tabconf))] <- input$methodechol
     names(tabconf)[1] <- "seuil"
@@ -770,12 +777,12 @@ shinyServer(function(input, output, session) {
   })
   
   output$matconf_dia <- renderTable({
-    tabconf <- as.data.frame(monerreur(res_dia[,input$methodedia[1]],res_dia[,1]))
+    tabconf <- as.data.frame(monerreurdia(res_dia[,input$methodedia[1]],res_dia[,1]))
     i=1
     repeat{
       i=i+1
       if(i>length(input$methodedia)) break
-      tabconf <- cbind(tabconf,as.data.frame(monerreur(res_dia[,input$methodedia[i]],res_dia[,1]))[,3])
+      tabconf <- cbind(tabconf,as.data.frame(monerreurdia(res_dia[,input$methodedia[i]],res_dia[,1]))[,3])
     }
     names(tabconf)[3:length(names(tabconf))] <- input$methodedia
     names(tabconf)[1] <- "seuil"
