@@ -500,9 +500,9 @@ tabPanel(
                                             min = 16,
                                             max = 150
                                           ),
-                                      #finalement pas besoin
-                                      radioButtons(inputId = "marchevelodixmin", label = "Faites-vous de la marche ou du vélo?", selected = "Yes",
-                                                   choices = c("Oui" = "Yes", "Non" = "No")),    
+                                    #finalement pas besoin
+                                      #radioButtons(inputId = "marchevelodixmin", label = "Faites-vous de la marche ou du vélo?", selected = "Yes",
+                                      #             choices = c("Oui" = "Yes", "Non" = "No")),    
                                       # checkboxGroupInput(
                                       #       inputId = "marchevelodixmin",
                                       #       label = "Faites-vous de la marche ou du vélo?",
@@ -519,14 +519,14 @@ tabPanel(
                                           #                 "non"),
                                           #   selected = "non"
                                           # ), 
-                                      #finalement pas besoin
-                                          numericInput(
-                                            inputId = "piecesmaison",
-                                            label = "Le nbr de pièces chez vous",
-                                            value = 2,
-                                            min = 0,
-                                            max = 10
-                                          ),
+                                    #finalement pas besoin
+                                          # numericInput(
+                                          #   inputId = "piecesmaison",
+                                          #   label = "Le nbr de pièces chez vous",
+                                          #   value = 2,
+                                          #   min = 0,
+                                          #   max = 10
+                                          # ),
                                           numericInput(
                                             inputId = "pauvretefamille",
                                             label = "Le taux de pauvreté de votre famille",
@@ -638,10 +638,10 @@ tabPanel(
                             column(width=4,         
                                         div(class = "option-group",
                                               div(class = "option-header", "Alimentation"),
-                                            radioButtons(inputId = "dentaire",label = "Quelle recommendation pour votre santé dentaire ?", 
-                                                         choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
-                                                                     "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1), 
-                                                         selected = 1), 
+                                            # radioButtons(inputId = "dentaire",label = "Quelle recommendation pour votre santé dentaire ?", 
+                                            #              choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
+                                            #                          "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1), 
+                                            #              selected = 1), 
                                           #   checkboxGroupInput(
                                           #   inputId = "dentaire",
                                           #   label = "Quelle recommendation pour votre santé dentaire ?",
@@ -668,15 +668,15 @@ tabPanel(
                                             max = 100
                                           ),
                                           #finalement pas besoin
-                                          helpText ("faible~126, moyen~185, élevé~266"),
-                                          numericInput(
-                                            inputId = "foodfolate",
-                                            label = "Consommation en folate alimentaire(g)",
-                                            value = 210,
-                                            min = 3,
-                                            max = 2000,
-                                            step = 10
-                                          ),
+                                          # helpText ("faible~126, moyen~185, élevé~266"),
+                                          # numericInput(
+                                          #   inputId = "foodfolate",
+                                          #   label = "Consommation en folate alimentaire(g)",
+                                          #   value = 210,
+                                          #   min = 3,
+                                          #   max = 2000,
+                                          #   step = 10
+                                          # ),
                                           helpText ("faible~390, moyen~900, élevé~1600"),
                                           numericInput(
                                             inputId = "waterdrank",
@@ -769,25 +769,25 @@ tabPanel(
                                             step = 10
                                           ),
                                           #finalement pas besoin
-                                          helpText ("faible~26, moyen~57, élevé~108"),
-                                          numericInput(
-                                            inputId = "vitamineC",
-                                            label = "Consommation en vitamine C (mg)",
-                                            value = 79,
-                                            min = 0,
-                                            max = 1000,
-                                            step = 10
-                                          ),
+                                          # helpText ("faible~26, moyen~57, élevé~108"),
+                                          # numericInput(
+                                          #   inputId = "vitamineC",
+                                          #   label = "Consommation en vitamine C (mg)",
+                                          #   value = 79,
+                                          #   min = 0,
+                                          #   max = 1000,
+                                          #   step = 10
+                                          # ),
                                           #finalement pas besoin
-                                          helpText ("faible~418, moyen~778, élevé~1462"),
-                                          numericInput(
-                                            inputId = "LuteineZeaxanthine",
-                                            label = "Consommation en Lutéine et Zéaxanthine (mg)",
-                                            value = 1550,
-                                            min = 0,
-                                            max = 80000,
-                                            step = 10
-                                          ),
+                                          # helpText ("faible~418, moyen~778, élevé~1462"),
+                                          # numericInput(
+                                          #   inputId = "LuteineZeaxanthine",
+                                          #   label = "Consommation en Lutéine et Zéaxanthine (mg)",
+                                          #   value = 1550,
+                                          #   min = 0,
+                                          #   max = 80000,
+                                          #   step = 10
+                                          # ),
                                           helpText ("faible~26, moyen~57, élevé~108"),
                                           numericInput(
                                             inputId = "vitB6",
@@ -853,12 +853,26 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4( textOutput(outputId = "resultat_hypertensionbis"), align = "left"),
-                                         h4(
-                                          textOutput(outputId = "resultat_hypertension"), align = "left"
-                                         ),
-                                         h4(paste0("Seuil de discrimination: ", seuil_hyp), align="left")
-                                         ),
+                                         h4(textOutput(outputId = "resultat_hypertensionbis"), align = "left"),
+                                         h4(textOutput(outputId = "resultat_hypertension"), align = "left"),
+                                         h4(paste0("Seuil de discrimination: ", seuil_hyp), align="left"),
+                                         br(),
+                                         br(),
+                                  h4(
+                                    
+                                    checkboxInput(inputId="idCheckHyp",label="Variables?", value=FALSE),
+                                    conditionalPanel(condition="input.idCheckHyp==true",
+                                    verbatimTextOutput("valueHyp"))
+                                    # helpText("age,
+                                    #       trouble_sommeil,
+                                    #       cholesterol,
+                                    #       surpoids,
+                                    #       bmi,
+                                    #       pression_sys,
+                                    #       pression_dia,
+                                    #       phosphorus,
+                                    #       sodium"), align = "left"
+                                  )),
                                   
                                   column(width=4,
                                          br(),
@@ -876,12 +890,30 @@ tabPanel(
                                          br(),
                                          br(),
                                          br(),
-                                         h4( textOutput(outputId = "resultat_cholesterolbis"), align = "left"),
-                                         h4(
-                                           textOutput(outputId = "resultat_cholesterol"), align = "left"
-                                         ),
-                                         h4(paste0("Seuil de discrimination: ", seuil_chol), align="left")
-                                         ),
+                                         h4(textOutput(outputId = "resultat_cholesterolbis"), align = "left"),
+                                         h4(textOutput(outputId = "resultat_cholesterol"), align = "left"),
+                                         h4(paste0("Seuil de discrimination: ", seuil_chol), align="left"),
+                                         br(),
+                                         br(),   
+                                  h4(
+                                    checkboxInput(inputId="idCheckChol",label="Variables?", value=FALSE),
+                                    conditionalPanel(condition="input.idCheckChol==true",
+                                                     verbatimTextOutput("valueChol"))
+                                    # helpText("sexe,
+                                    #         age,
+                                    #         travail,
+                                    #         trouble_sommeil,
+                                    #         risquehypertension,
+                                    #         risquediabete,
+                                    #         surpoids,
+                                    #         hauteur,
+                                    #         poids,
+                                    #         diete,
+                                    #         fibre,
+                                    #         choles,
+                                    #         vitB6,
+                                    #         vitB12"), align = "left"
+                                    )),
                                          
                                   column(width=4,
                                          br(),
@@ -900,11 +932,31 @@ tabPanel(
                                          br(),
                                          br(),
                                          h4(textOutput(outputId = "resultat_diabetesbis"), align = "left"),
-                                         div(h4(
-                                           textOutput(outputId = "resultat_diabetes"), align = "left"
-                                         )),
-                                         h4(paste0("Seuil de discrimination: ", seuil_dia), align="left")
-                                  )
+                                         h4(textOutput(outputId = "resultat_diabetes"), align = "left"),
+                                         h4(paste0("Seuil de discrimination: ", seuil_dia), align="left"),
+                                         br(),
+                                         br(),
+                                        h4(
+                                          checkboxInput(inputId="idCheckDiab",label="Variables?", value=FALSE),
+                                          conditionalPanel(condition="input.idCheckDiab==true",
+                                                           verbatimTextOutput("valueDiab"))
+                                           # helpText("sexe,
+                                           #  age,
+                                           #  pauvretefamille,
+                                           #  cholesterol,
+                                           #  risquehypertension,
+                                           #  surpoids,
+                                           #  pression_dia,
+                                           #  waterdrank,
+                                           #  humidite,
+                                           #  alcool,
+                                           #  sucre,
+                                           #  choles,
+                                           #  proteines,
+                                           #  fer,
+                                           #  cafeine"), align = "left"
+                                        ))
+                                  
                                 )
                )
              )
