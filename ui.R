@@ -108,7 +108,7 @@ shinyUI(
         conditionalPanel(condition="input.idRadio == 3",
                          h2(span(strong("Phase 1: Regroupement des tables et construction d'un dataset commun 150 variables"),style="color:darkblue")),
                          h3("- Merge des tables",br(),"- Pré-sélection métier de 150 variables pour les 3 maladies (élimination des data trop techniques, trop détaillées ou non éthiques)",
-                            br(),"- Web scrapping des libellés des variables qualitatives"),
+                            br(),"- Web scrapping des libellés des variables qualitatives (transcodification)"),
                          h3("=>1 dataset 8339 individus / 150 variables",style="color:darkblue"),br(),
                          h2(span(strong("Phase 2: Déclinaison du dataset commun en 3 datasets spécifiques (un par maladie)",style="color:darkblue"))),
                          h3("- Recodage de variables",br(),"- Elimination des variables avec plus de 10% de NA",br(),"- Imputation simple des données manquantes"),
@@ -331,7 +331,7 @@ tabPanel(
                                          label = "Choisir la methode",
                                          choices = colnames(res_dia[, -1]),
                                          multiple = TRUE,
-                                         selected = colnames(res_dia[, c(2,6,10)]),
+                                         selected = colnames(res_dia[, 2:length(res_dia)]),
                                          options = list(
                                            `actions-box` = FALSE,
                                            `none-selected-text` = "Sélectionner"
@@ -387,7 +387,7 @@ tabPanel(
                                          label = "Choisir la methode",
                                          choices = colnames(res_chol[, -1]),
                                          multiple = TRUE,
-                                         selected = colnames(res_chol[, c(2,6,10)]),
+                                         selected = colnames(res_chol[, 2:length(res_chol)]),
                                          options = list(
                                            `actions-box` = FALSE,
                                            `none-selected-text` = "Sélectionner"
@@ -441,7 +441,7 @@ tabPanel(
                                          label = "Choisir la methode",
                                          choices = colnames(res_hyp[, -1]),
                                          multiple = TRUE,
-                                         selected = colnames(res_hyp[, c(2,6,10)]),
+                                         selected = colnames(res_hyp[, 2:length(res_hyp)]),
                                          options = list(
                                            `actions-box` = FALSE,
                                            `none-selected-text` = "Sélectionner"
