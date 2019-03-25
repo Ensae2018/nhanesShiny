@@ -154,6 +154,12 @@ modHyp <- glm(Y~Age_in_years_at_screening+Systolic_Blood_pres_2nd_rdg_mm_Hg+
                 Ever_told_doctor_had_trouble_sleeping+Phosphorus_mg+Diastolic_Blood_pres_1st_rdg_mm_Hg+
                 Sodium_mg,data=donHyp,family="binomial")
 
+#onglet coefficients pour visualiser les coefficnets de la logistique
+coefhyp<-data.frame(Variable=rownames(summary(modHyp)$coefficients),Estimate=summary(modHyp)$coefficients[,1],
+                    StdEr=summary(modHyp)$coefficients[,2],
+                    StatTest=summary(modHyp)$coefficients[,3],
+                    pValue=summary(modHyp)$coefficients[,4])
+
 # algorithme de prediction CHOLESTEROL
 ## Utilisation du modele logistique avec le choix d'une dizaine de variables prépondérantes
 # finalement les 15 var retenues avec le choix var de Log90
@@ -185,6 +191,12 @@ modChol <- glm(Y~RIDAGEYR_demo+
                  DR1TCHOL_dr1tot+
                  DR1TB12A_dr1tot,data=donChol,family="binomial")
 
+#onglet coefficients pour visualiser les coefficnets de la logistique
+coefcho<-data.frame(Variable=rownames(summary(modChol)$coefficients),Estimate=summary(modChol)$coefficients[,1],
+                    StdEr=summary(modChol)$coefficients[,2],
+                    StatTest=summary(modChol)$coefficients[,3],
+                    pValue=summary(modChol)$coefficients[,4])
+
 # algorithme de prediction DIABETES
 ## Utilisation du modele logistique step réduit aux 15 variables d'importance
 
@@ -206,6 +218,12 @@ modDiab <- glm(DIQ010_diq~RIDAGEYR_demo+
                  DR1TIRON_dr1tot+
                  Var_TENSIONDI+
                  DR1TCAFF_dr1tot,data=donDiapred,family="binomial")
+
+#onglet coefficients pour visualiser les coefficnets de la logistique
+coefdia<-data.frame(Variable=rownames(summary(modDiab)$coefficients),Estimate=summary(modDiab)$coefficients[,1],
+                    StdEr=summary(modDiab)$coefficients[,2],
+                    StatTest=summary(modDiab)$coefficients[,3],
+                    pValue=summary(modDiab)$coefficients[,4])
 
 # Le résulatat de comparaison des méthodes de prédiction Hypertension
 res_hyp <- read.csv2("data/res_hyp.csv")

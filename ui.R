@@ -339,7 +339,7 @@ tabPanel(
                                        )
                                      ),
                                      column(width=4,
-                                            sliderInput("seuilmoddia", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
+                                            sliderInput("seuilmoddia", "Choisir le seuil de discrimination", 0.01,0.99,0.5,0.01)
                                      )
                                    ),
                                    
@@ -395,7 +395,7 @@ tabPanel(
                                        )
                                      ),
                                      column(width=4,
-                                            sliderInput("seuilmodchol", "Choisir le seuil de discrimination", 0.01,0.99,0.5,0.1)
+                                            sliderInput("seuilmodchol", "Choisir le seuil de discrimination", 0.01,0.99,0.5,0.01)
                                      )
                                    ),
                                      fluidRow(
@@ -449,7 +449,7 @@ tabPanel(
                                        )
                                      ),
                                      column(width=4,
-                                            sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.2,0.8,0.5,0.1)
+                                            sliderInput("seuilmod", "Choisir le seuil de discrimination", 0.01,0.99,0.5,0.01)
                                      )
                                    ),
                                      fluidRow(
@@ -465,8 +465,16 @@ tabPanel(
                                             tableOutput("matconf")
                                      )
                                    )
-             ))
-  ), 
+             )),
+  
+    tabPanel("coefficients",
+             fluidRow(
+               column(width=4,h1("Modèle de prédiction diabète",align="center"),wellPanel(tableOutput("coefdiatab"),align="center")),
+               column(width=4,h1("Modèle de prédiction cholestérol",align="center"),wellPanel(tableOutput("coefchotab"),align="center")),
+               column(width=4,h1("Modèle de prédiction hypertension",align="center"),wellPanel(tableOutput("coefhyptab"),align="center"))             )
+    )    
+    
+    ), 
   
   #----------------------------------------------------------------  
   #tabPanel : PREDICTION

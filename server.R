@@ -827,8 +827,19 @@ shinyServer(function(input, output, session) {
     tabprecision
   })
 
-  
-  
+  #tables de coefficients de la logistique
+  output$coefdiatab <- renderTable({
+    
+    coefdia
+  })
+  output$coefchotab <- renderTable({
+    
+    coefcho
+  })
+  output$coefhyptab <- renderTable({
+    
+    coefhyp
+  })
   
   #=================================
   #Graphiques pour l'onglet CONTEXTE
