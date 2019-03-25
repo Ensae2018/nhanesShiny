@@ -112,7 +112,7 @@ shinyUI(
                          h3("=>1 dataset 8339 individus / 150 variables",style="color:darkblue"),br(),
                          h2(span(strong("Phase 2: Déclinaison du dataset commun en 3 datasets spécifiques (un par maladie)",style="color:darkblue"))),
                          h3("- Recodage de variables",br(),"- Elimination des variables avec plus de 10% de NA",br(),"- Imputation simple des données manquantes"),
-                         h3("=>3 datasets différents ~ 5000 individus / 80 variables",style="color:darkblue"),br(),
+                         h3("=>3 datasets différents ~ (5000 individus / 80 variables / 70%-80% quanti)",style="color:darkblue"),br(),
                          h2(span(strong("Phase 3: Modélisations spécifiques par maladie"),style="color:darkblue")),
                          h3("- Sélection de variables",br(),"- Sélection de modèles"),br(),
                          h2(span(strong("Phase 4: Outil Shiny + Package NHANESV2"),style="color:darkblue"))
@@ -1021,7 +1021,7 @@ tabPanel(
     # Sidebar with a slider input for number of bins
     sidebarLayout(
       sidebarPanel(
-        radioButtons(inputId = "idRadioC", label = "Plan", selected = 3,
+        radioButtons(inputId = "idRadioC", label = "Plan", selected = 1,
                      choices = c("Bilan de l'étude" = 1, "Feedback" =2, "Perspective" = 3))
         
       ),
