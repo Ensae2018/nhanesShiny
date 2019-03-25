@@ -974,7 +974,7 @@ shinyServer(function(input, output, session) {
   #CHOLESTEROL
   #-----------
   output$tabstatcho<-renderTable({
-    xcho<-donChol[,input$varchox]
+    xcho<-donChol_transco[,input$varchox]
     if (class(xcho) %in% c("numeric","integer")) {
       tabstat<-data.frame(matrix(NA,nrow = 6,ncol=2))
       colnames(tabstat)<-c("Type","Valeur")
@@ -993,37 +993,37 @@ shinyServer(function(input, output, session) {
   })
   
   output$graph1cho<-renderPlotly({
-    x1cho<-donChol[,input$varchox]
-    x2cho<-donChol[donChol$Y==1,input$varchox]
+    x1cho<-donChol_transco[,input$varchox]
+    x2cho<-donChol_transco[donChol_transco$Y==1,input$varchox]
     if (class(x1cho) %in% c("numeric","integer")) {
       
-      ggplot(donChol, aes(x=x1cho, color=donChol$Y)) +
+      ggplot(donChol_transco, aes(x=x1cho, color=donChol$Y)) +
         geom_histogram(fill="white", alpha=0.5, position="identity")+scale_color_manual(values=c("green","red"))+
         xlab(input$varchox)
     } else {
-      g<-ggplot(data=donChol, aes(x=x1cho,fill=donChol$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))+
+      g<-ggplot(data=donChol_transco, aes(x=x1cho,fill=donChol$Y))+geom_bar()+scale_fill_manual(values = c("green","red"))+
         xlab(input$varchox)
       ggplotly(g) }
     
   })
   
   output$graph2cho<-renderPlotly({
-    x1cho<-donChol[,input$varchoxy[1]]
-    x2cho<-donChol[,input$varchoxy[2]]
+    x1cho<-donChol_transco[,input$varchoxy[1]]
+    x2cho<-donChol_transco[,input$varchoxy[2]]
     
     if (input$idgraphtypecho==1) {
-      g<-qplot(x=x1cho,y=x2cho,data=donChol,color=donChol$Y,geom="point")+scale_color_manual(values=c("green","red"))+
+      g<-qplot(x=x1cho,y=x2cho,data=donChol_transco,color=donChol$Y,geom="point")+scale_color_manual(values=c("green","red"))+
         xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
       ggplotly(g)
     } else {
       if (input$idgraphtypecho==2) {
         
-        g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_boxplot()+
+        g<-ggplot(data=donChol_transco,aes(x=x1cho,y=x2cho))+geom_boxplot()+
           xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
         ggplotly(g) } else {
           
           if (input$idgraphtypecho==3) {
-            g<-ggplot(data=donChol,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
+            g<-ggplot(data=donChol_transco,aes(x=x1cho,y=x2cho))+geom_bin2d()+scale_fill_gradient(low="yellow",high="red")+
               xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
             ggplotly(g)}}}
     

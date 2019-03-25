@@ -59,36 +59,40 @@ donChol$SLQ050_slq <- as.factor(donChol$SLQ050_slq)
 #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
 donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
 
-
-# #RIDSTATR_demo  : Factor w/ 1 level "2": 1
-# #donChol$RIDSTATR_demo <- as.factor(don$RIDSTATR_demo)
-# donChol$"Gender" <- as.factor(donChol$"Gender")
-# #donChol$INDHHIN2_demo <- as.factor(donChol$INDHHIN2_demo) #contexte
-# #donChol$INDFMIN2_demo <- as.factor(donChol$INDFMIN2_demo) #contexte
-# donChol$"Ever told you had high blood pressure" <- as.factor(donChol$"Ever told you had high blood pressure")
-# donChol$"Doctor told you have diabetes" <- as.factor(donChol$"Doctor told you have diabetes")
-# donChol$"Ever told you have Hepatitis B?" <- as.factor(donChol$"Ever told you have Hepatitis B?")
-# donChol$"Ever told you have Hepatitis C?" <- as.factor(donChol$"Ever told you have Hepatitis C?")
-# donChol$"Home owned, bought, rented, other" <- as.factor(donChol$"Home owned, bought, rented, other")
-# donChol$"Covered by health insurance" <- as.factor(donChol$"Covered by health insurance")
-# #donChol$IMQ020_imq <- as.factor(donChol$IMQ020_imq)
-# #donChol$IMQ011_imq <- as.factor(donChol$IMQ011_imq)
-# donChol$"Ever been told you have asthma" <- as.factor(donChol$"Ever been told you have asthma")
-# donChol$"Doctor ever said you were overweight" <- as.factor(donChol$"Doctor ever said you were overweight")
-# donChol$"Overall recommendation for care" <- as.factor(donChol$"Overall recommendation for care")
-# donChol$"Vigorous work activity" <- as.factor(donChol$"Vigorous work activity")
-# donChol$"Moderate work activity" <- as.factor(donChol$"Moderate work activity")
-# donChol$"Walk or bicycle" <- as.factor(donChol$"Walk or bicycle")
-# donChol$"Vigorous recreational activities" <- as.factor(donChol$"Vigorous recreational activities")
-# donChol$"Moderate recreational activities" <- as.factor(donChol$"Moderate recreational activities")
-# donChol$"Ever told doctor had trouble sleeping?" <- as.factor(donChol$"Ever told doctor had trouble sleeping?")
-# #DRABF_dr1tot   : Factor w/ 1 level "2": 1
-# #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
-# donChol$"On special diet?" <- as.factor(donChol$"On special diet?")
-
-donChol_transco <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)
-#donChol_transco<-donChol
-#names(donDia_transco)<-c("")
+donChol_cor <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)
+donChol_transco<-donChol
+names(donChol_transco)<-c("Interview_Examination_status", "Gender", "Age_in_years_at_screening",
+  "Total_number_of_people_in_the_Household", "Total.number.of.people.in.the.Family",
+  "Annual.household.income", "Annual.family.income", "Ratio.of.family.income.to.poverty",
+  "Weight..kg.", "Standing.Height..cm.", "Body.Mass.Index..kg.m..2.",
+  "Ever.told.you.had.high.blood.pressure", "Systolic..Blood.pres..1st.rdg..mm.Hg",
+  "Diastolic..Blood.pres..1st.rdg..mm.Hg", "Systolic..Blood.pres..2nd.rdg..mm.Hg",
+  "Diastolic..Blood.pres..2nd.rdg..mm.Hg", "Systolic..Blood.pres..3rd.rdg..mm.Hg",
+  "Diastolic..Blood.pres..3rd.rdg..mm.Hg", "Doctor.told.you.have.diabetes",
+  "Ever.told.you.have.Hepatitis.B.", "Ever.told.you.have.Hepatitis.C.",
+  "Covered.by.health.insurance", "Number.of.rooms.in.home", "Home.owned..bought..rented..other",
+  "Ever.been.told.you.have.asthma", "Doctor.ever.said.you.were.overweight",
+  "Overall.recommendation.for.care", "Vigorous.work.activity",
+  "Moderate.work.activity", "Walk.or.bicycle", "Vigorous.recreational.activities",
+  "Moderate.recreational.activities", "Minutes.sedentary.activity",
+  "Sleep.hours", "Ever.told.doctor.had.trouble.sleeping.", "Energy..kcal.",
+  "Protein..gm.", "Carbohydrate..gm.", "Total.sugars..gm.", "Dietary.fiber..gm.",
+  "Total.fat..gm.", "Total.saturated.fatty.acids..gm.", "Total.monounsaturated.fatty.acids..gm.",
+  "Total.polyunsaturated.fatty.acids..gm.", "Cholesterol..mg.",
+  "Vitamin.E.as.alpha.tocopherol..mg.", "Added.alpha.tocopherol..Vitamin.E...mg.",
+  "Retinol..mcg.", "Vitamin.A..RAE..mcg.", "Alpha.carotene..mcg.",
+  "Beta.carotene..mcg.", "cryptoxanthin..mcg.", "Lycopene..mcg.",
+  "Lutein...zeaxanthin..mcg.", "Thiamin..Vitamin.B1...mg.", "Riboflavin..Vitamin.B2...mg.",
+  "Niacin..mg.", "Vitamin.B6..mg.", "Total.folate..mcg.", "Folic.acid..mcg.",
+  "Food.folate..mcg.", "Folate..DFE..mcg.", "Total.choline..mg.",
+  "Vitamin.B12..mcg.", "Added.vitamin.B12..mcg.", "Vitamin.C..mg.",
+  "Vitamin.D..D2...D3...mcg.", "Vitamin.K..mcg.", "Calcium..mg.",
+  "Phosphorus..mg.", "Magnesium..mg.", "Iron..mg.", "Zinc..mg.",
+  "Copper..mg.", "Sodium..mg.", "Potassium..mg.", "Selenium..mcg.",
+  "Caffeine..mg.", "Theobromine..mg.", "Alcohol..gm.", "Moisture..gm.",
+  "Total.plain.water.drank.yesterday..gm.", "Breast.fed.infant..either.day.",
+  "Number.of.days.of.intake", "On.special.diet.", "Var_TRAVAIL",
+  "Var_COFUMEUR", "Var_ARGENTALIM", "Y")
 
 #Conversion en facteurs de variables diabete
 donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
@@ -151,6 +155,7 @@ donHyp$Y<-factor(donHyp$Y,levels=c(0,1),labels=c("Sains","Malades"))
 #donChol$Y <- as.numeric(donChol$Y) #si jamais
 #donChol$Y <- as.factor(donChol$Y)
 donChol$Y<-factor(donChol$Y,levels=c(0,1),labels=c("Sains","Malades"))
+donChol_transco$Y<-factor(donChol_transco$Y,levels=c(0,1),labels=c("Sains","Malades"))
 
 #levels(donDiab$Y) <- c(0,1)#pas besoin pour diabete, Y=DIQ010_diq est déjà 0/1 en integer
 
@@ -241,7 +246,7 @@ Mdiacor<-cor(Xcordia)
 
 #Xcorchol<-model.matrix(~.-1,data=donChol_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
 #Xcorchol<- donChol_transco[-c(13)]
-Xcorchol<-model.matrix(~.-1,data=donChol_transco[-c(13)])
+Xcorchol<-model.matrix(~.-1,data=donChol_cor[-c(13)])
 
 Mcholcor<-cor(Xcorchol)
 

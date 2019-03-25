@@ -170,7 +170,7 @@ tabPanel(
              wellPanel(p(span(strong("Cholestérol", style = "color:blue"))),
                        
                        selectInput(inputId = "varchox", label = "Table et Graphique 1",
-                                   choices=colnames(donChol[,-1]),selected=colnames(donChol[,-1])[2]),br(),
+                                   choices=colnames(donChol_transco),selected=colnames(donChol_transco)[2]),br(),
                        
                        # pickerInput(
                        #   "varchoxy",
@@ -184,7 +184,7 @@ tabPanel(
                        #   )
                        # ),
                        selectInput(inputId = "varchoxy", label = "Graphique 2",
-                                   choices=colnames(donChol[,-1]),selected=colnames(donChol[, c(3,28)]),multiple=TRUE),
+                                   choices=colnames(donChol_transco),selected=colnames(donChol_transco[, c(3,28)]),multiple=TRUE),
                        radioButtons(inputId = "idgraphtypecho", label = "Type Graphique 2", selected = 3,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
