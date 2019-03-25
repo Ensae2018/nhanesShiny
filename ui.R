@@ -541,13 +541,28 @@ tabPanel(
                                             value = 2,
                                             min = 0,
                                             max = 5
-                                          )),
+                                          ),
+                                    
+                                    radioButtons(inputId = "activite", label = "Avez-vous une activite physique", selected = "oui",
+                                                 choices = c("Oui" = "oui", "Non" = "non"))
+                                    
+                                    ),
                                    br(),
                                    
                                    div(class = "option-group",
                                      div(class = "option-header", "Alimentation"),
                                      
                                      
+                                     
+                                     helpText ("faible~100, moyen~1900, élevé~9000"),
+                                     numericInput(
+                                       inputId = "calorie",
+                                       label = "Consommation en calories (kcal)",
+                                       value = 1900,
+                                       min = 0,
+                                       max = 10000,
+                                       step = 100
+                                     ),
                                      helpText ("faible~57, moyen~88, élevé~128"),
                                      numericInput(
                                        inputId = "sucre",
@@ -566,33 +581,42 @@ tabPanel(
                                        max = 2000,
                                        step = 10
                                      ),
-                                     helpText ("faible~55, moyen~73, élevé~97"),
+                                     helpText ("faible~5, moyen~220, élevé~1300"),
                                      numericInput(
-                                       inputId = "proteines",
-                                       label = "Consommation en protéines (mg)",
-                                       value = 79,
+                                       inputId = "carbo",
+                                       label = "Consommation en carbonhydrate (mg)",
+                                       value = 220,
+                                       min = 0,
+                                       max = 1300,
+                                       step = 50
+                                     ),
+                                     helpText ("faible~4, moyen~70, élevé~400"),
+                                     numericInput(
+                                       inputId = "graisse",
+                                       label = "Consommation en graisses (mg)",
+                                       value = 70,
                                        min = 0,
                                        max = 500,
                                        step = 10
                                      ),
-                                     helpText ("faible~8, moyen~12, élevé~16"),
-                                     numericInput(
-                                       inputId = "fer",
-                                       label = "Consommation en fer (mg)",
-                                       value = 13,
-                                       min = 0,
-                                       max = 100,
-                                       step = 10
-                                     ),
-                                     helpText ("faible~19, moyen~81, élevé~177"),
-                                     numericInput(
-                                       inputId = "cafeine",
-                                       label = "Consommation en caféine (mg)",
-                                       value = 128,
-                                       min = 0,
-                                       max = 5000,
-                                       step = 10
-                                     ),
+                                     # helpText ("faible~8, moyen~12, élevé~16"),
+                                     # numericInput(
+                                     #   inputId = "fer",
+                                     #   label = "Consommation en graisses (mg)",
+                                     #   value = 13,
+                                     #   min = 0,
+                                     #   max = 100,
+                                     #   step = 10
+                                     # ),
+                                     # helpText ("faible~19, moyen~81, élevé~177"),
+                                     # numericInput(
+                                     #   inputId = "cafeine",
+                                     #   label = "Consommation en caféine (mg)",
+                                     #   value = 128,
+                                     #   min = 0,
+                                     #   max = 5000,
+                                     #   step = 10
+                                     # ),
                                      #finalement pas besoin
                                      # helpText ("faible~26, moyen~57, élevé~108"),
                                      # numericInput(
@@ -792,15 +816,15 @@ tabPanel(
                                             max = 20000,
                                             step = 10
                                           ),
-                                          helpText ("faible~?, moyen~?, élevé~?"),
-                                          numericInput(
-                                            inputId = "alcool",
-                                            label = "Consommation d'alcool(g)",
-                                            value = 8,
-                                            min = 0,
-                                            max = 500,
-                                            step = 2
-                                          ),
+                                          # helpText ("faible~?, moyen~?, élevé~?"),
+                                          # numericInput(
+                                          #   inputId = "alcool",
+                                          #   label = "Consommation d'alcool(g)",
+                                          #   value = 8,
+                                          #   min = 0,
+                                          #   max = 500,
+                                          #   step = 2
+                                          # ),
                                           helpText ("faible~900, moyen~1200, élevé~1600"),
                                           numericInput(
                                             inputId = "phosphorus",
@@ -962,12 +986,11 @@ tabPanel(
                                            #  pression_dia,
                                            #  waterdrank,
                                            #  humidite,
-                                           #  alcool,
+                                           #  calories,
                                            #  sucre,
-                                           #  choles,
-                                           #  proteines,
-                                           #  fer,
-                                           #  cafeine"), align = "left"
+                                           #  carbonhydrate
+                                           #  graisses,
+                                           #  choles"), align = "left"
                                         ))
                                   
                                 )

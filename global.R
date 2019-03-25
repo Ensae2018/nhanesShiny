@@ -203,21 +203,23 @@ coefcho<-data.frame(Variable=rownames(summary(modChol)$coefficients),Estimate=su
 donDiapred<-donDia
 donDiapred<-donDia[,-1]
 donDiapred$DIQ010_diq<-as.numeric(donDiapred$DIQ010_diq)-1
+
 modDiab <- glm(DIQ010_diq~RIDAGEYR_demo+
-                 DR1TSUGR_dr1tot+
                  BPQ080_bpq+
                  MCQ080_mcq+
-                 BPQ020_bpq + 
-                 DR1TALCO_dr1tot+
+                 BPQ020_bpq+
+                 DR1TSUGR_dr1tot+
+                 DR1TKCAL_dr1tot+
+                 DR1TCARB_dr1tot+
+                 DR1TTFAT_dr1tot+
                  DR1TMOIS_dr1tot+
-                 RIAGENDR_demo+
-                 DR1.320Z_dr1tot+
-                 DR1TCHOL_dr1tot+
-                 DR1TPROT_dr1tot+
                  INDFMPIR_demo+
-                 DR1TIRON_dr1tot+
+                 RIAGENDR_demo+
+                 DR1TCHOL_dr1tot+
+                 DR1.320Z_dr1tot+
                  Var_TENSIONDI+
-                 DR1TCAFF_dr1tot,data=donDiapred,family="binomial")
+                 Var_ACTIVITE,
+               data=donDiapred,family="binomial")
 
 #onglet coefficients pour visualiser les coefficnets de la logistique
 coefdia<-data.frame(Variable=rownames(summary(modDiab)$coefficients),Estimate=summary(modDiab)$coefficients[,1],

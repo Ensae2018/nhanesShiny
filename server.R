@@ -23,7 +23,7 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$idCheckDiab==TRUE, {
-    output$valueDiab <- renderText({ paste0("sexe,age,pauvretefamille,cholesterol,risquehypertension,surpoids,pression_dia,waterdrank,humidite,alcool,sucre,choles,proteines,fer,cafeine")})
+    output$valueDiab <- renderText({ paste0("sexe,age,pauvretefamille,cholesterol,risquehypertension,surpoids,pression_dia,waterdrank,eau dans les aliments,calories,sucre,graisse,carbonhydrate,conso cholesterol,activite")})
   })
   
   
@@ -124,34 +124,34 @@ shinyServer(function(input, output, session) {
       #updateNumericInput(session,inputId="foodfolate",value = sample(20:266,1))
       updateNumericInput(session,inputId="waterdrank",value = sample(200:1600,1))
       updateNumericInput(session,inputId="humidite",value = sample(600:3400,1))
-      updateNumericInput(session,inputId="alcool",value = sample(2:200,1))
+      #updateNumericInput(session,inputId="alcool",value = sample(2:200,1))
       updateNumericInput(session,inputId="phosphorus",value = sample(100:1600,1))
       updateNumericInput(session,inputId="sodium",value = sample(1000:4000,1))
       updateNumericInput(session,inputId="sucre",value = sample(10:128,1))
       updateNumericInput(session,inputId="choles",value = sample(100:390,1))
-      updateNumericInput(session,inputId="proteines",value = sample(10:97,1))
-      updateNumericInput(session,inputId="fer",value = sample(4:16,1))
-      updateNumericInput(session,inputId="cafeine",value = sample(20:177,1))
+      # updateNumericInput(session,inputId="proteines",value = sample(10:97,1))
+      # updateNumericInput(session,inputId="fer",value = sample(4:16,1))
+      # updateNumericInput(session,inputId="cafeine",value = sample(20:177,1))
       #updateNumericInput(session,inputId="vitamineC",value = sample(20:108,1))
       #updateNumericInput(session,inputId="LuteineZeaxanthine",value = sample(100:1462,1))
       #updateNumericInput(session,inputId="vitB6",value = sample(10:108,1))                        #33 pour Chol
       updateNumericInput(session,inputId="vitB6",value = 33)                        #33 pour Chol
       #updateNumericInput(session,inputId="vitB12",value = sample(10:108,1))                       #99 pour Chol
       updateNumericInput(session,inputId="vitB12",value = 99)                       #99 pour Chol
-      
+      updateRadioButtons(session,inputId="activite",choices = c("Oui" = "actif", "Non" = "inactif"),
+                         selected = "actif")
     }
     if (input$typepatient=="Profil à l'instar de Sharon Stone") { #PROBLEME DIABETES
 
       updateSelectInput(session,inputId="sexe",selected = "Female",
                         choices = c("M" = "Male", "F" = "Female"))
       updateNumericInput(session,inputId="age",value = 61)
-      #updateRadioButtons(session,inputId="marchevelodixmin",selected = "No",
-      #                   choices = c("Oui" = "Yes", "Non" = "No"))
-      updateRadioButtons(session,inputId="travail",selected = "Oui",
+      
+      updateRadioButtons(session,inputId="travail",selected = "oui",
                          choices = c("Oui" = "oui", "Non" = "non"))
-      #updateNumericInput(session,inputId="piecesmaison",value = 6)
+      
       updateNumericInput(session,inputId="pauvretefamille",value = 5)
-      updateRadioButtons(session,inputId="trouble_sommeil",selected = "Yes",
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="cholesterol",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
@@ -164,31 +164,30 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session,inputId="hauteur",value = 174)
       updateNumericInput(session,inputId="poids",value = 57)
       updateNumericInput(session,inputId="bmi",value = 18.8)
-      updateNumericInput(session,inputId="pression_sys",value = 80)
-      updateNumericInput(session,inputId="pression_dia",value = 40)
-      #updateRadioButtons(session,inputId="dentaire",
-      #                   choices = c("Continuez comme ça" = 4, "N'hésitez pas à visiter un dentiste" = 3, 
-      #                               "Visitez un dentiste dans les 2 semaines prochaines" = 2, "Visitez un dentiste immédiatement" = 1),
-      #                   selected = 4)
+      updateNumericInput(session,inputId="pression_sys",value = 120)
+      updateNumericInput(session,inputId="pression_dia",value = 70)
+      
       updateRadioButtons(session,inputId="diete",choices = c("Oui" = 1, "Non" = 2),
                          selected = 2)
       updateNumericInput(session,inputId="fibre",value = 22)
-      #updateNumericInput(session,inputId="foodfolate",value = 266)
-      updateNumericInput(session,inputId="waterdrank",value = 1600)
-      updateNumericInput(session,inputId="humidite",value = 3400)
-      updateNumericInput(session,inputId="alcool",value = 500)
-      updateNumericInput(session,inputId="phosphorus",value = 1600)
-      updateNumericInput(session,inputId="sodium",value = 4000)
-      updateNumericInput(session,inputId="sucre",value = 128)
-      updateNumericInput(session,inputId="choles",value = 390)
-      updateNumericInput(session,inputId="proteines",value = 97)
-      updateNumericInput(session,inputId="fer",value = 16)
-      updateNumericInput(session,inputId="cafeine",value = 177)
-      #updateNumericInput(session,inputId="vitamineC",value = 108)
-      #updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
-      updateNumericInput(session,inputId="vitB6",value = 33)                    #33 pour Chol
-      updateNumericInput(session,inputId="vitB12",value = 108)
-
+      
+      updateNumericInput(session,inputId="waterdrank",value = 900)
+      updateNumericInput(session,inputId="humidite",value = 2500)
+      
+      updateNumericInput(session,inputId="phosphorus",value = 1200)
+      updateNumericInput(session,inputId="sodium",value = 3000)
+      updateNumericInput(session,inputId="sucre",value = 50)
+      updateNumericInput(session,inputId="choles",value = 250)
+      
+      updateNumericInput(session,inputId="vitB6",value = 57)                    #33 pour Chol
+      updateNumericInput(session,inputId="vitB12",value = 57)
+      updateNumericInput(session,inputId="calorie",value = 1500) 
+      updateNumericInput(session,inputId="carbo",value = 220) 
+      updateNumericInput(session,inputId="graisse",value = 100) 
+      updateRadioButtons(session,inputId="activite",choices = c("Oui" = "actif", "Non" = "inactif"),
+                         selected = "actif")
+      
+      
     }
     if (input$typepatient=="Profil à l'instar de David Hasselhoff") { #PROBLEME HYPERTENSION et CHOLESTEROL
       
@@ -226,19 +225,20 @@ shinyServer(function(input, output, session) {
       #updateNumericInput(session,inputId="foodfolate",value = 900)
       updateNumericInput(session,inputId="waterdrank",value = 2500)
       updateNumericInput(session,inputId="humidite",value = 3400)
-      updateNumericInput(session,inputId="alcool",value = 1600)
+      #updateNumericInput(session,inputId="alcool",value = 1600)
       updateNumericInput(session,inputId="phosphorus",value = 1200)
       updateNumericInput(session,inputId="sodium",value = 3150)
       updateNumericInput(session,inputId="sucre",value = 250)
       updateNumericInput(session,inputId="choles",value = 390)
-      updateNumericInput(session,inputId="proteines",value = 97)
-      updateNumericInput(session,inputId="fer",value = 16)
-      updateNumericInput(session,inputId="cafeine",value = 177)
+      # updateNumericInput(session,inputId="proteines",value = 97)
+      # updateNumericInput(session,inputId="fer",value = 16)
+      # updateNumericInput(session,inputId="cafeine",value = 177)
       #updateNumericInput(session,inputId="vitamineC",value = 108)
       #updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
       updateNumericInput(session,inputId="vitB6",value = 70)                    #33 pour annuler Chol
       updateNumericInput(session,inputId="vitB12",value = 108)
-      
+      updateRadioButtons(session,inputId="activite",choices = c("Oui" = "actif", "Non" = "inactif"),
+                         selected = "actif")
     }
     
     if (input$typepatient=="Profil à l'instar de Michael Phelps") { #AUCUN PROBLEME (TRES SPORTIF)
@@ -277,19 +277,20 @@ shinyServer(function(input, output, session) {
       #updateNumericInput(session,inputId="foodfolate",value = 266)
       updateNumericInput(session,inputId="waterdrank",value = 1600)
       updateNumericInput(session,inputId="humidite",value = 3400)
-      updateNumericInput(session,inputId="alcool",value = 100)
+      #updateNumericInput(session,inputId="alcool",value = 100)
       updateNumericInput(session,inputId="phosphorus",value = 1200)
       updateNumericInput(session,inputId="sodium",value = 3150)
       updateNumericInput(session,inputId="sucre",value = 120)
       updateNumericInput(session,inputId="choles",value = 250)
-      updateNumericInput(session,inputId="proteines",value = 97)
-      updateNumericInput(session,inputId="fer",value = 16)
-      updateNumericInput(session,inputId="cafeine",value = 57)
+      # updateNumericInput(session,inputId="proteines",value = 97)
+      # updateNumericInput(session,inputId="fer",value = 16)
+      # updateNumericInput(session,inputId="cafeine",value = 57)
       #updateNumericInput(session,inputId="vitamineC",value = 108)
       #updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
       updateNumericInput(session,inputId="vitB6",value = 55)
       updateNumericInput(session,inputId="vitB12",value = 108)
-      
+      updateRadioButtons(session,inputId="activite",choices = c("Oui" = "actif", "Non" = "inactif"),
+                         selected = "actif")
     }
     
     output$im_profil <- renderImage({
@@ -368,22 +369,24 @@ shinyServer(function(input, output, session) {
       ifelse(tempoChol()$fit>seuil_chol,"Cholesterol: Danger!!","Cholesterol: :-D")
     })
     
-    tempoDiab <- reactive({predict(modDiab,data.frame(RIDAGEYR_demo=input$age,
-                                            DR1TSUGR_dr1tot=input$sucre,
+    tempoDiab <- reactive({predict(modDiab,
+                                   data.frame(RIDAGEYR_demo=input$age,
                                             BPQ080_bpq=ifelse(input$cholesterol=="Yes",c("1"),c("2")),
                                             MCQ080_mcq=ifelse(input$surpoids=="Yes",c("1"),c("2")),
                                             BPQ020_bpq=ifelse(input$risquehypertension==1,c("1"),c("2")), 
-                                            DR1TALCO_dr1tot=input$alcool,
+                                            DR1TSUGR_dr1tot=input$sucre,
+                                            DR1TKCAL_dr1tot=input$calorie,
+                                            DR1TCARB_dr1tot=input$carbo,
+                                            DR1TTFAT_dr1tot=input$graisse,
                                             DR1TMOIS_dr1tot=input$humidite,
-                                            RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
-                                            DR1.320Z_dr1tot=input$waterdrank,
-                                            DR1TCHOL_dr1tot=input$choles,
-                                            DR1TPROT_dr1tot=input$proteines,
                                             INDFMPIR_demo=input$pauvretefamille,
-                                            DR1TIRON_dr1tot=input$fer,
+                                            RIAGENDR_demo=ifelse(input$sexe=="Male",c("1"),c("2")),
+                                            DR1TCHOL_dr1tot=input$choles,
+                                            DR1.320Z_dr1tot=input$waterdrank,
                                             Var_TENSIONDI=input$pression_dia,
-                                            DR1TCAFF_dr1tot=input$cafeine
-    ),type="response",se.fit = T)})
+                                            Var_ACTIVITE=input$activite),
+                                            type="response",se.fit = T)})
+     
     
     output$resultat_diabetes <- renderText({
       paste0("Proba: ",round(tempoDiab()$fit,3),"  IT: ", round(tempoDiab()$fit-1.96*tempoDiab()$se.fit,3),
