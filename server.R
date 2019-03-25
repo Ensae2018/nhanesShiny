@@ -846,6 +846,8 @@ shinyServer(function(input, output, session) {
   
   
   output$Mdiagraph <- renderPlot({corrplot(Mdiacor)})
+  output$Mcholgraph <- renderPlot({corrplot(Mcholcor)})
+  output$Mhypgraph <- renderPlot({corrplot(Mhypcor)})
   
   #=================================
   #Graphiques pour l'onglet CONTEXTE

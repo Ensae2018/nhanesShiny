@@ -21,6 +21,8 @@ library(corrplot)#matrices de correlation
 # on importe les donnees necessaire pour le projet
 donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hypertension transcodifie et avec imputation mice
 
+donHyp_transco<-donHyp
+
 # on importe les donnees necessaire pour le projet
 donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 # A TRAITER
@@ -83,6 +85,10 @@ donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
 # #DRABF_dr1tot   : Factor w/ 1 level "2": 1
 # #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
 # donChol$"On special diet?" <- as.factor(donChol$"On special diet?")
+
+donChol_transco <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)
+#donChol_transco<-donChol
+#names(donDia_transco)<-c("")
 
 #Conversion en facteurs de variables diabete
 donDia$RIAGENDR_demo<-factor(donDia$RIAGENDR_demo)
@@ -232,6 +238,16 @@ coefdia<-data.frame(Variable=rownames(summary(modDiab)$coefficients),Estimate=su
 Xcordia<-model.matrix(~.-1,data=donDia_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
 
 Mdiacor<-cor(Xcordia)
+
+#Xcorchol<-model.matrix(~.-1,data=donChol_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
+#Xcorchol<- donChol_transco[-c(13)]
+Xcorchol<-model.matrix(~.-1,data=donChol_transco[-c(13)])
+
+Mcholcor<-cor(Xcorchol)
+
+Xcorhyp<-model.matrix(~.-1,data=donHyp_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
+ 
+Mhypcor<-cor(Xcorhyp)
 
 
 # Le résulatat de comparaison des méthodes de prédiction Hypertension
