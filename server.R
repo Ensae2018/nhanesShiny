@@ -190,7 +190,7 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session,inputId="vitB12",value = 108)
 
     }
-    if (input$typepatient=="Profil à l'instar de David Hasselhoff") { #PROBLEME HYPERTENSION
+    if (input$typepatient=="Profil à l'instar de David Hasselhoff") { #PROBLEME HYPERTENSION et CHOLESTEROL
       
       updateSelectInput(session,inputId="sexe",selected = "Male",
                         choices = c("M" = "Male", "F" = "Female"))
@@ -236,35 +236,35 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session,inputId="cafeine",value = 177)
       #updateNumericInput(session,inputId="vitamineC",value = 108)
       #updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
-      updateNumericInput(session,inputId="vitB6",value = 33)                    #33 pour Chol
+      updateNumericInput(session,inputId="vitB6",value = 70)                    #33 pour annuler Chol
       updateNumericInput(session,inputId="vitB12",value = 108)
       
     }
     
-    if (input$typepatient=="Profil à l'instar de Michael Phelps") { #PROBLEME CHOLESTEROL
+    if (input$typepatient=="Profil à l'instar de Michael Phelps") { #AUCUN PROBLEME (TRES SPORTIF)
       
       updateSelectInput(session,inputId="sexe",selected = "Male",
                         choices = c("M" = "Male", "F" = "Female"))
-      updateNumericInput(session,inputId="age",value = 48)
+      updateNumericInput(session,inputId="age",value = 33)
       #updateRadioButtons(session,inputId="marchevelodixmin",selected = "Yes",
       #                   choices = c("Oui" = "Yes", "Non" = "No"))
-      updateRadioButtons(session,inputId="travail",selected = "oui",
+      updateRadioButtons(session,inputId="travail",selected = "non",
                          choices = c("Oui" = "oui", "Non" = "non"))
       #updateNumericInput(session,inputId="piecesmaison",value = 6)
       updateNumericInput(session,inputId="pauvretefamille",value = 5)
-      updateRadioButtons(session,inputId="trouble_sommeil",selected = "Yes",
+      updateRadioButtons(session,inputId="trouble_sommeil",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="cholesterol",selected = "No",
                          choices = c("Oui" = "Yes", "Non" = "No"))
       updateRadioButtons(session,inputId="risquehypertension",choices = c("Oui" = 1, "Non" = 2),
-                         selected = 1)
+                         selected = 2)
       updateRadioButtons(session,inputId="risquediabete",choices = c("Oui" = 1, "Non" = 2),
-                         selected = 1)
+                         selected = 2)
       updateRadioButtons(session,inputId="surpoids",choices = c("Oui" = "Yes", "Non" = "No"),
-                         selected = "Yes")
-      updateNumericInput(session,inputId="hauteur",value = 164)
-      updateNumericInput(session,inputId="poids",value = 94)
-      #updateNumericInput(session,inputId="bmi",value = 24.2)
+                         selected = "No")
+      updateNumericInput(session,inputId="hauteur",value = 193)
+      updateNumericInput(session,inputId="poids",value = 90)
+      updateNumericInput(session,inputId="bmi",value = 24.2)
       updateNumericInput(session,inputId="pression_sys",value = 120)
       updateNumericInput(session,inputId="pression_dia",value = 80)
       #updateRadioButtons(session,inputId="dentaire",
@@ -287,7 +287,7 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session,inputId="cafeine",value = 57)
       #updateNumericInput(session,inputId="vitamineC",value = 108)
       #updateNumericInput(session,inputId="LuteineZeaxanthine",value = 1462)
-      updateNumericInput(session,inputId="vitB6",value = 108)
+      updateNumericInput(session,inputId="vitB6",value = 55)
       updateNumericInput(session,inputId="vitB12",value = 108)
       
     }

@@ -24,7 +24,7 @@ donHyp <- read.csv("data/nhanes_hyper_mice.csv", row.names = 1)# donnee hyperten
 donChol <- read.csv("data/nhanes_chol_mice_finale.csv", row.names = 1)# donnee cholesterol transcodifie et avec imputation mice
 # A TRAITER
 #don2Chol <- read.csv("data/nhanes_chol_mice_finale_transco.csv", header=T, sep=";", dec=".", row.names = 1)
-str(donChol)
+#str(donChol)
 
 # on importe les donnees necessaire pour le projet: partie diabete
 donDia <- read.csv2("data/nhanes_dia_avant_transco.csv", sep=",",dec=".",row.names = 1)# donnee diabete transcodifie et avec imputation mice
@@ -55,6 +55,7 @@ donChol$SLQ050_slq <- as.factor(donChol$SLQ050_slq)
 #DRABF_dr1tot   : Factor w/ 1 level "2": 1
 #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
 donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
+
 
 # #RIDSTATR_demo  : Factor w/ 1 level "2": 1
 # #donChol$RIDSTATR_demo <- as.factor(don$RIDSTATR_demo)

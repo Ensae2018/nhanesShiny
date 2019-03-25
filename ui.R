@@ -533,7 +533,96 @@ tabPanel(
                                             value = 2,
                                             min = 0,
                                             max = 5
-                                          )
+                                          )),
+                                   br(),
+                                   
+                                   div(class = "option-group",
+                                     div(class = "option-header", "Alimentation"),
+                                     
+                                     
+                                     helpText ("faible~57, moyen~88, élevé~128"),
+                                     numericInput(
+                                       inputId = "sucre",
+                                       label = "Consommation en sucre (mg)",
+                                       value = 100,
+                                       min = 0,
+                                       max = 1000,
+                                       step = 10
+                                     ),
+                                     helpText ("faible~155, moyen~250, élevé~390"),
+                                     numericInput(
+                                       inputId = "choles",
+                                       label = "Consommation en cholestérol (mg)",
+                                       value = 290,
+                                       min = 0,
+                                       max = 2000,
+                                       step = 10
+                                     ),
+                                     helpText ("faible~55, moyen~73, élevé~97"),
+                                     numericInput(
+                                       inputId = "proteines",
+                                       label = "Consommation en protéines (mg)",
+                                       value = 79,
+                                       min = 0,
+                                       max = 500,
+                                       step = 10
+                                     ),
+                                     helpText ("faible~8, moyen~12, élevé~16"),
+                                     numericInput(
+                                       inputId = "fer",
+                                       label = "Consommation en fer (mg)",
+                                       value = 13,
+                                       min = 0,
+                                       max = 100,
+                                       step = 10
+                                     ),
+                                     helpText ("faible~19, moyen~81, élevé~177"),
+                                     numericInput(
+                                       inputId = "cafeine",
+                                       label = "Consommation en caféine (mg)",
+                                       value = 128,
+                                       min = 0,
+                                       max = 5000,
+                                       step = 10
+                                     ),
+                                     #finalement pas besoin
+                                     # helpText ("faible~26, moyen~57, élevé~108"),
+                                     # numericInput(
+                                     #   inputId = "vitamineC",
+                                     #   label = "Consommation en vitamine C (mg)",
+                                     #   value = 79,
+                                     #   min = 0,
+                                     #   max = 1000,
+                                     #   step = 10
+                                     # ),
+                                     #finalement pas besoin
+                                     # helpText ("faible~418, moyen~778, élevé~1462"),
+                                     # numericInput(
+                                     #   inputId = "LuteineZeaxanthine",
+                                     #   label = "Consommation en Lutéine et Zéaxanthine (mg)",
+                                     #   value = 1550,
+                                     #   min = 0,
+                                     #   max = 80000,
+                                     #   step = 10
+                                     # ),
+                                     helpText ("faible~26, moyen~57, élevé~108"),
+                                     numericInput(
+                                       inputId = "vitB6",
+                                       label = "Consommation en vitamine B6 (mg)",
+                                       value = 79,
+                                       min = 0,
+                                       max = 1000,
+                                       step = 10
+                                     ),
+                                     helpText ("faible~26, moyen~57, élevé~108"),
+                                     numericInput(
+                                       inputId = "vitB12",
+                                       label = "Consommation en vitamine B12 (mg)",
+                                       value = 79,
+                                       min = 0,
+                                       max = 1000,
+                                       step = 10
+                                     )
                                     )),
                                     
                               
@@ -720,90 +809,6 @@ tabPanel(
                                             value = 3350,
                                             min = 80,
                                             max = 20000,
-                                            step = 10
-                                          ),
-                                          helpText ("faible~57, moyen~88, élevé~128"),
-                                          numericInput(
-                                            inputId = "sucre",
-                                            label = "Consommation en sucre (mg)",
-                                            value = 100,
-                                            min = 0,
-                                            max = 1000,
-                                            step = 10
-                                          ),
-                                          
-                                          helpText ("faible~155, moyen~250, élevé~390"),
-                                          numericInput(
-                                            inputId = "choles",
-                                            label = "Consommation en cholestérol (mg)",
-                                            value = 290,
-                                            min = 0,
-                                            max = 2000,
-                                            step = 10
-                                          ),
-                                          helpText ("faible~55, moyen~73, élevé~97"),
-                                          numericInput(
-                                            inputId = "proteines",
-                                            label = "Consommation en protéines (mg)",
-                                            value = 79,
-                                            min = 0,
-                                            max = 500,
-                                            step = 10
-                                          ),
-                                          helpText ("faible~8, moyen~12, élevé~16"),
-                                          numericInput(
-                                            inputId = "fer",
-                                            label = "Consommation en fer (mg)",
-                                            value = 13,
-                                            min = 0,
-                                            max = 100,
-                                            step = 10
-                                          ),
-                                          helpText ("faible~19, moyen~81, élevé~177"),
-                                          numericInput(
-                                            inputId = "cafeine",
-                                            label = "Consommation en caféine (mg)",
-                                            value = 128,
-                                            min = 0,
-                                            max = 5000,
-                                            step = 10
-                                          ),
-                                          #finalement pas besoin
-                                          # helpText ("faible~26, moyen~57, élevé~108"),
-                                          # numericInput(
-                                          #   inputId = "vitamineC",
-                                          #   label = "Consommation en vitamine C (mg)",
-                                          #   value = 79,
-                                          #   min = 0,
-                                          #   max = 1000,
-                                          #   step = 10
-                                          # ),
-                                          #finalement pas besoin
-                                          # helpText ("faible~418, moyen~778, élevé~1462"),
-                                          # numericInput(
-                                          #   inputId = "LuteineZeaxanthine",
-                                          #   label = "Consommation en Lutéine et Zéaxanthine (mg)",
-                                          #   value = 1550,
-                                          #   min = 0,
-                                          #   max = 80000,
-                                          #   step = 10
-                                          # ),
-                                          helpText ("faible~26, moyen~57, élevé~108"),
-                                          numericInput(
-                                            inputId = "vitB6",
-                                            label = "Consommation en vitamine B6 (mg)",
-                                            value = 79,
-                                            min = 0,
-                                            max = 1000,
-                                            step = 10
-                                          ),
-                                          helpText ("faible~26, moyen~57, élevé~108"),
-                                          numericInput(
-                                            inputId = "vitB12",
-                                            label = "Consommation en vitamine B12 (mg)",
-                                            value = 79,
-                                            min = 0,
-                                            max = 1000,
                                             step = 10
                                           )))
                           )),
@@ -996,7 +1001,7 @@ tabPanel(
                          br(),
                          h4("2) Modèle de régression logistique retenu pour son côté explicatif et sa méthode de sélection des variables.",align="left"),
                          br(),
-                         h4("3) Les variables de discrimination cohérent par rapport à notre recherche bibliographique sur les maladies..",align="left"),
+                         h4("3) Les variables de discrimination cohérent par rapport à notre recherche bibliographique sur les maladies.",align="left"),
                          br(),
                          h4("4) Choix du seuil de discrimination offrant le meilleur compromis de performance pour le diagnostique de dépistage. (point optimum courbe ROC)",align="left"),
                          br()),
