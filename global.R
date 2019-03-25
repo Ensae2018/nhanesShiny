@@ -229,22 +229,7 @@ coefdia<-data.frame(Variable=rownames(summary(modDiab)$coefficients),Estimate=su
                     pValue=summary(modDiab)$coefficients[,4])
 
 #matrice de correlation
-Xcordia<-model.matrix(~.-1,data=donDiapred[,c("RIDAGEYR_demo",
-                                              "BPQ080_bpq",
-                                              "MCQ080_mcq",
-                                              "BPQ020_bpq",
-                                              "DR1TSUGR_dr1tot",
-                                              "DR1TKCAL_dr1tot",
-                                              "DR1TCARB_dr1tot",
-                                              "DR1TTFAT_dr1tot",
-                                              "DR1TMOIS_dr1tot",
-                                              "INDFMPIR_demo",
-                                              "RIAGENDR_demo",
-                                              "DR1TCHOL_dr1tot",
-                                              "DR1.320Z_dr1tot",
-                                              "Var_TENSIONDI",
-                                              "Var_ACTIVITE",
-                                              "DIQ010_diq")])
+Xcordia<-model.matrix(~.-1,data=donDia_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
 
 Mdiacor<-cor(Xcordia)
 
