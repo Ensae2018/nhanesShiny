@@ -469,9 +469,14 @@ tabPanel(
   
     tabPanel("coefficients",
              fluidRow(
-               column(width=4,h1("Modèle de prédiction diabète",align="center"),wellPanel(tableOutput("coefdiatab"),align="center")),
-               column(width=4,h1("Modèle de prédiction cholestérol",align="center"),wellPanel(tableOutput("coefchotab"),align="center")),
-               column(width=4,h1("Modèle de prédiction hypertension",align="center"),wellPanel(tableOutput("coefhyptab"),align="center"))             )
+               column(width=4,h1("SUMMARY du modèle de prédiction diabète",align="center"),
+                      wellPanel(tableOutput("coefdiatab"),align="center"),
+                      h1("Matrice de corrélation",align="center"),
+                      plotOutput("Mdiagraph")),
+               column(width=4,h1("SUMMARY du modèle de prédiction cholestérol",align="center"),
+                      wellPanel(tableOutput("coefchotab"),align="center")),
+               column(width=4,h1("SUMMARY du modèle de prédiction hypertension",align="center"),
+                      wellPanel(tableOutput("coefhyptab"),align="center"))             )
     )    
     
     ), 

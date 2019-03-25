@@ -141,7 +141,7 @@ shinyServer(function(input, output, session) {
       updateRadioButtons(session,inputId="activite",choices = c("Oui" = "actif", "Non" = "inactif"),
                          selected = "actif")
     }
-    if (input$typepatient=="Profil à l'instar de Sharon Stone") { #PROBLEME DIABETES
+    if (input$typepatient=="Profil à l'instar de Sharon Stone") { #PROBLEME DIABETE
 
       updateSelectInput(session,inputId="sexe",selected = "Female",
                         choices = c("M" = "Male", "F" = "Female"))
@@ -179,8 +179,8 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session,inputId="sucre",value = 50)
       updateNumericInput(session,inputId="choles",value = 250)
       
-      updateNumericInput(session,inputId="vitB6",value = 57)                    #33 pour Chol
-      updateNumericInput(session,inputId="vitB12",value = 57)
+      updateNumericInput(session,inputId="vitB6",value = 33)                    #33 pour Chol
+      updateNumericInput(session,inputId="vitB12",value = 99)
       updateNumericInput(session,inputId="calorie",value = 1500) 
       updateNumericInput(session,inputId="carbo",value = 220) 
       updateNumericInput(session,inputId="graisse",value = 100) 
@@ -843,6 +843,9 @@ shinyServer(function(input, output, session) {
     
     coefhyp
   })
+  
+  
+  output$Mdiagraph <- renderPlot({corrplot(Mdiacor)})
   
   #=================================
   #Graphiques pour l'onglet CONTEXTE

@@ -14,6 +14,7 @@ library(pROC)#Etude courbe ROC et AUC
 library(shinyWidgets)#widgets avancés pour Shiny
 library(igraph) # des graphe type phylogenic 
 library(plotly)#graphes interactifs
+library(corrplot)#matrices de correlation
 
 #options(error=recover)
 
@@ -226,6 +227,27 @@ coefdia<-data.frame(Variable=rownames(summary(modDiab)$coefficients),Estimate=su
                     StdEr=summary(modDiab)$coefficients[,2],
                     StatTest=summary(modDiab)$coefficients[,3],
                     pValue=summary(modDiab)$coefficients[,4])
+
+#matrice de correlation
+Xcordia<-model.matrix(~.-1,data=donDiapred[,c("RIDAGEYR_demo",
+                                              "BPQ080_bpq",
+                                              "MCQ080_mcq",
+                                              "BPQ020_bpq",
+                                              "DR1TSUGR_dr1tot",
+                                              "DR1TKCAL_dr1tot",
+                                              "DR1TCARB_dr1tot",
+                                              "DR1TTFAT_dr1tot",
+                                              "DR1TMOIS_dr1tot",
+                                              "INDFMPIR_demo",
+                                              "RIAGENDR_demo",
+                                              "DR1TCHOL_dr1tot",
+                                              "DR1.320Z_dr1tot",
+                                              "Var_TENSIONDI",
+                                              "Var_ACTIVITE",
+                                              "DIQ010_diq")])
+
+Mdiacor<-cor(Xcordia)
+
 
 # Le résulatat de comparaison des méthodes de prédiction Hypertension
 res_hyp <- read.csv2("data/res_hyp.csv")
