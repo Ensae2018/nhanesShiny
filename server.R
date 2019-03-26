@@ -902,7 +902,7 @@ shinyServer(function(input, output, session) {
     } else {
       if (input$idgraphtype==2) {
         
-        g<-ggplot(data=donDia_transco,aes(x=x1dia,y=x2dia))+geom_boxplot()+
+        g<-ggplot(data=donDia_transco,aes(x=x1dia,y=x2dia,fill=x1dia))+geom_boxplot()+
           xlab(input$vardiaxy[[1]])+ylab(input$vardiaxy[[2]])
         ggplotly(g) } else {
           
@@ -960,7 +960,7 @@ shinyServer(function(input, output, session) {
     } else {
       if (input$idgraphtypehyp==2) {
         
-        g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp))+geom_boxplot()+
+        g<-ggplot(data=donHyp,aes(x=x1hyp,y=x2hyp,fill=x1hyp))+geom_boxplot()+
           xlab(input$varhypxy[[1]])+ylab(input$varhypxy[[2]])
         ggplotly(g) } else {
           
@@ -1018,7 +1018,7 @@ shinyServer(function(input, output, session) {
     } else {
       if (input$idgraphtypecho==2) {
         
-        g<-ggplot(data=donChol_transco,aes(x=x1cho,y=x2cho))+geom_boxplot()+
+        g<-ggplot(data=donChol_transco,aes(x=x1cho,y=x2cho,fill=x1cho))+geom_boxplot()+
           xlab(input$varchoxy[[1]])+ylab(input$varchoxy[[2]])
         ggplotly(g) } else {
           
