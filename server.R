@@ -834,20 +834,20 @@ shinyServer(function(input, output, session) {
   output$coefdiatab <- renderTable({
     
     coefdia
-  })
+  }, spacing="xs", bordered=T)
   output$coefchotab <- renderTable({
     
     coefcho
-  })
+  }, spacing="xs", bordered=T)
   output$coefhyptab <- renderTable({
     
     coefhyp
-  })
+  }, spacing="xs", bordered=T)
   
   
-  output$Mdiagraph <- renderPlot({corrplot(Mdiacor)})
-  output$Mcholgraph <- renderPlot({corrplot(Mcholcor)})
-  output$Mhypgraph <- renderPlot({corrplot(Mhypcor)})
+  output$Mdiagraph <- renderPlot({corrplot(Mdiacor)}, width = 600, height = 600)
+  output$Mcholgraph <- renderPlot({corrplot(Mcholcor)}, width = 600, height = 600)
+  output$Mhypgraph <- renderPlot({corrplot(Mhypcor)}, width = 600, height = 600)
   
   #=================================
   #Graphiques pour l'onglet CONTEXTE

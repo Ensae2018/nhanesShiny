@@ -59,7 +59,7 @@ donChol$SLQ050_slq <- as.factor(donChol$SLQ050_slq)
 #donChol$DRABF_dr1tot <- as.factor(donChol$DRABF_dr1tot)
 donChol$DRQSDIET_dr1tot <- as.factor(donChol$DRQSDIET_dr1tot)
 
-donChol_cor <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)
+
 donChol_transco<-donChol
 names(donChol_transco)<-c("Interview_Examination_status", "Gender", "Age_in_years_at_screening",
   "Total_number_of_people_in_the_Household", "Total.number.of.people.in.the.Family",
@@ -244,9 +244,13 @@ Xcordia<-model.matrix(~.-1,data=donDia_transco[,c(2,3,6,10,11,12,16,28,30,31,33,
 
 Mdiacor<-cor(Xcordia)
 
+#donChol_cor <- read.csv("data/nhanes_chol_mice_step_finale.csv", row.names = 1)
+donChol_cor <- donChol_transco[,c(2,3,9,10,11,12,19,26,35,40,45,58,64,85,86)]
 #Xcorchol<-model.matrix(~.-1,data=donChol_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
 #Xcorchol<- donChol_transco[-c(13)]
-Xcorchol<-model.matrix(~.-1,data=donChol_cor[-c(13)])
+#Xcorchol<-model.matrix(~.-1,data=donChol_cor[-c(13)])
+Xcorchol<-model.matrix(~.-1,data=donChol_cor)
+
 
 Mcholcor<-cor(Xcorchol)
 
