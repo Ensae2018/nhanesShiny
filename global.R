@@ -254,7 +254,12 @@ Xcorchol<-model.matrix(~.-1,data=donChol_cor)
 
 Mcholcor<-cor(Xcorchol)
 
-Xcorhyp<-model.matrix(~.-1,data=donHyp_transco[,c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
+Xcorhyp<-model.matrix(~.-1,data=donHyp_transco[,c("Age_in_years_at_screening","Systolic_Blood_pres_2nd_rdg_mm_Hg",
+                                                    "high_cholesterol_level", "Body_Mass_Index_kg_m_2", "Doctor_ever_said_you_were_overweight",
+                                                    "Ever_told_doctor_had_trouble_sleeping", "Phosphorus_mg", "Diastolic_Blood_pres_1st_rdg_mm_Hg", 
+                                                    "Sodium_mg")])
+                                               
+#c(2,3,6,10,11,12,16,28,30,31,33,37,73,74,81,85)])
  
 Mhypcor<-cor(Xcorhyp)
 
