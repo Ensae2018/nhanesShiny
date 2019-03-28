@@ -114,7 +114,7 @@ shinyUI(
                          h3("- Recodage de variables",br(),"- Elimination des variables avec plus de 10% de NA",br(),"- Imputation simple des données manquantes"),
                          h3("=>3 datasets différents ~ (5000 individus / 80 variables / 70%-80% quanti)",style="color:darkblue"),br(),
                          h2(span(strong("Phase 3: Modélisations spécifiques par maladie"),style="color:darkblue")),
-                         h3("- Sélection de variables",br(),"- Sélection de modèles"),br(),
+                         h3("- Clustering",br(),"- Sélection de variables",br(),"- Sélection de modèles"),br(),
                          h2(span(strong("Phase 4: Outil Shiny"),style="color:darkblue"))
                       
         )
