@@ -1072,6 +1072,8 @@ tabPanel(
                          br(),
                          h4("2) Extension du modèle de dépistage vers un modèle de diagnostic (qui prenne en compte le processus médicale).",align="left"),
                          
+                         
+                         br())
 
       )))
 )))
