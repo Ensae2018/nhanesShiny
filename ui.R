@@ -482,7 +482,7 @@ tabPanel(
                        plotOutput("Mcholgraph")),
                
                column(width=4,h1("SUMMARY du modèle de prédiction hypertension",align="center"),
-                      wellPanel(tableOutput("coefhyptab"),align="center"),
+                      wellPanel(tableOutput("coefhyptab"),br(),br(),br(),br(),br(),br(),br(),align="center"),
                       
                       h1("Matrice de corrélation",align="center"),
                       plotOutput("Mhypgraph")) 
@@ -1033,7 +1033,7 @@ tabPanel(
     sidebarLayout(
       sidebarPanel(
         radioButtons(inputId = "idRadioC", label = "Plan", selected = 1,
-                     choices = c("Bilan de l'étude" = 1, "Feedback" =2, "Perspective" = 3))
+                     choices = c("Bilan de l'étude" = 1, "Feedback" =2, "Perspectives" = 3))
         
       ),
       
@@ -1044,31 +1044,31 @@ tabPanel(
                          br(),
                          h4("0) Un outil dédié plutôt à l'aide à la décision qui en aucun cas ne peut remplacer l'expertise du médecin.",align="left"),
                          br(),
-                         h4("1) Modèles de prédictions presque tous équivalents en performance, quelque soit la maladie.",align="left"),
+                         h4("1) Modèles de prédictions presque tous équivalents en performance, quelle que soit la maladie.",align="left"),
                          br(),
                          h4("2) Modèle de régression logistique retenu pour son côté explicatif et sa méthode de sélection des variables.",align="left"),
                          br(),
-                         h4("3) Les variables de discrimination cohérent par rapport à notre recherche bibliographique sur les maladies.",align="left"),
+                         h4("3) Les variables de discrimination cohérentes par rapport à notre recherche bibliographique sur les maladies.",align="left"),
                          br(),
-                         h4("4) Choix du seuil de discrimination offrant le meilleur compromis de performance pour le diagnostique de dépistage (point optimum courbe ROC).",align="left"),
+                         h4("4) Choix du seuil de discrimination offrant le meilleur compromis de performance pour le diagnostic de dépistage (point optimum courbe ROC).",align="left"),
                          br()),
         conditionalPanel(condition="input.idRadioC == 2",
                          br(),
                          br(),
-                         h4(";-D Construction de modèle prédictif malgré des données très hétérogènes, creuses, mal renseignés, et manque de libellés explicites.",align="left"),
+                         h4(";-D Construction de modèle prédictif malgré des données très hétérogènes, creuses, mal renseignées, et manque de libellés explicites.",align="left"),
                          br(),
                          h4(";-D Travail très constructif en équipe à l'aide des outils collaboratifs.",align="left"),
                          br(),
                          h4(";-D La mise en oeuvre de diverses méthodes de classification abordées durant le cursus.",align="left"),
                          br(),
-                         h4(":-O Importance de séance de coaching pour traiter des aspects plus techniques et nous aider à avancer dans la bonne direction.",align="left"),
+                         h4(":-O Importance des séances de coaching pour traiter des aspects plus techniques et nous aider à avancer dans la bonne direction.",align="left"),
                          br(),
-                         h4(":-O Remonter des données nutriments vers les aliments n'a pas pu être fait suite au temps imparti.",align="left"),
+                         h4(":-O Remonter depuis les données nutriments vers les données aliments n'a pas pu être fait suite au temps imparti.",align="left"),
                          br()),
         conditionalPanel(condition="input.idRadioC == 3",
                          br(),
                          br(),
-                         h4("1) Construction modèle prédictive maladie sur d'autres pays inspiré de ce modèle américian.",align="left"),
+                         h4("1) Construction modèle prédictif maladie sur d'autres pays inspiré de ce modèle américian.",align="left"),
                          br(),
                          h4("2) Extension du modèle de dépistage vers un modèle de diagnostique (qui prenne en compte le processus médicale).",align="left"),
                          br(),
