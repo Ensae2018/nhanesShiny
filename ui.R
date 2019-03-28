@@ -53,8 +53,8 @@ shinyUI(
       title = "Présentation",
       
       # Application title
-      titlePanel(h1("Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles diagnostiques pour l'hypertension, le cholestérol et le diabète 
-                 à partir de donnéees démographiques, de santé, d'alimentation et d'habitudes de vie",align="center")),
+      titlePanel(h1("Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles de dépistage pour l'hypertension, le cholestérol et le diabète 
+                 à partir de données démographiques, de santé, d'alimentation et d'habitudes de vie",align="center")),
       hr(),br(),
       
       # Sidebar with a slider input for number of bins
@@ -99,7 +99,7 @@ shinyUI(
           h3("-",span(strong("médicales")),":"),
           h4("* caractéristiques générales: poids, taille, IMC, santé dentaire..."),
           h4("* analyses de laboratoire: plomb, insuline, test d'urine..."),
-          h4("* maladies déjà connues: hypertension, cholestérol, diabète, problème coronaires, infarctus..."),
+          h4("* maladies déjà connues: hypertension, cholestérol, diabète, problèmes coronaires, infarctus..."),
           h3("-", span(strong("alimentaires")),": les menus complets de 2 jours non consécutifs d'alimentation"),
           h3("-",span(strong("habitudes de vie")),": travail/chômage, qualité du sommeil, activité physique...")),
         
@@ -108,14 +108,14 @@ shinyUI(
         conditionalPanel(condition="input.idRadio == 3",
                          h2(span(strong("Phase 1: Regroupement des tables et construction d'un dataset commun 150 variables"),style="color:darkblue")),
                          h3("- Merge des tables",br(),"- Pré-sélection métier de 150 variables pour les 3 maladies (élimination des data trop techniques, trop détaillées ou non éthiques)",
-                            br(),"- Web scrapping des libellés des variables qualitatives (transcodification)"),
+                            br(),"- Web scrapping des libellés des variables qualitatives (+ transcodification)"),
                          h3("=>1 dataset 8339 individus / 150 variables",style="color:darkblue"),br(),
                          h2(span(strong("Phase 2: Déclinaison du dataset commun en 3 datasets spécifiques (un par maladie)",style="color:darkblue"))),
                          h3("- Recodage de variables",br(),"- Elimination des variables avec plus de 10% de NA",br(),"- Imputation simple des données manquantes"),
                          h3("=>3 datasets différents ~ (5000 individus / 80 variables / 70%-80% quanti)",style="color:darkblue"),br(),
                          h2(span(strong("Phase 3: Modélisations spécifiques par maladie"),style="color:darkblue")),
                          h3("- Sélection de variables",br(),"- Sélection de modèles"),br(),
-                         h2(span(strong("Phase 4: Outil Shiny + Package NHANESV2"),style="color:darkblue"))
+                         h2(span(strong("Phase 4: Outil Shiny"),style="color:darkblue"))
                       
         )
         
@@ -151,7 +151,7 @@ tabPanel(
                        #   )
                        # ),
                        selectInput(inputId = "varhypxy", label = "Graphique 2",
-                                   choices=colnames(donHyp[,-1]),selected=colnames(donHyp[, c(79,11)]),multiple=TRUE),
+                                   choices=colnames(donHyp[,-1]),selected=colnames(donHyp[, c(79,79)]),multiple=TRUE),
                        radioButtons(inputId = "idgraphtypehyp", label = "Type Graphique 2", selected = 1,
                                     choices = c("Nuage" = 1,"Boxplot" = 2,"Heatmap"=3))
                        
@@ -256,7 +256,7 @@ tabPanel(
       label = "Afficher les libellés des individus?", 
       grid = TRUE, 
       force_edges = TRUE,
-      choices = c("oui","non")), align="center"),
+      choices = c("oui","non"), selected="non"),align="center"),
     div(sliderTextInput(
       inputId = "choixaxe", 
       label = "Choisir les axes des dimensions", 
@@ -309,7 +309,7 @@ tabPanel(
     # Choix modele pour Diabete
     tabPanel("modèle diabète",
              navlistPanel(widths=c(2,10),
-                          "Modèle Diabète",
+                          "Modèle Diabète",selected="modèle prédiction",
                           tabPanel(title = "choix variable",
                                    fluidRow(
                                      column(
@@ -363,7 +363,7 @@ tabPanel(
     # Choix modele pour Cholesterol
     tabPanel("modèle cholestérol",
              navlistPanel(widths=c(2,10),
-                          "Modèle Cholestérol",
+                          "Modèle Cholestérol",selected="modèle prédiction",
                           tabPanel(title = "choix variable",
                                    fluidRow(
                                      column(
@@ -417,7 +417,7 @@ tabPanel(
     # Choix modele pour Hypertension
     tabPanel("modèle hypertension",
              navlistPanel(widths=c(2,10),
-                          "Modèle Hypertension",
+                          "Modèle Hypertension",selected="modèle prédiction",
                           tabPanel(title = "choix variable",
                                    fluidRow(
                                      column(

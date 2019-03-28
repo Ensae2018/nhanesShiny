@@ -503,7 +503,9 @@ shinyServer(function(input, output, session) {
       habillage = (switch(input$choixmaladie,
                           "cholesterol"=1,"diabetes"=2,"hypertension"=3)), #pas utiliser des accents
       addEllipses = T,
-      geom = c(ifelse(input$afficherind=="oui","text","point"))
+      geom = c(ifelse(input$afficherind=="oui","text","point")),
+      axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+               ifelse(input$choixaxe=="dim1-dim2",2,4))
     )
   })
   
@@ -515,7 +517,9 @@ shinyServer(function(input, output, session) {
                           "cholesterol"=1,"diabetes"=2,"hypertension"=3)), #pas utiliser des accents
       label="var",
       col.var = grp,
-      invisible = "quanti.sup"
+      invisible = "quanti.sup",
+      axes = c(ifelse(input$choixaxe=="dim1-dim2",1,3),
+               ifelse(input$choixaxe=="dim1-dim2",2,4))
     )
   })
   
