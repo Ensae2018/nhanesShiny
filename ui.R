@@ -1022,7 +1022,7 @@ tabPanel(
     title = "Conclusion",
     
     # Application title
-    titlePanel(h1(br(),"Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles de d�pistage pour l'hypertension, le cholestérol et le diabète 
+    titlePanel(h1(br(),"Projet",span(strong("Nhanes 2015-2016", style = "color:blue"))," : recherche de modèles de dépistage pour l'hypertension, le cholestérol et le diabète 
                 à partir de données démographiques, de santé, d'alimentation et d'habitudes de vie",align="center",
                   hr(),
                   br(),
