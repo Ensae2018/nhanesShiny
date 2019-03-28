@@ -1068,9 +1068,9 @@ tabPanel(
         conditionalPanel(condition="input.idRadioC == 3",
                          br(),
                          br(),
-                         h4("1) Construction modèle prédictif maladie sur d'autres pays inspiré de ce modèle américian.",align="left"),
+                         h4("1) Construction modèle prédictif maladie sur d'autres pays inspiré de ce modèle américain.",align="left"),
                          br(),
-                         h4("2) Extension du modèle de dépistage vers un modèle de diagnostic (qui prenne en compte le processus médicale).",align="left"),
+                         h4("2) Extension du modèle de dépistage vers un modèle de diagnostic (qui prenne en compte le processus médical).",align="left"),
                          
                          
                          br())
