@@ -316,8 +316,8 @@ tabPanel(
                                        width = 1,
                                        title = "parametre diab",
                                        dropdownButton(
-                                         tags$h3("List of Input"),
-                                         sliderInput("priodia", "Rang d'importance", 1, 10, value = 1),
+                                         #tags$h3("List of Input"),
+                                         sliderInput("priodia", "Rang d'importance", 1, 5, value = 1),
                                          tooltip = tooltipOptions(title = "Click to see inputs !")
                                        )),column(width = 11,
                                                  dataTableOutput(outputId = "tabselvardia")))),
@@ -370,8 +370,8 @@ tabPanel(
                                        width = 1,
                                        title = "parametre chol",
                                        dropdownButton(
-                                         tags$h3("List of Input"),
-                                         sliderInput("priochol", "Rang d'importance", 1, 10, value = 1),
+                                         #tags$h3("List of Input"),
+                                         sliderInput("priochol", "Rang d'importance", 1, 5, value = 1),
                                          tooltip = tooltipOptions(title = "Click to see inputs !")
                                        )
                                      ),
@@ -424,8 +424,8 @@ tabPanel(
                                        width = 1,
                                        title = "parametre hyp",
                                        dropdownButton(
-                                         tags$h3("List of Input"),
-                                         sliderInput("priohyp", "Rang d'importance", 1, 10, value = 1),
+                                         #tags$h3("List of Input"),
+                                         sliderInput("priohyp", "Rang d'importance", 1, 5, value = 1),
                                          tooltip = tooltipOptions(title = "Click to see inputs !")
                                        )
                                      ),
