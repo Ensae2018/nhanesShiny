@@ -1050,7 +1050,7 @@ tabPanel(
                          br(),
                          h4("3) Les variables de discrimination cohérent par rapport à notre recherche bibliographique sur les maladies.",align="left"),
                          br(),
-                         h4("4) Choix du seuil de discrimination offrant le meilleur compromis de performance pour le diagnostique de dépistage. (point optimum courbe ROC)",align="left"),
+                         h4("4) Choix du seuil de discrimination offrant le meilleur compromis de performance pour le diagnostique de dépistage (point optimum courbe ROC).",align="left"),
                          br()),
         conditionalPanel(condition="input.idRadioC == 2",
                          br(),
@@ -1070,7 +1070,7 @@ tabPanel(
                          br(),
                          h4("1) Construction modèle prédictive maladie sur d'autres pays inspiré de ce modèle américian.",align="left"),
                          br(),
-                         h4("2) Extension du modèle de dépistage vers un modèle de diagnostique.(qui prenne en compte le processus médicale)",align="left"),
+                         h4("2) Extension du modèle de dépistage vers un modèle de diagnostique (qui prenne en compte le processus médicale).",align="left"),
                          br(),
                          h4("3) Intégrer des données historiques et des données de type génome.",align="left"),
                          br())
